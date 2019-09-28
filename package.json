@@ -1,0 +1,49 @@
+{
+  "name": "seller_redux",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "native-base": "^2.13.8",
+    "prop-types": "^15.7.2",
+    "react": "16.8.6",
+    "react-native": "0.60.4",
+    "react-native-arabic-numbers": "^1.0.1",
+    "react-native-easy-grid": "^0.2.2",
+    "react-native-odoo-client": "https://github.com/nguyenphuquang/react-native-odoo-client.git",
+    "react-native-offline": "^5.1.0",
+    "react-native-paper": "^2.16.0",
+    "react-navigation": "^4.0.10",
+    "react-navigation-stack": "^1.9.1",
+    "react-navigation-tabs": "^2.5.5",
+    "react-redux": "^7.1.1",
+    "redux": "^4.0.4",
+    "redux-observable": "^1.2.0",
+    "rxjs": "^6.5.3",
+    "victory-native": "^33.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.4.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.56.0",
+    "prettier": "^1.18.2",
+    "react-dom": "16.8.6",
+    "react-test-renderer": "16.8.6"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
