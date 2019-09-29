@@ -7,7 +7,7 @@ import rootReducer from './reducers';
 const initialState = {};
 
 const epicMiddelware = createEpicMiddleware();
-
+// redux-thunk
 const store = createStore(
   rootReducer,
   initialState,

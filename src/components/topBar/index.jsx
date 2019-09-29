@@ -11,34 +11,7 @@ import {
   IconButton,
 } from 'react-native-paper';
 
-const styles = StyleSheet.create({
-  view: {
-    marginVertical: 10,
-    marginHorizontal: 5,
-    borderRadius: 8,
-    borderWidth: 2,
-    height: 50,
-    flexDirection: 'row',
-    borderColor: '#d3d3d3',
-  },
-  col: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  dialogScrollArea: {
-    maxHeight: 170,
-    paddingHorizontal: 0,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  text: {
-    paddingLeft: 8,
-  },
-});
+import {fetch_dashboard} from '../../actions/dashboardActions';
 
 const TopBar = () => {
   const [visible, setVisible] = useState(false);
@@ -121,8 +94,8 @@ const TopBar = () => {
               <Button onPress={() => setVisible(false)}>إالغاء</Button>
               <Button
                 onPress={() => {
-                  this._hideDialog();
-                  this._onRefresh();
+                  setVisible(false);
+                  fetch_dashboard(filter);
                 }}>
                 صفي
               </Button>
@@ -141,3 +114,32 @@ const TopBar = () => {
 };
 
 export default TopBar;
+
+const styles = StyleSheet.create({
+  view: {
+    marginVertical: 10,
+    marginHorizontal: 5,
+    borderRadius: 8,
+    borderWidth: 2,
+    height: 50,
+    flexDirection: 'row',
+    borderColor: '#d3d3d3',
+  },
+  col: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  dialogScrollArea: {
+    maxHeight: 170,
+    paddingHorizontal: 0,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  text: {
+    paddingLeft: 8,
+  },
+});

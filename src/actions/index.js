@@ -1,1 +1,1 @@
-export loginRequest from './authActions';
+export {loginRequest} from './authActions';

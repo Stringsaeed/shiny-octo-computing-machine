@@ -1,1 +1,2 @@
-export Chart from './chart';
+export {Chart} from './chart';
+export {TopBar} from './topBar';

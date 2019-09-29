@@ -1,53 +1,40 @@
 import React, {Component} from 'react';
-import {withNavigation, ScrollView} from 'react-navigation';
-import {RefreshControl, StyleSheet} from 'react-native';
-import FilterBar from './topBar';
+
+import {connect} from 'react-redux';
+import {Container} from 'native-base';
+import {bindActionCreators} from 'redux';
+import {RefreshControl} from 'react-native';
+import {ScrollView} from 'react-navigation';
+
+import {ConnectedTopBar} from '../../containers';
+import {fetch_dashboard} from '../../actions/dashboardActions';
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      refreshing: false,
-      isLoading: true,
-      visible: false,
-      is_checked: 'WEEK',
-      default_filter: 'Current Week',
-    };
   }
+  componentDidMount() {}
 
-  _onRefresh() {
-    this.setState({refreshing: true});
-    setTimeout(() => {
-      this.setState({refreshing: false});
-    }, 500);
-  }
-
+  _onRefresh = () => {
+    this.props.fetch_dashboard();
+  };
   render() {
     return (
       <Container>
-        <FilterBar />
+        <ConnectedTopBar />
         <ScrollView
           refreshControl={
             <RefreshControl
-              refreshing={this.state.refreshing}
+              refreshing={this.props.isLoading}
               onRefresh={this._onRefresh.bind(this)}
               title={'اسحب لاعادة التحميل'}
               tintColor={'#de356a'}
             />
           }>
-          {!this.state.refreshing && [
-            <ShipmentCard
-              refreshing={this.state.refreshing}
-              filter={this.state.default_filter}
-            />,
-            <ProductCard
-              refreshing={this.state.refreshing}
-              filter={this.state.default_filter}
-            />,
-            <AccountCard
-              refreshing={this.state.refreshing}
-              filter={this.state.default_filter}
-            />,
+          {!this.props.isLoading && [
+            <ShipmentCard />,
+            <ProductCard />,
+            <AccountCard />,
           ]}
         </ScrollView>
       </Container>
@@ -55,4 +42,19 @@ class Dashboard extends Component {
   }
 }
 
-export default withNavigation(Dashboard);
+const mapStateToProps = state => ({
+  isLoading: state.dashboard.isLoading,
+  dashboardError: state.dashboard.dashboardError,
+  dashboardSuccess: state.dashboard.dashboardSuccess,
+  shipmentCardData: state.dashboard.shipmentCardData,
+  productCardData: state.dashboard.productCardData,
+  accountCardData: state.dashboard.accountCardData,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({fetch_dashboard}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Dashboard);
