@@ -6,8 +6,8 @@ import {bindActionCreators} from 'redux';
 import {RefreshControl} from 'react-native';
 import {ScrollView} from 'react-navigation';
 
-import {ConnectedTopBar} from '../../containers';
 import {fetch_dashboard} from '../../actions/dashboardActions';
+import {ConnectedShipmentCard, ConnectedTopBar} from '../../containers';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -31,11 +31,7 @@ class Dashboard extends Component {
               tintColor={'#de356a'}
             />
           }>
-          {!this.props.isLoading && [
-            <ShipmentCard />,
-            <ProductCard />,
-            <AccountCard />,
-          ]}
+          {!this.props.isLoading && [<ConnectedShipmentCard />]}
         </ScrollView>
       </Container>
     );
@@ -46,7 +42,6 @@ const mapStateToProps = state => ({
   isLoading: state.dashboard.isLoading,
   dashboardError: state.dashboard.dashboardError,
   dashboardSuccess: state.dashboard.dashboardSuccess,
-  shipmentCardData: state.dashboard.shipmentCardData,
   productCardData: state.dashboard.productCardData,
   accountCardData: state.dashboard.accountCardData,
 });

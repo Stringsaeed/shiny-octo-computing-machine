@@ -1,29 +1,19 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Col} from 'react-native-easy-grid';
-import {
-  Button,
-  Subheading,
-  Portal,
-  Dialog,
-  RadioButton,
-  TouchableRipple,
-  IconButton,
-} from 'react-native-paper';
+import {Button, Dialog, IconButton, Portal, RadioButton, Subheading, TouchableRipple,} from 'react-native-paper';
 
-import {fetch_dashboard} from '../../actions/dashboardActions';
-
-const TopBar = () => {
+const TopBar = props => {
   const [visible, setVisible] = useState(false);
-  const [filter, setFilter] = useState('Current Week');
+  const [filter, setFilter] = useState(props.filter);
 
   return (
     <View style={styles.view}>
-      <Col style={styles.col}>
+      <Col style={styles.col} size={33}>
         <IconButton
           name="filter-variant"
           type="MaterialCommunityIcons"
-          onPress={() => setVisible(!visible)}
+          onPress={() => setVisible(false)}
         />
         <Portal>
           <Dialog visible={visible} onDismiss={() => setVisible(false)}>
@@ -39,9 +29,9 @@ const TopBar = () => {
                           status={filter === 'Today' ? 'checked' : 'unchecked'}
                         />
                       </View>
-                      <Right>
+                      <Col size={33}>
                         <Subheading style={styles.text}>اليوم</Subheading>
-                      </Right>
+                      </Col>
                     </View>
                   </TouchableRipple>
                   <TouchableRipple onPress={() => setFilter('Current Week')}>
@@ -54,9 +44,9 @@ const TopBar = () => {
                           }
                         />
                       </View>
-                      <Right>
+                      <Col size={33}>
                         <Subheading style={styles.text}>هذا الاسبوع</Subheading>
-                      </Right>
+                      </Col>
                     </View>
                   </TouchableRipple>
                   <TouchableRipple onPress={() => setFilter('Current Month')}>
@@ -69,22 +59,22 @@ const TopBar = () => {
                           }
                         />
                       </View>
-                      <Right>
+                      <Col size={33}>
                         <Subheading style={styles.text}>هذا الشهر</Subheading>
-                      </Right>
+                      </Col>
                     </View>
                   </TouchableRipple>
                   <TouchableRipple onPress={() => setFilter('All')}>
                     <View style={styles.row}>
                       <View pointerEvents="none">
                         <RadioButton
-                          value="ALAllL"
+                          value="All"
                           status={filter === 'All' ? 'checked' : 'unchecked'}
                         />
                       </View>
-                      <Right>
+                      <Col size={33}>
                         <Subheading style={styles.text}>الكل</Subheading>
-                      </Right>
+                      </Col>
                     </View>
                   </TouchableRipple>
                 </View>
@@ -95,7 +85,7 @@ const TopBar = () => {
               <Button
                 onPress={() => {
                   setVisible(false);
-                  fetch_dashboard(filter);
+                  props.onFiltering(filter);
                 }}>
                 صفي
               </Button>
@@ -103,12 +93,9 @@ const TopBar = () => {
           </Dialog>
         </Portal>
       </Col>
-      <Content />
-      <Right style={{marginRight: 5}}>
-        <Text style={{fontFamily: 'NotoKufiArabic-Regular'}}>
-          لوحة البيانات
-        </Text>
-      </Right>
+      <Col size={33} style={styles.right}>
+        <Text style={styles.textFont}>لوحة البيانات</Text>
+      </Col>
     </View>
   );
 };
@@ -141,5 +128,11 @@ const styles = StyleSheet.create({
   },
   text: {
     paddingLeft: 8,
+  },
+  textFont: {
+    fontFamily: 'NotoKufiArabic-Regular',
+  },
+  right: {
+    marginRight: 5,
   },
 });

@@ -1,4 +1,4 @@
-import {DASHBOARD_SUCCESS, DASHBOARD_ERROR} from '../constants';
+import {DASHBOARD_ERROR, DASHBOARD_SUCCESS} from '../constants';
 
 const initialState = {
   isLoading: true,
@@ -8,6 +8,7 @@ const initialState = {
   productCardData: {},
   accountCardData: {},
   settings: {},
+  filter: 'Current Week',
 };
 
 export default function(state = initialState, action) {
@@ -20,12 +21,14 @@ export default function(state = initialState, action) {
         shipmentCardData: action.payload.shipmentCard,
         productCardData: action.payload.productCard,
         accountCardData: action.payload.accountCard,
+        filter: action.payload.filter,
       };
     case DASHBOARD_ERROR:
       return {
         ...state,
         isLoading: false,
         dashboardError: true,
+        filter: action.payload.filter,
       };
     default:
       return {

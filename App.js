@@ -1,4 +1,4 @@
-/**
+    /**
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
@@ -6,14 +6,14 @@
  * @flow
  */
 
-import React from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
-import {Provider} from 'react-redux';
+    import React from 'react';
+    import {SafeAreaView, StatusBar} from 'react-native';
+    import {Provider} from 'react-redux';
 
-import store from './src/store';
-import Login from './src/views/login';
+    import store from './src/store';
+    import Login from './src/views/login';
 
-const App = () => {
+    const App = () => {
   return (
     <Provider store={store}>
       <StatusBar barStyle="dark-content" />

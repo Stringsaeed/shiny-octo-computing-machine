@@ -1,7 +1,7 @@
 import Odoo from 'react-native-odoo-client';
 
 import {parameters} from '../utils';
-import {DASHBOARD_SUCCESS, DASHBOARD_ERROR} from '../constants';
+import {DASHBOARD_ERROR, DASHBOARD_SUCCESS} from '../constants';
 
 export const fetch_dashboard = filter => async (dispatch, getState) => {
   const {settings} = getState().auth;
@@ -36,11 +36,15 @@ export const fetch_dashboard = filter => async (dispatch, getState) => {
         shipmentCard: shipmentCardData,
         productCard: productCardData,
         accountCard: accountCardData,
+        filter: filter,
       },
     });
   } catch {
     dispatch({
       type: DASHBOARD_ERROR,
+      payload: {
+        filter: filter,
+      },
     });
   }
 };
