@@ -3,9 +3,10 @@ import {ShipmentCard} from '../components';
 
 const mapStateToProps = state => ({
   shipmentCardData: state.dashboard.shipmentCardData,
+  dashboardSuccess: state.dashboard.dashboardSuccess,
 });
 
-export default connect(
+export const ConnectedShipmentCard = connect(
   mapStateToProps,
-  {},
+  null,
 )(ShipmentCard);

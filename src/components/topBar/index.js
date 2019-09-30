@@ -1,27 +1,42 @@
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Col} from 'react-native-easy-grid';
-import {Button, Dialog, IconButton, Portal, RadioButton, Subheading, TouchableRipple,} from 'react-native-paper';
+import {
+  Button,
+  Dialog,
+  Portal,
+  RadioButton,
+  Subheading,
+  TouchableRipple,
+} from 'react-native-paper';
 
-const TopBar = props => {
+export const TopBar = props => {
   const [visible, setVisible] = useState(false);
   const [filter, setFilter] = useState(props.filter);
 
   return (
     <View style={styles.view}>
       <Col style={styles.col} size={33}>
-        <IconButton
-          name="filter-variant"
-          type="MaterialCommunityIcons"
-          onPress={() => setVisible(false)}
+        <Button
+          icon="filter"
+          onPress={() => {
+            setVisible(true);
+          }}
         />
         <Portal>
-          <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+          <Dialog
+            visible={visible}
+            onDismiss={() => {
+              setVisible(false);
+            }}>
             <Dialog.Title>إختار</Dialog.Title>
             <Dialog.ScrollArea style={styles.dialogScrollArea}>
               <ScrollView>
                 <View>
-                  <TouchableRipple onPress={() => setFilter('Today')}>
+                  <TouchableRipple
+                    onPress={() => {
+                      setFilter('Today');
+                    }}>
                     <View style={styles.row}>
                       <View pointerEvents="none">
                         <RadioButton
@@ -34,7 +49,10 @@ const TopBar = props => {
                       </Col>
                     </View>
                   </TouchableRipple>
-                  <TouchableRipple onPress={() => setFilter('Current Week')}>
+                  <TouchableRipple
+                    onPress={() => {
+                      setFilter('Current Week');
+                    }}>
                     <View style={styles.row}>
                       <View pointerEvents="none">
                         <RadioButton
@@ -49,7 +67,10 @@ const TopBar = props => {
                       </Col>
                     </View>
                   </TouchableRipple>
-                  <TouchableRipple onPress={() => setFilter('Current Month')}>
+                  <TouchableRipple
+                    onPress={() => {
+                      setFilter('Current Month');
+                    }}>
                     <View style={styles.row}>
                       <View pointerEvents="none">
                         <RadioButton
@@ -64,7 +85,10 @@ const TopBar = props => {
                       </Col>
                     </View>
                   </TouchableRipple>
-                  <TouchableRipple onPress={() => setFilter('All')}>
+                  <TouchableRipple
+                    onPress={() => {
+                      setFilter('All');
+                    }}>
                     <View style={styles.row}>
                       <View pointerEvents="none">
                         <RadioButton
@@ -81,9 +105,15 @@ const TopBar = props => {
               </ScrollView>
             </Dialog.ScrollArea>
             <Dialog.Actions>
-              <Button onPress={() => setVisible(false)}>إالغاء</Button>
               <Button
                 onPress={() => {
+                  setVisible(false);
+                }}>
+                إالغاء
+              </Button>
+              <Button
+                onPress={() => {
+                  console.log(filter);
                   setVisible(false);
                   props.onFiltering(filter);
                 }}>
@@ -99,8 +129,6 @@ const TopBar = props => {
     </View>
   );
 };
-
-export default TopBar;
 
 const styles = StyleSheet.create({
   view: {

@@ -1,2 +1,2 @@
+export {ConnectedShipmentCard} from './shipmentCardContainer';
 export * from './connectedTopBar';
-export ConnectedShipmentCard from './shipmentCardContainer';

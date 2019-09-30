@@ -30,9 +30,7 @@ class Login extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.success) {
-      Toast.show({
-        text: 'تمت عملية الدخول',
-      });
+      this.props.navigation.navigate('app');
     } else if (this.props.emailError) {
       Toast.show({
         text: 'لم تمت عملية الدخول',

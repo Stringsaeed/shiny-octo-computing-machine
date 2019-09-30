@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {VictoryPie} from 'victory-native';
 
-const Chart = props => {
+export const Chart = props => {
   const {data, colors, width, height} = props;
   return (
     <VictoryPie
       colorScale={colors}
       data={data}
-      width={width || 100}
-      height={height || 100}
+      width={100}
+      height={100}
       padding={0}
     />
   );
@@ -21,5 +21,3 @@ Chart.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
 };
-
-export default Chart;

@@ -1,4 +1,4 @@
-    /**
+/**
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
@@ -6,20 +6,23 @@
  * @flow
  */
 
-    import React from 'react';
-    import {SafeAreaView, StatusBar} from 'react-native';
-    import {Provider} from 'react-redux';
+import React from 'react';
+import {SafeAreaView, StatusBar} from 'react-native';
+import {Provider} from 'react-redux';
+import {Provider as RNPProvider} from 'react-native-paper';
 
-    import store from './src/store';
-    import Login from './src/views/login';
+import store from './src/store';
+import AppSwitcher from './src/containers/appContainer';
 
-    const App = () => {
+const App = () => {
   return (
     <Provider store={store}>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <Login />
-      </SafeAreaView>
+      <RNPProvider>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView>
+          <AppSwitcher />
+        </SafeAreaView>
+      </RNPProvider>
     </Provider>
   );
 };
