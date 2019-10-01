@@ -19,31 +19,35 @@ import {ConnectedShipmentCard, ConnectedTopBar} from '../../containers';
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    this.state = {
+      isLoading: true,
+    };
     this.props.fetch_dashboard(this.props.filter);
   }
-  componentDidMount() {}
+
   componentDidUpdate(prevState) {
-    if (prevState.dashboardSuccess) {
-      console.log(prevState);
+    if (this.props.isLoading !== prevState.isLoading) {
+      this.setState({isLoading: !this.state.isLoading});
     }
   }
   _onRefresh = () => {
-    this.props.fetch_dashboard();
+    this.props.fetch_dashboard(this.props.filter);
   };
+
   render() {
     return (
-      <SafeAreaView style={{flex: 1}}>
+      <View style={styles.view}>
         <ConnectedTopBar />
-        {/* <SV
-            refreshControl={
-              <RefreshControl
-                refreshing={this.props.isLoading}
-                onRefresh={this._onRefresh.bind(this)}
-                title={'اسحب لاعادة التحميل'}
-                tintColor="#de356a"
-              />
-            }> */}
+        {/*<SV*/}
+        {/*  style={styles.scrollView}*/}
+        {/*  refreshControl={*/}
+        {/*    <RefreshControl*/}
+        {/*      refreshing={this.props.isLoading}*/}
+        {/*      onRefresh={this._onRefresh.bind(this)}*/}
+        {/*      title={'اسحب لاعادة التحميل'}*/}
+        {/*      tintColor="#de356a"*/}
+        {/*    />*/}
+        {/*  }>*/}
         {this.props.isLoading ? (
           <View style={styles.indicatorView}>
             <BallIndicator color="#de356a" />
@@ -51,8 +55,8 @@ class Dashboard extends Component {
         ) : (
           <ConnectedShipmentCard />
         )}
-        {/* </SV> */}
-      </SafeAreaView>
+        {/*</SV>*/}
+      </View>
     );
   }
 }
@@ -79,5 +83,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  scrollView: {
+    flex: 1,
+    margin: '2%',
+  },
+  view: {
+    flex: 1,
+    flexDirection: 'row',
   },
 });

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import PropTypes from 'prop-types';
 import {Card, CardItem} from 'native-base';
@@ -6,132 +6,85 @@ import {Col, Grid} from 'react-native-easy-grid';
 import {StyleSheet, Text, View} from 'react-native';
 import {ArabicNumbers} from 'react-native-arabic-numbers';
 
+import {Chart} from '../chart';
 import {generator} from '../../utils';
-import {Chart} from '../index';
 
-export class ShipmentCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      total: this.props.shipmentCardData.total_shipments,
-      in_transit: this.props.shipmentCardData.total_shipments_in_transit,
-      approved: this.props.shipmentCardData.total_shipments_shipped,
-      rejected: this.props.shipmentCardData.total_shipments_rejected,
+export const ShipmentCard = props => {
+  const {total, in_transit, approved, rejected, data} = props.shipmentCardData;
+  return (
+    <Card style={styles.card}>
+      <CardItem header>
+        <Col size={33}>
+          <Text style={styles.headerText}>الشحنات</Text>
+        </Col>
+      </CardItem>
 
-      data: [
-        {x: ' ', y: this.props.shipmentCardData.total_shipments_in_transit},
-        {x: ' ', y: this.props.shipmentCardData.total_shipments_shipped},
-        {x: ' ', y: this.props.shipmentCardData.total_shipments_rejected},
-      ],
-    };
-    this.transformData = this.transformData.bind(this);
-  }
+      <CardItem style={{flex: 1}}>
+        <Col />
+        <Col style={styles.colChartView}>
+          {in_transit || approved || rejected ? (
+            <Chart data={data} colors={generator(data.length - 1)} />
+          ) : (
+            <Text>لا توجد شحنات</Text>
+          )}
+        </Col>
+        <Col />
+      </CardItem>
 
-  transformData = () => {
-    this.setState({
-      total: this.props.shipmentCardData.total_shipments,
-      in_transit: this.props.shipmentCardData.total_shipments_in_transit,
-      approved: this.props.shipmentCardData.total_shipments_shipped,
-      rejected: this.props.shipmentCardData.total_shipments_rejected,
+      <CardItem style={{flex: 1}}>
+        <Col>
+          <Text style={styles.text}>{ArabicNumbers(total.toString())}</Text>
+        </Col>
+        <Col />
+        <Col>
+          <Text style={styles.text}>المرسلة</Text>
+        </Col>
+      </CardItem>
 
-      data: [
-        {x: ' ', y: this.props.shipmentCardData.total_shipments_in_transit},
-        {x: ' ', y: this.props.shipmentCardData.total_shipments_shipped},
-        {x: ' ', y: this.props.shipmentCardData.total_shipments_rejected},
-      ],
-    });
-  };
+      <CardItem style={{flex: 1}}>
+        <Col style={styles.colView}>
+          <Text style={styles.text}>
+            {ArabicNumbers(in_transit.toString())}
+          </Text>
+        </Col>
+        <Col style={styles.colView}>
+          <View style={styles.inTransitCircle} />
+        </Col>
+        <Col style={styles.colView}>
+          <Text style={styles.text}>في الطريق</Text>
+        </Col>
+      </CardItem>
 
-  // componentDidUpdate(prevState) {
-  //   if (prevState.dashboardSuccess) {
-  //     this.transformData();
-  //   }
-  // }
+      <CardItem style={{flex: 1}}>
+        <Col style={styles.colView}>
+          <Text style={styles.text}>{ArabicNumbers(approved.toString())}</Text>
+        </Col>
+        <Col style={styles.colView}>
+          <View style={styles.recBall} />
+        </Col>
+        <Col style={styles.colView}>
+          <Text style={styles.text}>المستلمة</Text>
+        </Col>
+      </CardItem>
 
-  render() {
-    this.transformData();
-    const {total, in_transit, approved, rejected, data} = this.state;
-    return (
-      <Grid style={{flex: 1}}>
-        <Card style={styles.card}>
-          <CardItem header>
-            <Col size={33}>
-              <Text style={styles.headerText}>الشحنات</Text>
-            </Col>
-          </CardItem>
+      <CardItem style={{flex: 1}}>
+        <Col>
+          <Text style={styles.text}>{ArabicNumbers(rejected.toString())}</Text>
+        </Col>
+        <Col>
+          <View style={styles.cardFooter} />
+        </Col>
+        <Col>
+          <Text>المرفوضة</Text>
+        </Col>
+      </CardItem>
+    </Card>
+  );
+};
 
-          <CardItem>
-            <Col />
-            <Col style={styles.colChartView}>
-              {in_transit || approved || rejected ? (
-                <Chart data={data} colors={generator(data.length - 1)} />
-              ) : (
-                <Text>لا توجد شحنات</Text>
-              )}
-            </Col>
-            <Col />
-          </CardItem>
-
-          <CardItem>
-            <Col style={styles.colView}>
-              <Text style={styles.text}>{ArabicNumbers(total.toString())}</Text>
-            </Col>
-            <Col />
-            <Col style={styles.colView}>
-              <Text style={styles.text}>المرسلة</Text>
-            </Col>
-          </CardItem>
-
-          <CardItem>
-            <Col style={styles.colView}>
-              <Text style={styles.text}>
-                {ArabicNumbers(in_transit.toString())}
-              </Text>
-            </Col>
-            <Col style={styles.colView}>
-              <View style={styles.inTransitCircle} />
-            </Col>
-            <Col style={styles.colView}>
-              <Text style={styles.text}>في الطريق</Text>
-            </Col>
-          </CardItem>
-
-          <CardItem>
-            <Col style={styles.colView}>
-              <Text style={styles.text}>
-                {ArabicNumbers(approved.toString())}
-              </Text>
-            </Col>
-            <Col style={styles.colView}>
-              <View style={styles.recBall} />
-            </Col>
-            <Col style={styles.colView}>
-              <Text style={styles.text}>المستلمة</Text>
-            </Col>
-          </CardItem>
-
-          <CardItem>
-            <Col>
-              <Text style={styles.text}>
-                {ArabicNumbers(rejected.toString())}
-              </Text>
-            </Col>
-            <Col>
-              <View style={styles.cardFooter} />
-            </Col>
-            <Col>
-              <Text>المرفوضة</Text>
-            </Col>
-          </CardItem>
-        </Card>
-      </Grid>
-    );
-  }
-}
-
-// ShipmentCard.propTypes = {
-//   shipmentCardData: PropTypes.objectOf(PropTypes.number).isRequired,
-// };
+ShipmentCard.propTypes = {
+  shipmentCardData: PropTypes.object.isRequired,
+};
 
 const styles = StyleSheet.create({
   card: {
@@ -171,5 +124,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#F3CEF0',
     alignSelf: 'center',
+    flex: 1,
   },
 });

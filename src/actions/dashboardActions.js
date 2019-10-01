@@ -11,10 +11,10 @@ export const fetch_dashboard = filter => async (dispatch, getState) => {
   try {
     const response = await odoo.search_read('seller.home.app', inParams, {});
     const shipmentCardData = await {
-      total_shipments: response[0].total_shipments,
-      total_shipments_in_transit: response[0].total_shipments_in_transit,
-      total_shipments_shipped: response[0].total_shipments_shipped,
-      total_shipments_rejected: response[0].total_shipments_rejected,
+      total: response[0].total_shipments,
+      in_transit: response[0].total_shipments_in_transit,
+      shipped: response[0].total_shipments_shipped,
+      rejected: response[0].total_shipments_rejected,
     };
     const productCardData = await {
       quantity_products_received: response[0].quantity_products_received,
@@ -29,7 +29,7 @@ export const fetch_dashboard = filter => async (dispatch, getState) => {
       total_remaining_payments: response[0].total_remaining_payments,
       total_price_scrap: response[0].total_price_scrap,
     };
-    console.log(response);
+
     dispatch({
       type: DASHBOARD_SUCCESS,
       payload: {

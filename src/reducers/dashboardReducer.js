@@ -4,7 +4,12 @@ const initialState = {
   isLoading: true,
   dashboardError: false,
   dashboardSuccess: false,
-  shipmentCardData: {},
+  shipmentCardData: {
+    total: 0,
+    in_transit: 0,
+    shipped: 0,
+    rejected: 0,
+  },
   productCardData: {},
   accountCardData: {},
   filter: 'Current Week',
