@@ -1,4 +1,8 @@
-import {DASHBOARD_ERROR, DASHBOARD_SUCCESS} from '../constants';
+import {
+  DASHBOARD_ERROR,
+  DASHBOARD_REQUEST,
+  DASHBOARD_SUCCESS,
+} from '../constants';
 
 const initialState = {
   isLoading: true,
@@ -17,6 +21,11 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case DASHBOARD_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
     case DASHBOARD_SUCCESS:
       return {
         ...state,

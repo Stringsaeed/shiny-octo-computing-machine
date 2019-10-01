@@ -1,34 +1,19 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 
 import {connect} from 'react-redux';
-import {Container, Grid} from 'native-base';
 import {bindActionCreators} from 'redux';
-import {ScrollView} from 'react-navigation';
 import {BallIndicator} from 'react-native-indicators';
-import {
-  RefreshControl,
-  StyleSheet,
-  View,
-  SafeAreaView,
-  ScrollView as SV,
-} from 'react-native';
+import {SafeAreaView, ScrollView as SV, StyleSheet, View} from 'react-native';
 
+import {ConnectedTopBar} from '../../containers';
+import {shipmentCardSelector} from '../../selectors';
+import {ShipmentCard} from '../../components/shipmentCard';
 import {fetch_dashboard} from '../../actions/dashboardActions';
-import {ConnectedShipmentCard, ConnectedTopBar} from '../../containers';
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isLoading: true,
-    };
     this.props.fetch_dashboard(this.props.filter);
-  }
-
-  componentDidUpdate(prevState) {
-    if (this.props.isLoading !== prevState.isLoading) {
-      this.setState({isLoading: !this.state.isLoading});
-    }
   }
 
   _onRefresh = () => {
@@ -36,8 +21,9 @@ class Dashboard extends Component {
   };
 
   render() {
+    console.log(this.props.isLoading);
     return (
-      <View style={{flex: 1}}>
+      <Fragment>
         <SafeAreaView
           style={{flex: 1}}
           forceInset={{horizontal: 'always', top: 'always'}}>
@@ -48,16 +34,19 @@ class Dashboard extends Component {
                 <BallIndicator color="#de356a" />
               </View>
             ) : (
-              <ConnectedShipmentCard />
+              <View style={{flex: 1}}>
+                <ShipmentCard shipmentCardData={this.props.shipmentCardData} />
+              </View>
             )}
           </SV>
         </SafeAreaView>
-      </View>
+      </Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  shipmentCardData: shipmentCardSelector(state.dashboard.shipmentCardData),
   isLoading: state.dashboard.isLoading,
   dashboardError: state.dashboard.dashboardError,
   dashboardSuccess: state.dashboard.dashboardSuccess,
