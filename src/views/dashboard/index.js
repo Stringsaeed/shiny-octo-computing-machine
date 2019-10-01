@@ -9,8 +9,8 @@ import {
   RefreshControl,
   StyleSheet,
   View,
-  ScrollView as SV,
   SafeAreaView,
+  ScrollView as SV,
 } from 'react-native';
 
 import {fetch_dashboard} from '../../actions/dashboardActions';
@@ -30,32 +30,28 @@ class Dashboard extends Component {
       this.setState({isLoading: !this.state.isLoading});
     }
   }
+
   _onRefresh = () => {
     this.props.fetch_dashboard(this.props.filter);
   };
 
   render() {
     return (
-      <View style={styles.view}>
-        <ConnectedTopBar />
-        {/*<SV*/}
-        {/*  style={styles.scrollView}*/}
-        {/*  refreshControl={*/}
-        {/*    <RefreshControl*/}
-        {/*      refreshing={this.props.isLoading}*/}
-        {/*      onRefresh={this._onRefresh.bind(this)}*/}
-        {/*      title={'اسحب لاعادة التحميل'}*/}
-        {/*      tintColor="#de356a"*/}
-        {/*    />*/}
-        {/*  }>*/}
-        {this.props.isLoading ? (
-          <View style={styles.indicatorView}>
-            <BallIndicator color="#de356a" />
-          </View>
-        ) : (
-          <ConnectedShipmentCard />
-        )}
-        {/*</SV>*/}
+      <View style={{flex: 1}}>
+        <SafeAreaView
+          style={{flex: 1}}
+          forceInset={{horizontal: 'always', top: 'always'}}>
+          <ConnectedTopBar />
+          <SV>
+            {this.props.isLoading ? (
+              <View style={styles.indicatorView}>
+                <BallIndicator color="#de356a" />
+              </View>
+            ) : (
+              <ConnectedShipmentCard />
+            )}
+          </SV>
+        </SafeAreaView>
       </View>
     );
   }
@@ -86,10 +82,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    margin: '2%',
   },
   view: {
     flex: 1,
-    flexDirection: 'row',
   },
 });

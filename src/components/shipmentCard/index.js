@@ -1,8 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import {Card, CardItem} from 'native-base';
-import {Col, Grid} from 'react-native-easy-grid';
+import {Card, CardItem, Left, Right, Content} from 'native-base';
 import {StyleSheet, Text, View} from 'react-native';
 import {ArabicNumbers} from 'react-native-arabic-numbers';
 
@@ -14,69 +13,66 @@ export const ShipmentCard = props => {
   return (
     <Card style={styles.card}>
       <CardItem header>
-        <Col size={33}>
+        <Right>
           <Text style={styles.headerText}>الشحنات</Text>
-        </Col>
+        </Right>
+      </CardItem>
+
+      <CardItem
+        style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        {in_transit || approved || rejected ? (
+          <Chart data={data} colors={generator(data.length - 1)} />
+        ) : (
+          <Text>لا توجد شحنات</Text>
+        )}
       </CardItem>
 
       <CardItem style={{flex: 1}}>
-        <Col />
-        <Col style={styles.colChartView}>
-          {in_transit || approved || rejected ? (
-            <Chart data={data} colors={generator(data.length - 1)} />
-          ) : (
-            <Text>لا توجد شحنات</Text>
-          )}
-        </Col>
-        <Col />
-      </CardItem>
-
-      <CardItem style={{flex: 1}}>
-        <Col>
+        <Left>
           <Text style={styles.text}>{ArabicNumbers(total.toString())}</Text>
-        </Col>
-        <Col />
-        <Col>
+        </Left>
+        <Content />
+        <Right>
           <Text style={styles.text}>المرسلة</Text>
-        </Col>
+        </Right>
       </CardItem>
 
       <CardItem style={{flex: 1}}>
-        <Col style={styles.colView}>
+        <Left style={styles.colView}>
           <Text style={styles.text}>
             {ArabicNumbers(in_transit.toString())}
           </Text>
-        </Col>
-        <Col style={styles.colView}>
+        </Left>
+        <Content style={styles.colView}>
           <View style={styles.inTransitCircle} />
-        </Col>
-        <Col style={styles.colView}>
+        </Content>
+        <Right style={styles.colView}>
           <Text style={styles.text}>في الطريق</Text>
-        </Col>
+        </Right>
       </CardItem>
 
       <CardItem style={{flex: 1}}>
-        <Col style={styles.colView}>
+        <Left style={styles.colView}>
           <Text style={styles.text}>{ArabicNumbers(approved.toString())}</Text>
-        </Col>
-        <Col style={styles.colView}>
+        </Left>
+        <Content style={styles.colView}>
           <View style={styles.recBall} />
-        </Col>
-        <Col style={styles.colView}>
+        </Content>
+        <Right style={styles.colView}>
           <Text style={styles.text}>المستلمة</Text>
-        </Col>
+        </Right>
       </CardItem>
 
       <CardItem style={{flex: 1}}>
-        <Col>
+        <Left>
           <Text style={styles.text}>{ArabicNumbers(rejected.toString())}</Text>
-        </Col>
-        <Col>
+        </Left>
+        <Content>
           <View style={styles.cardFooter} />
-        </Col>
-        <Col>
+        </Content>
+        <Right>
           <Text>المرفوضة</Text>
-        </Col>
+        </Right>
       </CardItem>
     </Card>
   );
@@ -88,13 +84,13 @@ ShipmentCard.propTypes = {
 
 const styles = StyleSheet.create({
   card: {
+    flex: 1,
     borderRadius: 8,
     marginLeft: 15,
     marginBottom: 10,
     marginTop: 10,
     marginRight: 15,
     elevation: 6,
-    flex: 1,
   },
   headerText: {
     fontSize: 25,

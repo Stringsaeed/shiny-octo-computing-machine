@@ -19,9 +19,7 @@ const App = () => {
     <Provider store={store}>
       <RNPProvider>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
-          <AppSwitcher />
-        </SafeAreaView>
+        <AppSwitcher />
       </RNPProvider>
     </Provider>
   );
