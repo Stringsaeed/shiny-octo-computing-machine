@@ -24,17 +24,17 @@ export const fetch_dashboard = filter => async (dispatch, getState) => {
       rejected: response[0].total_shipments_rejected,
     };
     const productCardData = {
-      quantity_products_received: response[0].quantity_products_received,
-      quantity_available_products: response[0].quantity_available_products,
-      quantity_actual_sold: response[0].quantity_actual_sold,
-      quantity_scrap_products: response[0].quantity_scrap_products,
+      received: response[0].quantity_products_received,
+      available: response[0].quantity_available_products,
+      sold: response[0].quantity_actual_sold,
+      scrap: response[0].quantity_scrap_products,
     };
     const accountCardData = {
-      total_price_shipments: response[0].total_price_shipments,
-      total_payments: response[0].total_payments,
-      total_received_payments: response[0].total_received_payments,
-      total_remaining_payments: response[0].total_remaining_payments,
-      total_price_scrap: response[0].total_price_scrap,
+      shipments: response[0].total_price_shipments,
+      payments: response[0].total_payments,
+      received: response[0].total_received_payments,
+      remaining: response[0].total_remaining_payments,
+      scrap: response[0].total_price_scrap,
     };
 
     dispatch({

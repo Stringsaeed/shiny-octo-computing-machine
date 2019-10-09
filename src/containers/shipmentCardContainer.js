@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 
-import {ShipmentCard} from '../components';
+import {DashboardCard} from '../components';
 import {shipmentCardSelector} from '../selectors';
 
 const mapStateToProps = state => ({
@@ -12,4 +12,4 @@ const mapStateToProps = state => ({
 export const ConnectedShipmentCard = connect(
   mapStateToProps,
   null,
-)(ShipmentCard);
+)(DashboardCard);

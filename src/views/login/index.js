@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {KeyboardAvoidingView, ScrollView, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import {
+  Content,
   Form,
   Icon,
   Input,
@@ -12,7 +13,6 @@ import {
   Text,
   Toast,
   View,
-  Content,
 } from 'native-base';
 import {loginRequest} from '../../actions';
 
@@ -87,7 +87,7 @@ class Login extends Component {
                 <View style={styles.buttonView}>
                   <Button
                     icon="exit-to-app"
-                    mode="contained"
+                    mode="outline"
                     style={styles.button}
                     animated
                     onPress={this._onPress}
@@ -162,9 +162,6 @@ const styles = StyleSheet.create({
   buttonView: {alignItems: 'center', alignSelf: 'center'},
   button: {
     width: 250,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#9204cc',
   },
   copyRightView: {bottom: 0, alignItems: 'center', flex: 1},
 });

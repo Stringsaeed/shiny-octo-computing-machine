@@ -7,8 +7,8 @@
  */
 
 import React from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
+import {SafeAreaView, StatusBar} from 'react-native';
 import {Provider as RNPProvider} from 'react-native-paper';
 
 import store from './src/store';
@@ -19,7 +19,11 @@ const App = () => {
     <Provider store={store}>
       <RNPProvider>
         <StatusBar barStyle="dark-content" />
-        <AppSwitcher />
+        <SafeAreaView
+          style={{flex: 1}}
+          forceInset={{horizontal: 'always', top: 'always'}}>
+          <AppSwitcher />
+        </SafeAreaView>
       </RNPProvider>
     </Provider>
   );

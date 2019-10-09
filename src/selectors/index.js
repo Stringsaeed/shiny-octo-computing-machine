@@ -1,1 +1,1 @@
-export {shipmentCardSelector} from './dashboardSelector';
+export * from './dashboardSelector';
