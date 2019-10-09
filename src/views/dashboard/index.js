@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types'
 import React, {Component, Fragment} from 'react';
 
 import {connect} from 'react-redux';
+import {Icon} from 'native-base';
 import {bindActionCreators} from 'redux';
 import {BallIndicator} from 'react-native-indicators';
 import {ScrollView as SV, StyleSheet, View} from 'react-native';
@@ -141,6 +143,25 @@ class Dashboard extends Component {
   }
 }
 
+Dashboard.propTypes = {
+  accountCardData: PropTypes.object.isRequired,
+  fetch_dashboard: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  productCardData: PropTypes.object.isRequired,
+  shipmentCardData: PropTypes.object.isRequired
+};
+
+Dashboard.navigationOptions = {
+  title: 'لوحة البيانات',
+  swipeEnabled: true,
+  tabBarIcon: ({tintColor}) => (
+    <Icon name="ios-home" size={30} color={tintColor} />
+  ),
+  headerForceInset: true,
+  headerTintColor: '#9204cc',
+};
+
 const mapStateToProps = state => ({
   shipmentCardData: shipmentCardSelector(state.dashboard.shipmentCardData),
   productCardData: productsCardSelector(state.dashboard.productCardData),
@@ -154,7 +175,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({fetch_dashboard}, dispatch);
 
-export default connect(
+export const ConnectedDashboard = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Dashboard);

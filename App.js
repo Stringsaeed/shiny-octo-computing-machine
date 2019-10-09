@@ -18,7 +18,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <RNPProvider>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar backgroundColor="#9204cc" barStyle="light-content" />
         <SafeAreaView
           style={{flex: 1}}
           forceInset={{horizontal: 'always', top: 'always'}}>

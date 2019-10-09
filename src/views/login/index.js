@@ -122,7 +122,7 @@ const mapDispatchToProps = dispatch =>
     dispatch,
   );
 
-export default connect(
+export const ConnectedLogin = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Login);

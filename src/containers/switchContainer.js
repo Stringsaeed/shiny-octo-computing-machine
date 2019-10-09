@@ -1,18 +1,15 @@
 import {createSwitchNavigator} from 'react-navigation';
 
-import LoginView from '../views/login';
-import DashboardView from '../views/dashboard';
+import {ConnectedLogin} from '../views';
+import {TopTabsContainer} from './tabsAppContainer';
 
 export const authSwitcher = createSwitchNavigator(
   {
     app: {
-      screen: DashboardView,
-      navigationOptions: {
-        header: null,
-      },
+      screen: TopTabsContainer,
     },
     login: {
-      screen: LoginView,
+      screen: ConnectedLogin,
       navigationOptions: {
         header: null,
       },
