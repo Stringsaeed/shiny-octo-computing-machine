@@ -1,4 +1,4 @@
-export default class Filters {
+export class Filters {
   constructor(filter) {
     this.filter = filter;
     this.fields = [
@@ -31,7 +31,7 @@ export default class Filters {
         ['create_date', '<=', today],
         ['create_date', '>=', today],
       ]);
-      inParams.push(this.fields);
+      // inParams.push(this.fields);
 
       return inParams;
     }
@@ -48,7 +48,6 @@ export default class Filters {
       let mm = String(startWeek.getMonth() + 1).padStart(2, '0');
       let yyyy = startWeek.getFullYear();
       const firstDayWeek = `${mm}/${dd}/${yyyy}`;
-      console.log(firstDayWeek);
 
       // get last day of this week
       const endWeek = new Date(
@@ -63,7 +62,6 @@ export default class Filters {
         ['create_date', '<=', lastDayWeek],
         ['create_date', '>=', firstDayWeek],
       ]);
-      inParams.push(this.fields);
       return inParams;
     }
     if (this.filter === 'MONTH') {
@@ -74,7 +72,7 @@ export default class Filters {
         ['create_date', '<=', lastDayMonth],
         ['create_date', '>=', firstDayMonth],
       ]);
-      inParams.push(this.fields);
+      // inParams.push(this.fields);
       return inParams;
     }
   }

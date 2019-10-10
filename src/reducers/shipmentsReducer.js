@@ -1,7 +1,6 @@
 import {
   FETCHING_SHIPMENTS_ERROR,
   FETCHING_SHIPMENTS_SUCCESS,
-  FETCHING_SHIPMENTS_REQUEST,
   UPDATING_SHIPMENT_ERROR,
   UPDATING_SHIPMENT_SUCCESS,
   UPDATING_SHIPMENT_REQUEST,
@@ -20,18 +19,33 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case FETCHING_SHIPMENTS_ERROR:
-      return {};
+      return {
+        ...state,
+        isLoading: false,
+      };
     case FETCHING_SHIPMENTS_SUCCESS:
-      return {};
-    case FETCHING_SHIPMENTS_REQUEST:
-      return {};
+      return {
+        ...state,
+        isLoading: false,
+        data: action.payload,
+      };
     case UPDATING_SHIPMENT_ERROR:
-      return {};
+      return {
+        ...state,
+        isUpdating: false,
+      };
     case UPDATING_SHIPMENT_SUCCESS:
-      return {};
+      return {
+        ...state,
+        isUpdating: false,
+        data: action.payload,
+        offset: action.metadata.offset,
+      };
     case UPDATING_SHIPMENT_REQUEST:
-      return {};
-
+      return {
+        ...state,
+        isUpdating: true,
+      };
     default:
       return state;
   }
