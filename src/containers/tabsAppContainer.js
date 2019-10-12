@@ -1,20 +1,22 @@
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 
-import {ConnectedDashboard} from '../views';
-import MyComponent from '../views/products';
+import {ConnectedDashboard, ShipmentStack, ConnectedProductView} from '.';
 
 export const TopTabsContainer = createMaterialTopTabNavigator(
   {
-    Products: {
-      screen: MyComponent,
+    Shipments: {
+      screen: ShipmentStack,
     },
     Dashboard: {
       screen: ConnectedDashboard,
     },
+    Products: {
+      screen: ConnectedProductView,
+    },
   },
   {
     initialRouteName: 'Dashboard',
-    order: ['Products', 'Dashboard'],
+    order: ['Products', 'Shipments', 'Dashboard'],
     swipeEnabled: true,
     lazy: true,
     tabBarOptions: {

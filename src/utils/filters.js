@@ -1,5 +1,6 @@
 export class Filters {
   constructor(filter) {
+    console.log(filter, 'a7a');
     this.filter = filter;
     this.fields = [
       'product_id',
@@ -20,7 +21,7 @@ export class Filters {
     if (this.filter === 'ALL') {
       const inParams = [];
       inParams.push([]);
-      inParams.push(this.fields);
+      // inParams.push(this.fields);
       return inParams;
     }
     if (this.filter === 'TODAY') {
@@ -62,6 +63,7 @@ export class Filters {
         ['create_date', '<=', lastDayWeek],
         ['create_date', '>=', firstDayWeek],
       ]);
+      console.log(inParams);
       return inParams;
     }
     if (this.filter === 'MONTH') {

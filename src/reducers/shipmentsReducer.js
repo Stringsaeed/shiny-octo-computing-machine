@@ -4,6 +4,7 @@ import {
   UPDATING_SHIPMENT_ERROR,
   UPDATING_SHIPMENT_SUCCESS,
   UPDATING_SHIPMENT_REQUEST,
+  REFRESHING_SHIPMENT_REQUEST,
 } from '../constants';
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   offset: 0,
   limit: 10,
   filter: 'WEEK',
+  length: 0,
 };
 
 export default function(state = initialState, action) {
@@ -22,12 +24,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
+        isRefreshing: false,
       };
     case FETCHING_SHIPMENTS_SUCCESS:
       return {
         ...state,
         isLoading: false,
+        isRefreshing: false,
         data: action.payload,
+        length: action.meta.length,
+        filter: action.meta.filter,
       };
     case UPDATING_SHIPMENT_ERROR:
       return {
@@ -39,12 +45,18 @@ export default function(state = initialState, action) {
         ...state,
         isUpdating: false,
         data: action.payload,
-        offset: action.metadata.offset,
+        offset: action.meta.offset,
+        filter: action.meta.filter,
       };
     case UPDATING_SHIPMENT_REQUEST:
       return {
         ...state,
         isUpdating: true,
+      };
+    case REFRESHING_SHIPMENT_REQUEST:
+      return {
+        ...state,
+        isRefreshing: true,
       };
     default:
       return state;
@@ -78,16 +90,6 @@ export default function(state = initialState, action) {
 // }
 
 // function _getLimit() {
-//   const odoo = new Odoo(this.state.settings);
-//   const inParams = new Filters(this.filter).getInParam();
-//   odoo
-//     .search_count('portal.shipments', inParams)
-//     .then(value => {
-//       this.setState({lenShipment: value});
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
 // }
 
 // function _updateList(_state) {

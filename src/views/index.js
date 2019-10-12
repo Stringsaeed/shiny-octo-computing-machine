@@ -1,2 +1,5 @@
 export {ConnectedLogin} from './login';
-export {ConnectedDashboard} from './dashboard';
+export {Dashboard} from './dashboard';
+export {ShipmentView} from './shipments';
+export {ProductView} from './products';
+export {CreateShipment} from './create_shipments';

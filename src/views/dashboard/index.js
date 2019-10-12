@@ -1,22 +1,13 @@
-import PropTypes from 'prop-types'
 import React, {Component, Fragment} from 'react';
-
-import {connect} from 'react-redux';
 import {Icon} from 'native-base';
-import {bindActionCreators} from 'redux';
+import PropTypes from 'prop-types';
 import {BallIndicator} from 'react-native-indicators';
 import {ScrollView as SV, StyleSheet, View} from 'react-native';
 
-import {ConnectedTopBar} from '../../containers';
-import {DashboardCard} from '../../components/card';
-import {fetch_dashboard} from '../../actions/dashboardActions';
-import {
-  accountsCardSelector,
-  productsCardSelector,
-  shipmentCardSelector,
-} from '../../selectors';
+import {dashboardFiltersPortal} from '../../constants';
+import {DashboardCard, TopBar} from '../../components';
 
-class Dashboard extends Component {
+export class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.props.fetch_dashboard(this.props.filter);
@@ -27,41 +18,56 @@ class Dashboard extends Component {
   };
 
   render() {
+    const {
+      fetch_dashboard,
+      filter,
+      isLoading,
+      shipmentCardData,
+      productCardData,
+      accountCardData,
+    } = this.props;
     return (
       <Fragment>
-        <ConnectedTopBar />
-        <SV style={{flex: 1}}>
-          {this.props.isLoading ? (
+        <TopBar
+          filter={filter}
+          filters={dashboardFiltersPortal}
+          onFiltering={_filter => {
+            fetch_dashboard(_filter);
+          }}
+          name="لوحة البيانات"
+        />
+        <SV style={styles.scrollView}>
+          {isLoading ? (
             <View style={styles.indicatorView}>
               <BallIndicator color="#de356a" />
             </View>
           ) : (
-            <View style={{flex: 1}}>
+            <View style={styles.view}>
               <DashboardCard
                 noChartMessage="لا توجد شحنات"
-                chartData={this.props.shipmentCardData.data}
+                chartData={shipmentCardData.data}
                 items={[
                   {
-                    left: this.props.shipmentCardData.total,
+                    left: shipmentCardData.total,
                     content: false,
                     right: 'المرسلة',
                   },
                   {
-                    left: this.props.shipmentCardData.in_transit,
+                    left: shipmentCardData.in_transit,
                     content: true,
-                    color: this.props.shipmentCardData.data[0].fill,
+                    color: shipmentCardData.data[0].fill,
                     right: 'في الطريق',
                   },
                   {
-                    left: this.props.shipmentCardData.approved,
+                    left: shipmentCardData.approved,
                     content: true,
-                    color: this.props.shipmentCardData.data[1].fill,
+                    color: shipmentCardData.data[1].fill,
                     right: 'المستلمة',
                   },
                   {
-                    left: this.props.shipmentCardData.rejected,
+                    left: shipmentCardData.rejected,
                     content: true,
-                    color: this.props.shipmentCardData.data[2].fill,
+                    color: shipmentCardData.data[2].fill,
                     right: 'المرفوضة',
                   },
                 ]}
@@ -70,29 +76,29 @@ class Dashboard extends Component {
 
               <DashboardCard
                 noChartMessage="لا توجد منتجات"
-                chartData={this.props.productCardData.data}
+                chartData={productCardData.data}
                 items={[
                   {
-                    left: this.props.productCardData.sold,
+                    left: productCardData.sold,
                     content: false,
                     right: 'المباعة',
                   },
                   {
-                    left: this.props.productCardData.available,
+                    left: productCardData.available,
                     content: true,
-                    color: this.props.productCardData.data[0].fill,
+                    color: productCardData.data[0].fill,
                     right: 'بالمحل',
                   },
                   {
-                    left: this.props.productCardData.received,
+                    left: productCardData.received,
                     content: true,
-                    color: this.props.productCardData.data[1].fill,
+                    color: productCardData.data[1].fill,
                     right: 'المستلمة',
                   },
                   {
-                    left: this.props.productCardData.scrap,
+                    left: productCardData.scrap,
                     content: true,
-                    color: this.props.productCardData.data[2].fill,
+                    color: productCardData.data[2].fill,
                     right: 'المنتهية',
                   },
                 ]}
@@ -101,35 +107,35 @@ class Dashboard extends Component {
 
               <DashboardCard
                 noChartMessage="لا توجد حسابات"
-                chartData={this.props.accountCardData.data}
+                chartData={accountCardData.data}
                 items={[
                   {
-                    left: this.props.accountCardData.shipments,
+                    left: accountCardData.shipments,
                     content: false,
                     right: 'اجمالي الشحنات',
                   },
                   {
-                    left: this.props.accountCardData.payments,
+                    left: accountCardData.payments,
                     content: true,
-                    color: this.props.accountCardData.data[0].fill,
+                    color: accountCardData.data[0].fill,
                     right: 'اجمالي المبيعات',
                   },
                   {
-                    left: this.props.accountCardData.received,
+                    left: accountCardData.received,
                     content: true,
-                    color: this.props.accountCardData.data[1].fill,
+                    color: accountCardData.data[1].fill,
                     right: 'المستلمة',
                   },
                   {
-                    left: this.props.accountCardData.remaining,
+                    left: accountCardData.remaining,
                     content: true,
-                    color: this.props.accountCardData.data[2].fill,
+                    color: accountCardData.data[2].fill,
                     right: 'المتبقية',
                   },
                   {
-                    left: this.props.accountCardData.scrap,
+                    left: accountCardData.scrap,
                     content: true,
-                    color: this.props.accountCardData.data[3].fill,
+                    color: accountCardData.data[3].fill,
                     right: 'قيمة التالف',
                   },
                 ]}
@@ -149,7 +155,7 @@ Dashboard.propTypes = {
   filter: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
   productCardData: PropTypes.object.isRequired,
-  shipmentCardData: PropTypes.object.isRequired
+  shipmentCardData: PropTypes.object.isRequired,
 };
 
 Dashboard.navigationOptions = {
@@ -161,24 +167,6 @@ Dashboard.navigationOptions = {
   headerForceInset: true,
   headerTintColor: '#9204cc',
 };
-
-const mapStateToProps = state => ({
-  shipmentCardData: shipmentCardSelector(state.dashboard.shipmentCardData),
-  productCardData: productsCardSelector(state.dashboard.productCardData),
-  accountCardData: accountsCardSelector(state.dashboard.accountCardData),
-  filter: state.dashboard.filter,
-  isLoading: state.dashboard.isLoading,
-  dashboardError: state.dashboard.dashboardError,
-  dashboardSuccess: state.dashboard.dashboardSuccess,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({fetch_dashboard}, dispatch);
-
-export const ConnectedDashboard = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Dashboard);
 
 const styles = StyleSheet.create({
   indicatorView: {

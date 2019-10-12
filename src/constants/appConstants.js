@@ -16,3 +16,41 @@ export const dashboardFilters = [
   'quantity_actual_sold',
   'quantity_scrap_products',
 ];
+
+export const dashboardFiltersPortal = [
+  {
+    _key: 'Today',
+    name: 'اليوم',
+  },
+  {
+    _key: 'Current Week',
+    name: 'هذا الاسبوع',
+  },
+  {
+    _key: 'Current Month',
+    name: 'هذا الشهر',
+  },
+  {
+    _key: 'All',
+    name: 'الكل',
+  },
+];
+
+export const filtersPortal = [
+  {
+    _key: 'TODAY',
+    name: 'اليوم',
+  },
+  {
+    _key: 'WEEK',
+    name: 'هذا الاسبوع',
+  },
+  {
+    _key: 'MONTH',
+    name: 'هذا الشهر',
+  },
+  {
+    _key: 'ALL',
+    name: 'الكل',
+  },
+];

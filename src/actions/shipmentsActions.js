@@ -7,24 +7,38 @@ import {
   UPDATING_SHIPMENT_ERROR,
   UPDATING_SHIPMENT_SUCCESS,
   UPDATING_SHIPMENT_REQUEST,
+  REFRESHING_SHIPMENT_REQUEST,
 } from '../constants';
 
-export const fetch_shipment = (type: boolean, offsetUpdating: number) => async (
-  dispatch,
-  getState,
-) => {
+export const fetch_shipments = (
+  type,
+  changingFilter,
+  offsetUpdating = 0,
+) => async (dispatch, getState) => {
   try {
+    console.log('a7a');
     if (type === 'update') {
       dispatch({
         type: UPDATING_SHIPMENT_REQUEST,
       });
+    } else if (type === 'refresh') {
+      dispatch({
+        type: REFRESHING_SHIPMENT_REQUEST,
+      });
     }
-    const {filter, limit} = getState().shipments;
-    const offset =
-      type === 'update' ? offsetUpdating : getState().shipments.offset;
+    let fetchLength, actionFilter;
+    const {settings} = getState().auth;
+    const {filter, limit, length, offset} = getState().shipments;
+    const _offset = type === 'update' ? offsetUpdating : offset;
+    actionFilter = changingFilter || filter;
+    const odoo = new Odoo(settings);
+    const inParams = new Filters(actionFilter).getInParam();
 
-    const odoo = new Odoo(this.state.settings);
-    const inParams = new Filters(filter).getInParam();
+    console.log(_offset);
+    if (type !== 'update') {
+      fetchLength = await odoo.search_count('portal.shipments', inParams);
+      console.log(fetchLength);
+    }
     inParams.push([
       'product_id',
       'picking_id',
@@ -35,23 +49,27 @@ export const fetch_shipment = (type: boolean, offsetUpdating: number) => async (
       'barcode',
     ]);
     const shipments = await odoo.search_read('portal.shipments', inParams, {
-      offset: offset,
+      offset: _offset,
       limit: limit,
     });
+
     dispatch({
       type:
-        type === 'update'
+        type !== 'update'
           ? FETCHING_SHIPMENTS_SUCCESS
           : UPDATING_SHIPMENT_SUCCESS,
       payload: shipments,
       meta: {
-        offset: offset,
+        offset: _offset,
+        length: type !== 'update' ? fetchLength : length,
+        filter: actionFilter,
       },
     });
   } catch (e) {
+    console.log(e);
     dispatch({
       type:
-        type === 'update' ? FETCHING_SHIPMENTS_ERROR : UPDATING_SHIPMENT_ERROR,
+        type !== 'update' ? FETCHING_SHIPMENTS_ERROR : UPDATING_SHIPMENT_ERROR,
     });
   }
 };

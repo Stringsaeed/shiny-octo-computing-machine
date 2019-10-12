@@ -14,8 +14,9 @@ const store = createStore(
   initialState,
   compose(
     applyMiddleware(thunk, epicMiddelware),
-    // window.__REDUX_DEVTOOLS_EXTENSION__ &&
-    //   window.__REDUX_DEVTOOLS_EXTENSION__(),
+    __DEV__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION__(),
   ),
 );
 epicMiddelware.run(rootEpic);
