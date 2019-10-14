@@ -3,7 +3,7 @@ import {createSelector, createStructuredSelector} from 'reselect';
 import {generator} from '../utils';
 
 const colors = generator(5);
-console.log(colors);
+
 const totalSelector = state => state.total;
 const in_transitSelector = state => state.in_transit;
 const approvedSelector = state => state.shipped;

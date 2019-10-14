@@ -5,7 +5,17 @@ import {
   UPDATE_CREATE_SHIPMENT_PRODUCTS_FAILED,
   FETCH_CREATE_SHIPMENT_DATA_FAILED,
   FETCH_CREATE_SHIPMENT_DATA_SUCCESS,
+  USERS_SEARCH,
 } from '../constants';
+
+export const search = (term, fields, modelName) => ({
+  type: USERS_SEARCH,
+  meta: {
+    term: term,
+    fields: fields,
+    modelName: modelName,
+  },
+});
 
 export const fetchData = () => async (dispatch, getState) => {
   const {settings} = getState().auth;
@@ -27,6 +37,7 @@ export const fetchData = () => async (dispatch, getState) => {
         meta: {
           responsible: users,
           isAdmin: true,
+          userName: user[0].display_name,
         },
       });
     } else {
@@ -34,8 +45,9 @@ export const fetchData = () => async (dispatch, getState) => {
         type: FETCH_CREATE_SHIPMENT_DATA_SUCCESS,
         payload: products,
         meta: {
-          responsible: user,
+          responsible: user[0],
           isAdmin: false,
+          userName: user[0].display_name,
         },
       });
     }

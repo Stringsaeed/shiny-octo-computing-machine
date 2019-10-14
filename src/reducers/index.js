@@ -3,7 +3,7 @@ import loginReducer from './loginReducer';
 import productsReducer from './productsReducer';
 import dashboardReducer from './dashboardReducer';
 import shipmentsReducer from './shipmentsReducer';
-import createShipmentsReducer from './createShipmentReducer';
+import createShipmentsReducer from './createShipment.reducer';
 
 export default combineReducers({
   auth: loginReducer,

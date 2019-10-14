@@ -1,10 +1,29 @@
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  FlatList,
+  I18nManager,
+} from 'react-native';
 import {BallIndicator} from 'react-native-indicators';
-import {Portal, Dialog, Modal} from 'react-native-paper';
-import {Input, Item, Label, Text, View, Picker, Form} from 'native-base';
+import {Button, TextInput, HelperText} from 'react-native-paper';
+import {
+  Container,
+  Item,
+  Label,
+  Text,
+  View,
+  Picker,
+  Right,
+  Left,
+  Input,
+  Col,
+  Row,
+} from 'native-base';
+import {ArabicNumbers} from 'react-native-arabic-numbers';
 
-import {FlatListModel} from '../../components/flatlistModel';
+// import {FlatListModel} from '../../components/flatlistModel';
 
 export class CreateShipment extends Component {
   constructor(props) {
@@ -23,6 +42,7 @@ export class CreateShipment extends Component {
       selectedName: '',
       selectedId: 0,
       visible: false,
+      searchTerm: '',
     };
   }
 
@@ -42,17 +62,19 @@ export class CreateShipment extends Component {
 
   render() {
     const {
-      isSending,
+      search,
+      searchUsers,
+      isSearching,
+      userName,
       isLoading,
       products,
       disabled,
       responsible,
-      update,
     } = this.props;
 
     return !isLoading ? (
-      <Form styles={styles.flex}>
-        <Item picker inlineLabel rounded>
+      <Container styles={styles.flex}>
+        <Item inlineLabel rounded picker style={styles.item}>
           <Picker
             mode="dialog"
             selectedValue={this.state.selected}
@@ -73,7 +95,6 @@ export class CreateShipment extends Component {
               }
             }}
             style={styles.centerTextInput}
-            placeholder="إختر الفئة"
             itemTextStyle={styles.text(25)}
             textStyle={styles.text(25)}>
             <Picker.Item value={-1} label="اختار منتج" key={-1} />
@@ -89,8 +110,7 @@ export class CreateShipment extends Component {
           </Picker>
           <Label style={styles.text(25)}>المنتج</Label>
         </Item>
-
-        <Item inlineLabel rounded>
+        <Item inlineLabel rounded style={styles.item}>
           <Input
             keyboardType="numeric"
             value={String(this.state.quantity)}
@@ -99,70 +119,30 @@ export class CreateShipment extends Component {
           />
           <Label style={styles.text(25)}>الكمية</Label>
         </Item>
-
-        <Item inlineLabel rounded>
+        <Item inlineLabel rounded style={styles.item}>
           <Input disabled style={styles.centerTextInput}>
-            <Text style={styles.text(25)}>{this._getPrice()}</Text>
+            <Text style={styles.text(25)}>
+              {ArabicNumbers(this._getPrice())}
+            </Text>
           </Input>
           <Label style={styles.text(25)}>التكلفة</Label>
         </Item>
 
-        <Item inlineLabel rounded picker={!disabled} disabled={disabled}>
-          {disabled ? (
-            <Input disabled={disabled} style={styles.centerTextInput}>
-              <Text style={styles.text(25)}>{responsible[0].display_name}</Text>
-            </Input>
-          ) : (
-            <View>
-              <TouchableOpacity
-                activeOpacity={0.9}
-                onPress={() => {
-                  this.showDialog();
-                }}>
-                <Text style={styles.text(25)}>
-                  {this.state.selectedName || 'اختر مورد'}
-                </Text>
-              </TouchableOpacity>
-              <Portal>
-                <Modal visible={this.state.visible} onDismiss={this.hideDialog}>
-                  <FlatListModel
-                    data={responsible}
-                    getMoreData={() => {
-                      update('in');
-                    }}
-                    onSelect={(id, name) =>
-                      this.setState({selectedName: name, selectedId: id})
-                    }
-                  />
-                </Modal>
-              </Portal>
-            </View>
-            // <Picker
-            //   mode={'dialog'}
-            //   placeholder="إختر المسئول"
-            //   onValueChange={(v, i) => {
-            //     this.setState({
-            //       responsible: {
-            //         id: v,
-            //         name: i,
-            //       },
-            //     });
-            //   }}
-            //   style={styles.centerTextInput}
-            //   selectedValue={this.state.responsible.name}
-            //   itemTextStyle={styles.text}
-            //   textStyle={styles.text}>
-            //   <Picker.Item value="" label={'إختر المورد'} />
-            //   {responsible.map(_response => {
-            //     return (
-            //       <Picker.item value={_response.id} label={_response.name} />
-            //     );
-            //   })}
-            // </Picker>
-          )}
+        <Item rounded inlineLabel disabled style={styles.item}>
+          <Input disabled={disabled} style={styles.centerTextInput}>
+            <Text style={styles.text(25)}>{userName}</Text>
+          </Input>
           <Label style={styles.text(25)}>المورد</Label>
         </Item>
-      </Form>
+
+        {!disabled ? (
+          <View style={{alignItems: 'center', borderRadius: 8}}>
+            <Button mode="outlined" color="#9204cc">
+              <Text style={styles.text(25)}>اختر مورد</Text>
+            </Button>
+          </View>
+        ) : null}
+      </Container>
     ) : (
       <View style={styles.indicator}>
         <BallIndicator />
@@ -181,10 +161,10 @@ const styles = StyleSheet.create({
   },
   form: {
     flex: 1,
-    justifyContent: 'space-between',
   },
   flex: {
     flex: 1,
+    flexDirection: 'column',
   },
   button: {
     backgroundColor: '#ff8080',
@@ -207,11 +187,17 @@ const styles = StyleSheet.create({
   },
   centerTextInput: {
     textAlign: 'center',
+    writingDirection: 'rtl',
   },
   indicator: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  item: {
+    borderRadius: 8,
+    marginHorizontal: '1.5%',
+    marginVertical: '2%',
   },
 });
 
@@ -382,3 +368,18 @@ const styles = StyleSheet.create({
         </Container>
       </Root>
       * */
+
+// {/*<Container style={{flex: 1}}>*/}
+// {/*  <View style={{marginBottom: 10, alignItems: 'center'}}>*/}
+// {/*    <Text style={{fontSize: 30, fontFamily: 'NotoKufiArabic-Bold'}}>*/}
+// {/*      إضافة شحنة جديدة*/}
+// {/*    </Text>*/}
+// {/*  </View>*/}
+// {/*  {!this.state.isLoading ? (*/}
+// {/*    <View style={{flex: 1, margin: 10}}>*/}
+// {/*      */}
+// {/*    </View>*/}
+// {/*  ) : (*/}
+// {/*    <Indicator transparent={true} cardHeaderName="" />*/}
+// {/*  )}*/}
+// {/*</Container>;*/}

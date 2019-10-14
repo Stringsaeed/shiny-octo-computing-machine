@@ -4,6 +4,9 @@ import {
   UPDATE_CREATE_SHIPMENT_PRODUCTS_FAILED,
   FETCH_CREATE_SHIPMENT_DATA_FAILED,
   FETCH_CREATE_SHIPMENT_DATA_SUCCESS,
+  USERS_SEARCH,
+  USERS_SEARCH_SUCCESS,
+  USERS_SEARCH_FAILED,
 } from '../constants';
 
 const initialState = {
@@ -16,6 +19,9 @@ const initialState = {
   offset: 0,
   limit: 80,
   isUpdating: false,
+  searchUsers: [],
+  isSearching: false,
+  userName: '',
 };
 
 export default (state = initialState, action) => {
@@ -28,28 +34,28 @@ export default (state = initialState, action) => {
         isAdmin: action.meta.isAdmin,
         disabled: !action.meta.isAdmin,
         responsible: action.meta.responsible,
+        userName: action.meta.userName,
       };
     case FETCH_CREATE_SHIPMENT_DATA_FAILED:
       return {
         ...state,
         isLoading: false,
       };
-    case UPDATE_CREATE_SHIPMENT_PRODUCTS_REQUEST:
+    case USERS_SEARCH:
       return {
         ...state,
-        isUpdating: true,
+        isSearching: true,
       };
-    case UPDATE_CREATE_SHIPMENT_PRODUCTS_SUCCESS:
+    case USERS_SEARCH_SUCCESS:
       return {
         ...state,
-        isUpdating: false,
-        products: [...state.products, ...action.payload],
-        offset: action.meta.offset,
+        isSearching: false,
+        searchUsers: action.payload,
       };
-    case UPDATE_CREATE_SHIPMENT_PRODUCTS_FAILED:
+    case USERS_SEARCH_FAILED:
       return {
         ...state,
-        isUpdating: false,
+        isSearching: false,
       };
     default:
       return state;

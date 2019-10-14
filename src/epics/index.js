@@ -1,4 +1,5 @@
 import {combineEpics} from 'redux-observable';
-import loginUser from './loginEpic';
+import loginUser from './login.epic';
+import {searchItem} from './search.epic';
 
-export default combineEpics(loginUser);
+export default combineEpics(loginUser, searchItem);

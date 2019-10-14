@@ -114,6 +114,7 @@ const mapStateToProps = state => ({
   success: state.auth.success,
   settings: state.auth.settings,
 });
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
@@ -126,6 +127,7 @@ export const ConnectedLogin = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Login);
+
 const styles = StyleSheet.create({
   view: {
     flex: 1,
@@ -158,6 +160,7 @@ const styles = StyleSheet.create({
   secondView: {alignItems: 'center', margin: 40},
   headText: {
     fontSize: 40,
+    fontFamily: 'NotoKufiArabic-Regular',
   },
   buttonView: {alignItems: 'center', alignSelf: 'center'},
   button: {
