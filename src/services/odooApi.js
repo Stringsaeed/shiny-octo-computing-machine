@@ -89,7 +89,7 @@ export const odooAPI = settings => {
     },
     search: async (term, fields, modelName) => {
       const inParams = [];
-      inParams.push([['name', 'like', term]]);
+      inParams.push([['name', 'ilike', term]]);
       inParams.push(fields);
       return await odoo.search_read(modelName, inParams, {});
     },

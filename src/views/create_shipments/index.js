@@ -23,6 +23,7 @@ import {
 } from 'native-base';
 import {ArabicNumbers} from 'react-native-arabic-numbers';
 
+import {SearchDialog} from '../../components';
 // import {FlatListModel} from '../../components/flatlistModel';
 
 export class CreateShipment extends Component {
@@ -30,27 +31,19 @@ export class CreateShipment extends Component {
     super(props);
     this.props.fetch();
     this.state = {
-      product: '',
       quantity: 0,
       price: 0,
-      selected: undefined,
-      index: 0,
-      responsible: {
-        id: 0,
-        name: '',
-      },
-      selectedName: '',
-      selectedId: 0,
-      visible: false,
-      searchTerm: '',
+      selectedProduct: {},
+      selectedResponsible: {},
+      selectedProductResponsible: [],
+      productVisible: false,
+      responsibleVisible: false,
     };
   }
 
   _getPrice() {
-    const {products} = this.props;
-    return this.state.index && products
-      ? products[this.state.index - 1].standard_price * this.state.quantity
-      : 0;
+    const {selectedProduct, quantity} = this.state;
+    return selectedProduct ? selectedProduct.standard_price * quantity : 0;
   }
 
   showDialog = () => {
@@ -62,86 +55,109 @@ export class CreateShipment extends Component {
 
   render() {
     const {
-      search,
-      searchUsers,
-      isSearching,
-      userName,
-      isLoading,
+      selectedProduct,
+      productVisible,
+      quantity,
+      selectedResponsible,
+      selectedProductResponsible,
+      responsibleVisible,
+    } = this.state;
+    const {
       products,
-      disabled,
-      responsible,
+      isLoading,
+      isSending,
+      isAdmin,
+      searchProducts,
+      isSearchingProducts,
+      searchUsers,
+      isSearchingUsers,
+      currentUser,
+      users,
+      searchProductsAction,
+      searchUsersAction,
     } = this.props;
 
     return !isLoading ? (
       <Container styles={styles.flex}>
-        <Item inlineLabel rounded picker style={styles.item}>
-          <Picker
-            mode="dialog"
-            selectedValue={this.state.selected}
-            onValueChange={(v, i) => {
-              const vendor = products[i - 1].responsible_id;
-              if (!disabled) {
-                this.setState({
-                  selected: v,
-                  index: i,
-                  response: vendor[1],
-                  responsible_id: vendor[0],
-                });
-              } else {
-                this.setState({
-                  selected: v,
-                  index: i,
-                });
-              }
-            }}
-            style={styles.centerTextInput}
-            itemTextStyle={styles.text(25)}
-            textStyle={styles.text(25)}>
-            <Picker.Item value={-1} label="اختار منتج" key={-1} />
-            {products.map(value => {
-              return (
-                <Picker.item
-                  value={value.id}
-                  label={value.name}
-                  key={value.id}
-                />
-              );
-            })}
-          </Picker>
-          <Label style={styles.text(25)}>المنتج</Label>
-        </Item>
+        {/* <Item inlineLabel rounded style={styles.item}> */}
+        <Button onPress={() => this.setState({productVisible: true})}>
+          {selectedProduct ? selectedProduct.name : 'اختر منتج'}
+        </Button>
+        <SearchDialog
+          data={
+            isAdmin
+              ? products
+              : searchProducts !== []
+              ? searchProducts
+              : products
+          }
+          search={term => {
+            searchProductsAction(term);
+          }}
+          searchBar={isAdmin}
+          isSearching={isSearchingProducts}
+          visible={productVisible}
+          title="اختر منتج"
+          onSelect={_product => {
+            this.setState({
+              selectedProduct: _product,
+              selectedProductResponsible: _product.responsible_id[1],
+              productVisible: false,
+            });
+          }}
+        />
+        <Label style={styles.text(25)}>المنتج</Label>
+        {/* </Item> */}
         <Item inlineLabel rounded style={styles.item}>
           <Input
             keyboardType="numeric"
-            value={String(this.state.quantity)}
+            value={String(quantity)}
             style={styles.centerTextInput}
-            onChangeText={quantity => this.setState({quantity})}
+            onChangeText={_quantity => {
+              this.setState({quantity: _quantity});
+            }}
           />
           <Label style={styles.text(25)}>الكمية</Label>
         </Item>
         <Item inlineLabel rounded style={styles.item}>
           <Input disabled style={styles.centerTextInput}>
             <Text style={styles.text(25)}>
-              {ArabicNumbers(this._getPrice())}
+              {ArabicNumbers(this._getPrice() || 0)}
             </Text>
           </Input>
           <Label style={styles.text(25)}>التكلفة</Label>
         </Item>
-
-        <Item rounded inlineLabel disabled style={styles.item}>
-          <Input disabled={disabled} style={styles.centerTextInput}>
-            <Text style={styles.text(25)}>{userName}</Text>
-          </Input>
+        <Item inlineLabel rounded disabled={!isAdmin} style={styles.item}>
+          {!isAdmin ? (
+            <Input disabled={!isAdmin} style={styles.centerTextInput}>
+              <Text style={styles.text(25)}>{currentUser.display_name}</Text>
+            </Input>
+          ) : (
+            <Button onPress={() => this.setState({visible: true})}>
+              {selectedResponsible
+                ? selectedResponsible.name
+                : selectedProductResponsible
+                ? selectedProductResponsible[1]
+                : 'اختر مورد'}
+            </Button>
+          )}
+          <SearchDialog
+            data={searchUsers || users}
+            search={term => {
+              searchUsersAction(term);
+            }}
+            isSearching={isSearchingUsers}
+            visible={responsibleVisible}
+            title="اختر مورد"
+            onSelect={_responsible => {
+              this.setState({
+                selectedResponsible: _responsible,
+                responsibleVisible: false,
+              });
+            }}
+          />
           <Label style={styles.text(25)}>المورد</Label>
         </Item>
-
-        {!disabled ? (
-          <View style={{alignItems: 'center', borderRadius: 8}}>
-            <Button mode="outlined" color="#9204cc">
-              <Text style={styles.text(25)}>اختر مورد</Text>
-            </Button>
-          </View>
-        ) : null}
       </Container>
     ) : (
       <View style={styles.indicator}>

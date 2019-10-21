@@ -1,9 +1,9 @@
 import {
-  UPDATE_CREATE_SHIPMENT_PRODUCTS_REQUEST,
-  UPDATE_CREATE_SHIPMENT_PRODUCTS_SUCCESS,
-  UPDATE_CREATE_SHIPMENT_PRODUCTS_FAILED,
-  FETCH_CREATE_SHIPMENT_DATA_FAILED,
-  FETCH_CREATE_SHIPMENT_DATA_SUCCESS,
+  PROUDCTS_SEARCH,
+  PROUDCTS_SEARCH_SUCCESS,
+  PROUDCTS_SEARCH_FAILED,
+  CREATE_SHIPMENT_SUCCESS,
+  CREATE_SHIPMENT_FAILED,
   USERS_SEARCH,
   USERS_SEARCH_SUCCESS,
   USERS_SEARCH_FAILED,
@@ -13,49 +13,62 @@ const initialState = {
   products: [],
   isLoading: true,
   isSending: false,
-  disabled: true,
-  responsible: [],
   isAdmin: false,
-  offset: 0,
-  limit: 80,
-  isUpdating: false,
+  searchProducts: [],
+  isSearchingProducts: false,
   searchUsers: [],
-  isSearching: false,
-  userName: '',
+  isSearchingUsers: false,
+  currentUser: {},
+  users: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_CREATE_SHIPMENT_DATA_SUCCESS:
+    case CREATE_SHIPMENT_SUCCESS:
       return {
         ...state,
         isLoading: false,
         products: action.payload,
         isAdmin: action.meta.isAdmin,
-        disabled: !action.meta.isAdmin,
-        responsible: action.meta.responsible,
-        userName: action.meta.userName,
+        users: action.meta.users || state.users,
+        currentUser: action.meta.currentUser,
       };
-    case FETCH_CREATE_SHIPMENT_DATA_FAILED:
+    case CREATE_SHIPMENT_FAILED:
       return {
         ...state,
         isLoading: false,
       };
+    case PROUDCTS_SEARCH:
+      return {
+        ...state,
+        isSearchingProducts: true,
+      };
+    case PROUDCTS_SEARCH_SUCCESS:
+      return {
+        ...state,
+        isSearchingProducts: false,
+        searchUsers: action.payload,
+      };
+    case PROUDCTS_SEARCH_FAILED:
+      return {
+        ...state,
+        isSearchingProducts: false,
+      };
     case USERS_SEARCH:
       return {
         ...state,
-        isSearching: true,
+        isSearchingUsers: true,
       };
     case USERS_SEARCH_SUCCESS:
       return {
         ...state,
-        isSearching: false,
+        isSearchingUsers: false,
         searchUsers: action.payload,
       };
     case USERS_SEARCH_FAILED:
       return {
         ...state,
-        isSearching: false,
+        isSearchingUsers: false,
       };
     default:
       return state;

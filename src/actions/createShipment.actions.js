@@ -1,19 +1,22 @@
 import {odooAPI} from '../services';
 import {
-  UPDATE_CREATE_SHIPMENT_PRODUCTS_REQUEST,
-  UPDATE_CREATE_SHIPMENT_PRODUCTS_SUCCESS,
-  UPDATE_CREATE_SHIPMENT_PRODUCTS_FAILED,
-  FETCH_CREATE_SHIPMENT_DATA_FAILED,
-  FETCH_CREATE_SHIPMENT_DATA_SUCCESS,
+  CREATE_SHIPMENT_SUCCESS,
+  CREATE_SHIPMENT_FAILED,
   USERS_SEARCH,
+  PROUDCTS_SEARCH,
 } from '../constants';
 
-export const search = (term, fields, modelName) => ({
+export const searchUsers = term => ({
   type: USERS_SEARCH,
   meta: {
     term: term,
-    fields: fields,
-    modelName: modelName,
+  },
+});
+
+export const searchProducts = term => ({
+  type: PROUDCTS_SEARCH,
+  meta: {
+    term: term,
   },
 });
 
@@ -22,63 +25,38 @@ export const fetchData = () => async (dispatch, getState) => {
   const api = odooAPI(settings);
   try {
     const userId = settings.uid || api.auth();
-    const {offset, limit} = getState().createShipment;
-
-    const products = await api.getProducts(offset, limit);
 
     const group = await api.getGroups();
     const user = await api.getUser(userId);
-
+    // console.log(user);
     if (await user[0].groups_id.includes(await group[0].id)) {
-      const users = await api.getUsers(offset, limit);
+      const users = await api.getUsers(0, 10);
+      const products = await api.getProducts(0, 10);
       dispatch({
-        type: FETCH_CREATE_SHIPMENT_DATA_SUCCESS,
+        type: CREATE_SHIPMENT_SUCCESS,
         payload: products,
         meta: {
-          responsible: users,
+          currentUser: user[0],
+          users: users,
           isAdmin: true,
-          userName: user[0].display_name,
         },
       });
     } else {
+      const products = await api.getProducts(0, 0);
+      // console.log(products, user[0], FETCH_CREATE_SHIPMENT_DATA_SUCCESS);
       dispatch({
-        type: FETCH_CREATE_SHIPMENT_DATA_SUCCESS,
+        type: CREATE_SHIPMENT_SUCCESS,
         payload: products,
         meta: {
-          responsible: user[0],
+          currentUser: user[0],
           isAdmin: false,
-          userName: user[0].display_name,
         },
       });
     }
   } catch (e) {
     console.log(e);
     dispatch({
-      type: FETCH_CREATE_SHIPMENT_DATA_FAILED,
-    });
-  }
-};
-
-export const updateData = _key => async (dispatch, getState) => {
-  dispatch({
-    type: UPDATE_CREATE_SHIPMENT_PRODUCTS_REQUEST,
-  });
-  const {settings} = getState().auth;
-  const api = odooAPI(settings);
-  const {offset, limit} = getState().createShipment;
-  const newOffset = _key === 'in' ? offset + limit : offset - limit;
-  try {
-    const products = await api.getProducts(newOffset, limit);
-    dispatch({
-      type: UPDATE_CREATE_SHIPMENT_PRODUCTS_SUCCESS,
-      payload: products,
-      meta: {
-        offset: newOffset,
-      },
-    });
-  } catch (e) {
-    dispatch({
-      type: UPDATE_CREATE_SHIPMENT_PRODUCTS_FAILED,
+      type: CREATE_SHIPMENT_FAILED,
     });
   }
 };
