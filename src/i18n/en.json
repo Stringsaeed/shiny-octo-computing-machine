@@ -1,0 +1,43 @@
+{
+  "login": {
+    "title": "Login",
+    "email": "Email/ Mobile",
+    "password": "Password",
+    "loginBtn": "Login",
+    "failed": "Email/ Mobile or Password is not correct"
+  },
+  "app_navigation": {
+    "dashboard": "Dashboard",
+    "shipments": "Shipments",
+    "products": "Products",
+    "account": "Account"
+  },
+  "dashboard": {
+    "topBarTitle": "Dashboard",
+    "shipmentsCard": {
+      "cardTitle": "Shipments",
+      "noChartMessage": "You don't have Shipments",
+      "total": "Total",
+      "inTransit": "In Transit",
+      "received": "Received",
+      "rejected": "Rejected"
+    },
+    "productsCard": {
+      "cardTitle": "Products",
+      "noChartMessage": "You don't have Products",
+      "sold": "Sold",
+      "available": "In Stock",
+      "received": "Received",
+      "scrap": "Scraped"
+    },
+    "accountsCard": {
+      "cardTitle": "Accounts",
+      "noChartMessage": "No data for Accounts in this period",
+      "shipments": "Total Shipments",
+      "payments": "Total Payments",
+      "received": "Received",
+      "remaining": "Remaining",
+      "scrap": "Scraped"
+    }
+  }
+}
