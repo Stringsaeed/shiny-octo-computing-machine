@@ -7,10 +7,10 @@ import {
   accountsCardSelector,
   productsCardSelector,
   shipmentCardSelector,
-} from '../selectors';
+} from '../../selectors';
 
-import {Dashboard} from '../views';
-import {fetch_dashboard} from '../actions';
+import {Dashboard} from '../../views';
+import {fetch_dashboard} from '../../actions';
 
 Dashboard.propTypes = {
   accountCardData: PropTypes.object.isRequired,

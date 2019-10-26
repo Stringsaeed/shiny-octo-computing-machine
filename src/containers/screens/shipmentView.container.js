@@ -1,8 +1,8 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {ShipmentView} from '../views';
-import {fetch_shipments} from '../actions';
+import {ShipmentView} from '../../views';
+import {fetch_shipments} from '../../actions';
 
 const mapStateToProps = state => ({
   isLoading: state.shipments.isLoading,

@@ -1,5 +1,5 @@
 export * from './tabsAppContainer';
-export * from './appContainer';
+export * from './navigation';
 export * from './dashboardContainer';
 export * from './shipmentViewContainer';
 export * from './switchContainer';

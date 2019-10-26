@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
 import {KeyboardAvoidingView, ScrollView, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import {
@@ -14,9 +12,8 @@ import {
   Toast,
   View,
 } from 'native-base';
-import {loginRequest} from '../../actions';
 
-class Login extends Component {
+export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -106,27 +103,6 @@ class Login extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  isLoading: state.auth.isLoading,
-  emailError: state.auth.emailError,
-  passwordError: state.auth.passwordError,
-  success: state.auth.success,
-  settings: state.auth.settings,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      loginRequest,
-    },
-    dispatch,
-  );
-
-export const ConnectedLogin = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Login);
 
 const styles = StyleSheet.create({
   view: {

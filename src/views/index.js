@@ -1,4 +1,4 @@
-export {ConnectedLogin} from './login';
+export {Login} from './login';
 export {Dashboard} from './dashboard';
 export {ShipmentView} from './shipments';
 export {ProductView} from './products';

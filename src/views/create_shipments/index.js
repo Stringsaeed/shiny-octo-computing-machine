@@ -80,34 +80,35 @@ export class CreateShipment extends Component {
     return !isLoading ? (
       <Container styles={styles.flex}>
         {/* <Item inlineLabel rounded style={styles.item}> */}
-        <Button onPress={() => this.setState({productVisible: true})}>
-          {selectedProduct ? selectedProduct.name : 'اختر منتج'}
-        </Button>
-        <SearchDialog
-          data={
-            isAdmin
-              ? products
-              : searchProducts !== []
-              ? searchProducts
-              : products
-          }
-          search={term => {
-            searchProductsAction(term);
-          }}
-          searchBar={isAdmin}
-          isSearching={isSearchingProducts}
-          visible={productVisible}
-          title="اختر منتج"
-          onSelect={_product => {
-            this.setState({
-              selectedProduct: _product,
-              selectedProductResponsible: _product.responsible_id[1],
-              productVisible: false,
-            });
-          }}
-        />
-        <Label style={styles.text(25)}>المنتج</Label>
-        {/* </Item> */}
+        <View style={styles.buttonWithLabel}>
+          <Button onPress={() => this.setState({productVisible: true})}>
+            {selectedProduct ? selectedProduct.name : 'اختر منتج'}
+          </Button>
+          <SearchDialog
+            data={
+              isAdmin
+                ? products
+                : searchProducts !== []
+                ? searchProducts
+                : products
+            }
+            search={term => {
+              searchProductsAction(term);
+            }}
+            searchBar={isAdmin}
+            isSearching={isSearchingProducts}
+            visible={productVisible}
+            title="اختر منتج"
+            onSelect={_product => {
+              this.setState({
+                selectedProduct: _product,
+                selectedProductResponsible: _product.responsible_id[1],
+                productVisible: false,
+              });
+            }}
+          />
+          <Label style={styles.text(25)}>المنتج</Label>
+        </View>
         <Item inlineLabel rounded style={styles.item}>
           <Input
             keyboardType="numeric"
@@ -168,6 +169,10 @@ export class CreateShipment extends Component {
 }
 
 const styles = StyleSheet.create({
+  buttonWithLabel: {
+    flex: 1,
+    flexDirection: 'row',
+  },
   buttonsView: {
     marginTop: 10,
     marginRight: 5,

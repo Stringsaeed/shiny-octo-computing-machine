@@ -1,5 +1,9 @@
 import {createStackNavigator} from 'react-navigation-stack';
-import {ConnectedShipmentView, ConnectedCreateShipment} from '.';
+
+import {
+  ConnectedShipmentView,
+  ConnectedCreateShipment,
+} from 'containers/screens';
 
 export const ShipmentStack = createStackNavigator(
   {

@@ -1,8 +1,8 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {ProductView} from '../views';
-import {fetchProducts} from '../actions';
+import {ProductView} from '../../views';
+import {fetchProducts} from '../../actions';
 
 const mapStateToProps = state => ({
   isLoading: state.products.isLoading,

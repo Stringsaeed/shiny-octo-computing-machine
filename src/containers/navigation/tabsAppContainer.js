@@ -1,6 +1,10 @@
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 
-import {ConnectedDashboard, ShipmentStack, ConnectedProductView} from '.';
+import {
+  ConnectedDashboard,
+  ShipmentStack,
+  ConnectedProductView,
+} from 'containers/screens';
 
 export const TopTabsContainer = createMaterialTopTabNavigator(
   {
