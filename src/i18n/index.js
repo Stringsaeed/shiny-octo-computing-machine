@@ -1,9 +1,8 @@
-import {I18nManager} from 'react-native';
-import memoize from 'lodash.memoize';
 import i18n from 'i18n-js';
-import {} from 'react-native-localize';
-
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
+import Moment from 'moment';
+import {memoize} from 'lodash';
+import {I18nManager} from 'react-native';
+import {findBestAvailableLanguage} from 'react-native-localize';
 
 const translationGetters = {
   ar: () => require('./ar.json'),
@@ -15,14 +14,12 @@ export const translate = memoize(
   (key, config) => (config ? key + JSON.stringify(config) : key),
 );
 
-export const setI18nConfig = changedLang => {
-  const defaultLang = {language: 'en', isRTL: false};
-  const {language, isRTL} = changedLang || defaultLang;
+export const setI18nConfig = () => {
+  const {language, isRTL} = findBestAvailableLanguage(['ar', 'en']);
 
   translate.cache.clear();
-
   I18nManager.forceRTL(isRTL);
-
   i18n.translations = {[language]: translationGetters[language]()};
   i18n.local = language;
+  Moment.local(language);
 };

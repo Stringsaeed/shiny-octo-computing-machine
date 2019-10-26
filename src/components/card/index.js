@@ -3,7 +3,6 @@ import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text, View} from 'react-native';
-import {ArabicNumbers} from 'react-native-arabic-numbers';
 import {Card as NBCard, CardItem, Content, Left, Right} from 'native-base';
 
 import {Chart} from '../chart';
@@ -34,9 +33,7 @@ export const DashboardCard = props => {
         items.map(item => (
           <CardItem style={styles.colView}>
             <Left style={styles.colView}>
-              <Text style={styles.text}>
-                {ArabicNumbers(item.left.toString())}
-              </Text>
+              <Text style={styles.text}>{item.left.toString()}</Text>
             </Left>
             {item.content ? (
               <Content style={styles.colView}>

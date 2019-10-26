@@ -3,7 +3,7 @@ import {
   EMAIL_ERROR,
   LOGGING_SUCCESS,
   LOGIN_REQUEST,
-} from '../constants/loginActions';
+} from '../constants/login.actions';
 
 const initialState = {
   isLoading: false,

@@ -1,9 +1,8 @@
-import React, {Fragment} from 'react';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
+import React, {Fragment} from 'react';
 import {StyleSheet} from 'react-native';
 import Barcode from 'react-native-barcode-builder';
-import {ArabicNumbers} from 'react-native-arabic-numbers';
 import {Card, CardItem, Text, Left, Right, View} from 'native-base';
 
 export const ShipmentItem = ({
@@ -25,13 +24,12 @@ export const ShipmentItem = ({
   } else {
     translate_state = 'شحنت';
   }
-  Moment.locale('en');
 
   const formatted_date = Moment(date);
   const year = formatted_date.year();
   const day = formatted_date.date();
   const month = formatted_date.month() + 1;
-  console.log('afafsfa');
+
   return (
     <Fragment>
       <Card>
@@ -51,7 +49,7 @@ export const ShipmentItem = ({
           <Right style={styles.colView}>
             <View style={styles.rowView}>
               <Left style={styles.flex}>
-                <Text style={styles.textStyle}>{ArabicNumbers(amount)}</Text>
+                <Text style={styles.textStyle}>{amount}</Text>
               </Left>
               <Right style={styles.flex}>
                 <Text style={styles.textStyle}>الكمية</Text>
@@ -59,7 +57,7 @@ export const ShipmentItem = ({
             </View>
             <View style={styles.rowView}>
               <Left style={styles.flex}>
-                <Text style={styles.textStyle}>{ArabicNumbers(price)}</Text>
+                <Text style={styles.textStyle}>{price}</Text>
               </Left>
               <Right style={styles.flex}>
                 <Text style={styles.textStyle}>التكلفة</Text>
@@ -67,15 +65,9 @@ export const ShipmentItem = ({
             </View>
             <View style={styles.rowView}>
               <Left style={styles.rowView}>
-                <Text style={styles.textStyle}>
-                  {ArabicNumbers(year.toString())}/
-                </Text>
-                <Text style={styles.textStyle}>
-                  {ArabicNumbers(month.toString())}/
-                </Text>
-                <Text style={styles.textStyle}>
-                  {ArabicNumbers(day.toString())}
-                </Text>
+                <Text style={styles.textStyle}>{year.toString()}/</Text>
+                <Text style={styles.textStyle}>{month.toString()}/</Text>
+                <Text style={styles.textStyle}>{day.toString()}</Text>
               </Left>
               <Right style={styles.flex}>
                 <Text style={styles.textStyle}>التاريخ</Text>

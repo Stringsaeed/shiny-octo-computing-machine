@@ -28,7 +28,7 @@ export const TopTabsContainer = createMaterialTopTabNavigator(
       inactiveTintColor: '#f1e0f8',
       showIcon: true,
       style: {
-        backgroundColor: '#9204cc',
+        backgroundColor: '#f1e0f8',
       },
       indicatorStyle: {
         color: '#3a0151',

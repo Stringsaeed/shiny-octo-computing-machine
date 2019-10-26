@@ -2,7 +2,6 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet} from 'react-native';
 import Barcode from 'react-native-barcode-builder';
-import {ArabicNumbers} from 'react-native-arabic-numbers';
 import {Card, CardItem, Text, Left, Right, View} from 'native-base';
 
 export const ProductItem = ({
@@ -42,7 +41,7 @@ export const ProductItem = ({
           <Right style={styles.colView}>
             <View style={styles.rowView}>
               <Left style={styles.flex}>
-                <Text style={styles.textStyle}>{ArabicNumbers(price)}</Text>
+                <Text style={styles.textStyle}>{price}</Text>
               </Left>
               <Right style={styles.flex}>
                 <Text style={styles.textStyle}>سعر البيع</Text>
@@ -50,7 +49,7 @@ export const ProductItem = ({
             </View>
             <View style={styles.rowView}>
               <Left style={styles.flex}>
-                <Text style={styles.textStyle}>{ArabicNumbers(category)}</Text>
+                <Text style={styles.textStyle}>{category}</Text>
               </Left>
               <Right style={styles.flex}>
                 <Text style={styles.textStyle}>الفئة</Text>
@@ -58,9 +57,7 @@ export const ProductItem = ({
             </View>
             <View style={styles.rowView}>
               <Left style={styles.flex}>
-                <Text style={styles.textStyle}>
-                  {ArabicNumbers(removal_time)}
-                </Text>
+                <Text style={styles.textStyle}>{removal_time}</Text>
               </Left>
               <Right style={styles.flex}>
                 <Text style={styles.textStyle}>انتهاء الصلاحية</Text>

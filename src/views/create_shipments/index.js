@@ -1,30 +1,10 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-  FlatList,
-  I18nManager,
-} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {Button} from 'react-native-paper';
 import {BallIndicator} from 'react-native-indicators';
-import {Button, TextInput, HelperText} from 'react-native-paper';
-import {
-  Container,
-  Item,
-  Label,
-  Text,
-  View,
-  Picker,
-  Right,
-  Left,
-  Input,
-  Col,
-  Row,
-} from 'native-base';
-import {ArabicNumbers} from 'react-native-arabic-numbers';
+import {Container, Item, Label, Text, View, Input} from 'native-base';
 
 import {SearchDialog} from '../../components';
-// import {FlatListModel} from '../../components/flatlistModel';
 
 export class CreateShipment extends Component {
   constructor(props) {
@@ -65,7 +45,6 @@ export class CreateShipment extends Component {
     const {
       products,
       isLoading,
-      isSending,
       isAdmin,
       searchProducts,
       isSearchingProducts,
@@ -122,9 +101,7 @@ export class CreateShipment extends Component {
         </Item>
         <Item inlineLabel rounded style={styles.item}>
           <Input disabled style={styles.centerTextInput}>
-            <Text style={styles.text(25)}>
-              {ArabicNumbers(this._getPrice() || 0)}
-            </Text>
+            <Text style={styles.text(25)}>{this._getPrice() || 0}</Text>
           </Input>
           <Label style={styles.text(25)}>التكلفة</Label>
         </Item>

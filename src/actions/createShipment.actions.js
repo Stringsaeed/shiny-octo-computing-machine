@@ -1,24 +1,5 @@
 import {odooAPI} from '../services';
-import {
-  CREATE_SHIPMENT_SUCCESS,
-  CREATE_SHIPMENT_FAILED,
-  USERS_SEARCH,
-  PROUDCTS_SEARCH,
-} from '../constants';
-
-export const searchUsers = term => ({
-  type: USERS_SEARCH,
-  meta: {
-    term: term,
-  },
-});
-
-export const searchProducts = term => ({
-  type: PROUDCTS_SEARCH,
-  meta: {
-    term: term,
-  },
-});
+import {CREATE_SHIPMENT_SUCCESS, CREATE_SHIPMENT_FAILED} from '../constants';
 
 export const fetchData = () => async (dispatch, getState) => {
   const {settings} = getState().auth;

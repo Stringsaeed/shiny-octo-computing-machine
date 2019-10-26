@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
-import {Col} from 'react-native-easy-grid';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {FilterPortal} from '../filterPortal';
-import {Icon} from 'native-base';
+import {Icon, Col} from 'native-base';
 
 export const TopBar = ({onFiltering, filter, filters, name, createButton}) => {
   const [visible, setVisible] = useState(false);

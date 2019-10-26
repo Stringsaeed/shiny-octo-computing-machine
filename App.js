@@ -11,8 +11,8 @@ import {Provider} from 'react-redux';
 import {SafeAreaView, StatusBar} from 'react-native';
 import {Provider as RNPProvider} from 'react-native-paper';
 
-import store from './src/store';
-import AppSwitcher from './src/containers/appContainer';
+import store from '~/store';
+import AppSwitcher from '~/containers/appContainer';
 
 const App = () => {
   return (

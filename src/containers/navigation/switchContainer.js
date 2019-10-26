@@ -1,6 +1,6 @@
 import {createSwitchNavigator} from 'react-navigation';
 
-import {ConnectedLogin} from 'containers/screens';
+import {ConnectedLogin} from '~/containers/screens';
 import {TopTabsContainer} from './tabsAppContainer';
 
 export const authSwitcher = createSwitchNavigator(

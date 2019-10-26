@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {createAppContainer} from 'react-navigation';
-import {authSwitcher} from 'containers/switchContainer';
 
-import {translate, setI18nConfig} from 'i18n';
+import {translate, setI18nConfig} from '~/i18n';
+import {authSwitcher} from '~/containers/switchContainer';
 
 const AppContainer = createAppContainer(authSwitcher);
 

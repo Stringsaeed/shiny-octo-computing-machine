@@ -1,1 +1,43 @@
-{}
+{
+  "login": {
+    "title": "تسجيل الدخول",
+    "email": "البريد الإلكتروني/الموبايل",
+    "password": "كلمة المرور",
+    "loginBtn": "تسجيل الدخول",
+    "failed": "البريد الإلكتروني/الموبايل او كلمة المرور خطأ"
+  },
+  "app_navigation": {
+    "dashboard": "لوحة البيانات",
+    "shipments": "الشحنات",
+    "products": "المنتجات",
+    "account": "الحسابات"
+  },
+  "dashboard": {
+    "topBarTitle": "لوحة البيانات",
+    "shipmentsCard": {
+      "cardTitle": "الشحنات",
+      "noChartMessage": "لا توجد شحنات",
+      "received": "المستلمة",
+      "inTransit": "في الطريق",
+      "total": "المرسلة",
+      "rejected": "المرفوضة"
+    },
+    "productsCard": {
+      "cardTitle": "المنتجات",
+      "noChartMessage": "لا توجد منتجات",
+      "sold": "المباعة",
+      "available": "بالمحل",
+      "received": "المستلمة",
+      "scrap": "التالفة"
+    },
+    "accountsCard": {
+      "cardTitle": "الحسابات",
+      "noChartMessage": "لا توجد حسابات",
+      "shipments": "اجمالي الشحنات",
+      "payments": "اجمالي المبيعات",
+      "received": "المستلمة",
+      "remaining": "المتبقية",
+      "scrap": "قيمة التالف"
+    }
+  }
+}

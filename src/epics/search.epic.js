@@ -9,62 +9,55 @@ import {
 } from 'rxjs/operators';
 
 import {odooAPI} from '../services';
-import {
-  USERS_SEARCH,
-  USERS_SEARCH_SUCCESS,
-  USERS_SEARCH_FAILED,
-  PROUDCTS_SEARCH,
-  PROUDCTS_SEARCH_SUCCESS,
-  PROUDCTS_SEARCH_FAILED,
-} from '../constants';
+import {SEARCH, SEARCH_SUCCESS, SEARCH_FAILED} from '~/constants';
 
-export const searchUsers = (action$, store$) =>
+export const search = (action$, store$) =>
   action$.pipe(
-    ofType(USERS_SEARCH),
+    ofType(SEARCH),
     debounceTime(200),
     switchMap(action => {
-      const {term} = action.meta;
+      const {term, fields, modelName} = action.meta;
       const {settings} = store$.state.auth;
       const api = odooAPI(settings);
-      return from(api.search(term, ['name', 'id'], 'res.users')).pipe(
+      return from(api.search(term, fields, modelName)).pipe(
         map(results => ({
-          type: USERS_SEARCH_SUCCESS,
+          type: SEARCH_SUCCESS,
           payload: results,
         })),
       );
     }),
-    takeUntil(action$.ofType(USERS_SEARCH)),
+    takeUntil(action$.ofType(SEARCH)),
     catchError(e => ({
-      type: USERS_SEARCH_FAILED,
+      type: SEARCH_FAILED,
     })),
   );
 
-export const searchProducts = (action$, state$) =>
-  action$.pipe(
-    ofType(PROUDCTS_SEARCH),
-    debounceTime(200),
-    switchMap(action => {
-      const {term} = action.meta;
-      const {settings} = state$.value.auth;
-      const api = odooAPI(settings);
-      return from(
-        api.search(
-          term,
-          ['name', 'standard_price', 'responsible_id'],
-          'product.template',
-        ),
-      ).pipe(
-        map(results => ({
-          type: PROUDCTS_SEARCH_SUCCESS,
-          payload: results,
-        })),
-        takeUntil(action$.pipe(ofType(PROUDCTS_SEARCH))),
-        catchError(e => {
-          console.log(e);
-          return of({
-            type: PROUDCTS_SEARCH_FAILED,
-          });
-        }),
-      );
-    }),
-  );
+// export const searchProducts = (action$, state$) =>
+//   action$.pipe(
+//     ofType(PROUDCTS_SEARCH),
+//     debounceTime(200),
+//     switchMap(action => {
+//       const {term} = action.meta;
+//       const {settings} = state$.value.auth;
+//       const api = odooAPI(settings);
+//       return from(
+//         api.search(
+//           term,
+//           ['name', 'standard_price', 'responsible_id'],
+//           'product.template',
+//         ),
+//       ).pipe(
+//         map(results => ({
+//           type: PROUDCTS_SEARCH_SUCCESS,
+//           payload: results,
+//         })),
+//         takeUntil(action$.pipe(ofType(PROUDCTS_SEARCH))),
+//         catchError(e => {
+//           console.log(e);
+//           return of({
+//             type: PROUDCTS_SEARCH_FAILED,
+//           });
+//         }),
+//       );
+//     }),
+//   );

@@ -8,7 +8,7 @@ import {
   TouchableRipple,
 } from 'react-native-paper';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Col} from 'react-native-easy-grid';
+import {Col} from 'native-base';
 
 export const FilterPortal = ({
   defaultFilter,
