@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Icon} from 'native-base';
+import {Card, CardItem, Icon} from 'native-base';
 import PropTypes from 'prop-types';
 import {BallIndicator} from 'react-native-indicators';
 import {ScrollView as SV, StyleSheet, View} from 'react-native';
@@ -19,6 +19,7 @@ export class Dashboard extends Component {
 
   render() {
     const {
+      screenProps,
       fetch_dashboard,
       filter,
       isLoading,
@@ -26,6 +27,7 @@ export class Dashboard extends Component {
       productCardData,
       accountCardData,
     } = this.props;
+    const {t} = screenProps;
     return (
       <Fragment>
         <TopBar
@@ -34,116 +36,122 @@ export class Dashboard extends Component {
           onFiltering={_filter => {
             fetch_dashboard(_filter);
           }}
-          name="لوحة البيانات"
+          name={t('dashboard.topBarTitle')}
         />
-        <SV style={styles.scrollView}>
-          {isLoading ? (
-            <View style={styles.indicatorView}>
-              <BallIndicator color="#de356a" />
-            </View>
-          ) : (
+        {isLoading ? (
+          <Card transparent style={styles.indicatorCardView}>
+            <CardItem style={styles.flex}>
+              <View style={styles.flex}>
+                <View style={styles.indicatorView}>
+                  <BallIndicator color="#540e33" />
+                </View>
+              </View>
+            </CardItem>
+          </Card>
+        ) : (
+          <SV style={styles.scrollView}>
             <View style={styles.view}>
               <DashboardCard
-                noChartMessage="لا توجد شحنات"
+                noChartMessage={t('dashboard.shipmentsCard.noChartMessage')}
                 chartData={shipmentCardData.data}
                 items={[
                   {
-                    left: shipmentCardData.total,
+                    right: shipmentCardData.total,
                     content: false,
-                    right: 'المرسلة',
+                    left: t('dashboard.shipmentsCard.total'),
                   },
                   {
-                    left: shipmentCardData.in_transit,
+                    right: shipmentCardData.in_transit,
                     content: true,
                     color: shipmentCardData.data[0].fill,
-                    right: 'في الطريق',
+                    left: t('dashboard.shipmentsCard.inTransit'),
                   },
                   {
-                    left: shipmentCardData.approved,
+                    right: shipmentCardData.approved,
                     content: true,
                     color: shipmentCardData.data[1].fill,
-                    right: 'المستلمة',
+                    left: t('dashboard.shipmentsCard.received'),
                   },
                   {
-                    left: shipmentCardData.rejected,
+                    right: shipmentCardData.rejected,
                     content: true,
                     color: shipmentCardData.data[2].fill,
-                    right: 'المرفوضة',
+                    left: t('dashboard.shipmentsCard.rejected'),
                   },
                 ]}
-                headerName="الشحنات"
+                headerName={t('dashboard.shipmentsCard.cardTitle')}
               />
 
               <DashboardCard
-                noChartMessage="لا توجد منتجات"
+                noChartMessage={t('dashboard.productsCard.noChartMessage')}
                 chartData={productCardData.data}
                 items={[
                   {
-                    left: productCardData.sold,
+                    right: productCardData.sold,
                     content: false,
-                    right: 'المباعة',
+                    left: t('dashboard.productsCard.sold'),
                   },
                   {
-                    left: productCardData.available,
+                    right: productCardData.available,
                     content: true,
                     color: productCardData.data[0].fill,
-                    right: 'بالمحل',
+                    left: t('dashboard.productsCard.available'),
                   },
                   {
-                    left: productCardData.received,
+                    right: productCardData.received,
                     content: true,
                     color: productCardData.data[1].fill,
-                    right: 'المستلمة',
+                    left: t('dashboard.productsCard.received'),
                   },
                   {
-                    left: productCardData.scrap,
+                    right: productCardData.scrap,
                     content: true,
                     color: productCardData.data[2].fill,
-                    right: 'المنتهية',
+                    left: t('dashboard.productsCard.scrap'),
                   },
                 ]}
-                headerName="المنتجات"
+                headerName={t('dashboard.productsCard.cardTitle')}
               />
 
               <DashboardCard
-                noChartMessage="لا توجد حسابات"
+                noChartMessage={t('dashboard.accountsCard.noChartMessage')}
                 chartData={accountCardData.data}
                 items={[
                   {
-                    left: accountCardData.shipments,
+                    right: accountCardData.shipments,
                     content: false,
-                    right: 'اجمالي الشحنات',
+                    left: t('dashboard.accountsCard.shipments'),
                   },
                   {
-                    left: accountCardData.payments,
+                    right: accountCardData.payments,
                     content: true,
                     color: accountCardData.data[0].fill,
-                    right: 'اجمالي المبيعات',
+                    left: t('dashboard.accountsCard.payments'),
                   },
                   {
-                    left: accountCardData.received,
+                    right: accountCardData.received,
                     content: true,
                     color: accountCardData.data[1].fill,
-                    right: 'المستلمة',
+                    left: t('dashboard.accountsCard.received'),
                   },
                   {
-                    left: accountCardData.remaining,
+                    right: accountCardData.remaining,
                     content: true,
                     color: accountCardData.data[2].fill,
-                    right: 'المتبقية',
+                    left: t('dashboard.accountsCard.remaining'),
                   },
                   {
-                    left: accountCardData.scrap,
+                    right: accountCardData.scrap,
                     content: true,
                     color: accountCardData.data[3].fill,
-                    right: 'قيمة التالف',
+                    left: t('dashboard.accountsCard.scrap'),
                   },
                 ]}
-                headerName="الحسابات"
+                headerName={t('dashboard.accountsCard.cardTitle')}
               />
             </View>
-          )}
-        </SV>
+          </SV>
+        )}
       </Fragment>
     );
   }
@@ -169,10 +177,16 @@ Dashboard.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
+  indicatorCardView: {
+    marginLeft: 15,
+    marginBottom: 10,
+    marginTop: 20,
+    marginRight: 15,
+  },
   indicatorView: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
   },
   scrollView: {
     flex: 1,

@@ -1,10 +1,7 @@
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 
-import {
-  ConnectedDashboard,
-  ShipmentStack,
-  ConnectedProductView,
-} from 'containers/screens';
+import {ShipmentStack} from '~/containers/navigation/shipmentStack';
+import {ConnectedDashboard, ConnectedProductView} from '~/containers/screens';
 
 export const TopTabsContainer = createMaterialTopTabNavigator(
   {
@@ -28,11 +25,10 @@ export const TopTabsContainer = createMaterialTopTabNavigator(
       inactiveTintColor: '#f1e0f8',
       showIcon: true,
       style: {
-        backgroundColor: '#f1e0f8',
+        backgroundColor: '#FFFFFF',
       },
       indicatorStyle: {
-        color: '#3a0151',
-        backgroundColor: '#3a0151',
+        backgroundColor: 'transparent',
       },
     },
   },

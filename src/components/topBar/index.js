@@ -9,6 +9,9 @@ export const TopBar = ({onFiltering, filter, filters, name, createButton}) => {
   const [_filter, setFilter] = useState(filter);
   return (
     <View style={styles.view}>
+      <Col size={33} style={styles.right}>
+        <Text style={styles.textFont}>{name}</Text>
+      </Col>
       <Col style={styles.col} size={33}>
         {onFiltering && filters && filter && (
           <Button
@@ -41,9 +44,6 @@ export const TopBar = ({onFiltering, filter, filters, name, createButton}) => {
           </Button>
         )}
       </Col>
-      <Col size={33} style={styles.right}>
-        <Text style={styles.textFont}>{name}</Text>
-      </Col>
     </View>
   );
 };
@@ -58,9 +58,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderColor: '#d3d3d3',
   },
-  col: {
-    flex: 1,
-    flexDirection: 'row',
+  left: {
+    justifyContent: 'center',
+    marginRight: '1.2%',
   },
   dialogScrollArea: {
     maxHeight: 170,
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     fontFamily: 'NotoKufiArabic-Regular',
   },
   right: {
-    marginRight: 5,
+    justifyContent: 'center',
+    marginLeft: '1.2%',
   },
 });

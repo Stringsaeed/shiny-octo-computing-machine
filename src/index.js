@@ -12,7 +12,7 @@ import {SafeAreaView, StatusBar} from 'react-native';
 import {Provider as RNPProvider} from 'react-native-paper';
 
 import store from './store';
-import AppSwitcher from '~/containers/appContainer';
+import {NavigatedApp} from './containers';
 
 const App = () => {
   return (
@@ -22,7 +22,7 @@ const App = () => {
         <SafeAreaView
           style={{flex: 1}}
           forceInset={{horizontal: 'always', top: 'always'}}>
-          <AppSwitcher />
+          <NavigatedApp />
         </SafeAreaView>
       </RNPProvider>
     </Provider>

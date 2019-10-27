@@ -6,14 +6,12 @@ import rootEpic from './epics';
 import rootReducer from './reducers';
 
 const initialState = {};
-
-const epicMiddelware = createEpicMiddleware();
-// redux-thunk
+const epicMiddleware = createEpicMiddleware();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
   initialState,
-  composeEnhancers(applyMiddleware(thunk, epicMiddelware)),
+  composeEnhancers(applyMiddleware(thunk, epicMiddleware)),
 );
-epicMiddelware.run(rootEpic);
+epicMiddleware.run(rootEpic);
 export default store;

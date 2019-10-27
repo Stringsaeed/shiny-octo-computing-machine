@@ -1,17 +1,6 @@
 import React, {Component} from 'react';
-import {KeyboardAvoidingView, ScrollView, StyleSheet} from 'react-native';
-import {Button} from 'react-native-paper';
-import {
-  Content,
-  Form,
-  Icon,
-  Input,
-  Item,
-  Root,
-  Text,
-  Toast,
-  View,
-} from 'native-base';
+import {Button, TextInput, Snackbar} from 'react-native-paper';
+import {Image, Alert, Text, View, StyleSheet} from 'react-native';
 
 export class Login extends Component {
   constructor(props) {
@@ -19,8 +8,8 @@ export class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      visible: false,
     };
-    this.textInput = React.createRef();
     this._fetchData = this._fetchData.bind(this);
     this._onPress = this._onPress.bind(this);
   }
@@ -28,10 +17,16 @@ export class Login extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.success) {
       this.props.navigation.navigate('app');
-    } else if (this.props.emailError) {
-      Toast.show({
-        text: 'لم تمت عملية الدخول',
-      });
+      this.passwordTextInput.clear();
+      this.emailTextInput.clear();
+    } else if (
+      ((this.props.emailError || this.props.passwordError) &&
+        this.props.emailError !== prevProps.emailError) ||
+      this.props.passwordError !== prevProps.passwordError
+    ) {
+      this.setState({visible: true});
+      this.passwordTextInput.clear();
+      this.emailTextInput.focus();
     }
   }
 
@@ -42,105 +37,119 @@ export class Login extends Component {
   _onPress = () => this._fetchData();
 
   render() {
+    const {emailError, passwordError, screenProps} = this.props;
+    const {t} = screenProps;
+    const {email, password, visible} = this.state;
     return (
-      <ScrollView>
-        <KeyboardAvoidingView
-          behavior="padding"
-          style={styles.keyboardAvoidingView}>
-          <Root>
-            <Content>
-              <View style={styles.firstView}>
-                <View style={styles.secondView}>
-                  <Text style={styles.headText}>تسجيل الدخول</Text>
-                </View>
-                <View style={styles.view}>
-                  <Form>
-                    <Text style={styles.text}>
-                      البريد الالكتروني/ رقم الجوال
-                    </Text>
-                    <Item style={styles.item} error={this.props.emailError}>
-                      <Icon name="person" />
-                      <Input
-                        value={this.state.email}
-                        onChangeText={email => {
-                          this.setState({email: email});
-                        }}
-                        returnKeyType="next"
-                      />
-                    </Item>
-                    <Text style={styles.text}>كلمة المرور</Text>
-                    <Item style={styles.item} error={this.props.passwordError}>
-                      <Icon name="lock" />
-                      <Input
-                        value={this.state.password}
-                        secureTextEntry
-                        onChangeText={password => {
-                          this.setState({password: password});
-                        }}
-                      />
-                    </Item>
-                  </Form>
-                </View>
-                <View style={styles.buttonView}>
-                  <Button
-                    icon="exit-to-app"
-                    mode="outline"
-                    style={styles.button}
-                    animated
-                    onPress={this._onPress}
-                    loading={this.props.isLoading}>
-                    تسجيل الدخول
-                  </Button>
-                </View>
-              </View>
-              <View style={styles.copyRightView}>
-                <Text>©Copyright @ Crevisoft 2019</Text>
-              </View>
-            </Content>
-          </Root>
-        </KeyboardAvoidingView>
-      </ScrollView>
+      <View style={styles.container}>
+        <Image style={styles.logo} source={require('~/assets/logo.png')} />
+        <View style={styles.inputContainer}>
+          <TextInput
+            ref={input => {
+              this.emailTextInput = input;
+            }}
+            onSubmitEditing={() => {
+              this.passwordTextInput.focus();
+            }}
+            blurOnSubmit={false}
+            error={emailError}
+            value={email}
+            style={styles.inputs}
+            label={t('login.email')}
+            mode="outlined"
+            returnKeyType="next"
+            keyboardType="email-address"
+            underlineColor="#9204cc"
+            onChangeText={_email => this.setState({email: _email})}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            ref={input => {
+              this.passwordTextInput = input;
+            }}
+            onSubmitEditing={() => {
+              this._onPress();
+            }}
+            blurOnSubmit={false}
+            error={passwordError}
+            value={password}
+            style={styles.inputs}
+            returnKeyType="go"
+            label={t('login.password')}
+            mode="outlined"
+            secureTextEntry={true}
+            underlineColor="#9204cc"
+            onChangeText={_password => this.setState({password: _password})}
+          />
+        </View>
+        <Button
+          mode="contained"
+          dark
+          color="#9204cc"
+          loading={this.props.isLoading}
+          uppercase={false}
+          icon="exit-to-app"
+          animated
+          style={[styles.buttonContainer, styles.loginButton]}
+          onPress={this._onPress}>
+          <Text style={styles.loginText}>{t('login.loginBtn')}</Text>
+        </Button>
+        <Snackbar
+          visible={visible}
+          onDismiss={() => this.setState({visible: false})}>
+          {t('login.failed')}
+        </Snackbar>
+
+        <View style={styles.copyRightView}>
+          <Text style={styles.text}>©Copyright @ Crevisoft 2019</Text>
+        </View>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  item: {
-    width: 370,
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0.4,
-    borderBottomWidth: 0.4,
-    marginLeft: 15,
-    marginBottom: 15,
-  },
-  text: {
+  container: {
     flex: 1,
     justifyContent: 'center',
-    textAlign: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  inputContainer: {
+    backgroundColor: '#FFFFFF',
+    width: '80%',
+    height: 45,
+    marginBottom: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  inputs: {
+    backgroundColor: '#ffffff',
+    flex: 1,
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  loginButton: {
+    backgroundColor: '#9204cc',
+  },
+  loginText: {
+    color: '#feeff8',
+  },
+  text: {
+    fontWeight: 'bold',
+    fontFamily: 'NotoKufiArabic-Regular',
   },
   logo: {
     width: 200,
     height: 200,
-    alignSelf: 'center',
-    display: 'flex',
-    marginBottom: 10,
   },
-  keyboardAvoidingView: {flex: 1},
-  firstView: {margin: 25},
-  secondView: {alignItems: 'center', margin: 40},
-  headText: {
-    fontSize: 40,
-    fontFamily: 'NotoKufiArabic-Regular',
+  copyRightView: {
+    bottom: 0,
+    alignItems: 'center',
+    position: 'absolute',
   },
-  buttonView: {alignItems: 'center', alignSelf: 'center'},
-  button: {
-    width: 250,
-  },
-  copyRightView: {bottom: 0, alignItems: 'center', flex: 1},
 });

@@ -1,23 +1,28 @@
 import React, {Component} from 'react';
 import {createAppContainer} from 'react-navigation';
+import {addEventListener, removeEventListener} from 'react-native-localize';
 
 import {translate, setI18nConfig} from '~/i18n';
-import {authSwitcher} from '~/containers/switchContainer';
+import {authSwitcher} from '~/containers/navigation/switchContainer';
 
 const AppContainer = createAppContainer(authSwitcher);
 
-export default class extends Component {
+export class NavigatedApp extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      locale: 'en',
-    };
-    this.setLocale = this.setLocale.bind(this);
+    setI18nConfig();
+  }
+  componentDidMount() {
+    addEventListener('change', this.handleLocalizationChange);
   }
 
-  setLocale = locale => {
-    setI18nConfig(locale);
-    this.setState({locale: locale});
+  componentWillUnmount() {
+    removeEventListener('change', this.handleLocalizationChange);
+  }
+
+  handleLocalizationChange = () => {
+    setI18nConfig();
+    this.forceUpdate();
   };
 
   render() {
@@ -25,8 +30,6 @@ export default class extends Component {
       <AppContainer
         screenProps={{
           t: translate,
-          locale: this.state.locale,
-          setLocale: this.setLocale,
         }}
       />
     );

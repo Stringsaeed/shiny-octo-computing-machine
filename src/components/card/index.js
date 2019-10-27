@@ -14,11 +14,11 @@ export const DashboardCard = props => {
   return (
     <NBCard style={styles.card}>
       <CardItem header style={styles.headerItem}>
-        <Left />
-        <Content />
-        <Right>
+        <Left>
           <Text style={styles.headerText}>{headerName}</Text>
-        </Right>
+        </Left>
+        <Content />
+        <Right />
       </CardItem>
 
       <CardItem style={styles.chartCardItem} pointerEvents="none">

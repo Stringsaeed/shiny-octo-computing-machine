@@ -4,28 +4,7 @@ import {SearchBar} from 'react-native-elements';
 
 export const SearchView = props => {
   const [value, setValue] = useState('');
-  const actionName = navigation.getParam('actionName', '');
-
-  const {
-    isSearching,
-    searchProudcts,
-    searchUsers,
-    searchCategories,
-    products,
-    users,
-    categories,
-    onSelect,
-    navigation,
-  } = props;
-
-  const data =
-    actionName === 'products'
-      ? products
-      : actionName === 'users'
-      ? users
-      : actionName === 'categories'
-      ? categories
-      : [];
+  const {data, isSearching, search, onSelect} = props;
 
   return (
     <Fragment>
@@ -36,14 +15,8 @@ export const SearchView = props => {
             value={value}
             showLoading={isSearching}
             onChangeText={text => {
-              if (text !== '') {
-                if (actionName === 'products') {
-                  searchProudcts(text);
-                } else if (actionName === 'users') {
-                  searchUsers(text);
-                } else if (actionName === 'catrgory') {
-                  searchCategories(text);
-                }
+              if (text !== '' && text.length >= 3) {
+                search(text);
               }
               setValue(text);
             }}
@@ -65,15 +38,12 @@ export const SearchView = props => {
   );
 };
 
-// export const SearchDialog = ({
-//   data,
-//   search,
-//   isSearching,
-//   visible,
-//   title,
-//   onSelect,
-//   searchBar,
-// }) => {
+SearchView.navigationOptions = ({navigation}) => ({
+  title: navigation.getParam('title', 'Search'),
+  headerTintColor: '#fff',
+  headerBackTitle: null,
+  headerForceInset: true,
+});
 
 const styles = StyleSheet.create({
   flexView: {

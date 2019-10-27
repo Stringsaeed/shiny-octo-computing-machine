@@ -2,7 +2,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {loginRequest} from '../../actions';
-import {Login} from 'views';
+import {Login} from '~/views';
 
 const mapStateToProps = state => ({
   isLoading: state.auth.isLoading,

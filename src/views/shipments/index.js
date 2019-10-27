@@ -109,16 +109,6 @@ export class ShipmentView extends Component {
   }
 }
 
-ShipmentView.navigationOptions = {
-  title: 'الشحنات',
-  swipeEnabled: true,
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-send" size={30} color={tintColor} />
-  ),
-  headerForceInset: true,
-  headerTintColor: '#9204cc',
-};
-
 ShipmentView.propTypes = {
   isLoading: PropTypes.bool,
   filter: PropTypes.string,

@@ -32,14 +32,15 @@ const loginUser = (action$, {}) =>
         };
       }
       if (request.data.respond === 'error') {
-        if (request.data.message === 'Username not valid') {
+        if (request.data.message === 'Username not found') {
           return {
             type: EMAIL_ERROR,
           };
+        } else if (request.data.message === 'Invalid password') {
+          return {
+            type: PASSWORD_ERROR,
+          };
         }
-        return {
-          type: PASSWORD_ERROR,
-        };
       }
     }),
   );
