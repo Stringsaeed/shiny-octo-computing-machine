@@ -1,8 +1,17 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
-import {Button} from 'react-native-paper';
 import {BallIndicator} from 'react-native-indicators';
-import {Container, Item, Label, Text, View, Input} from 'native-base';
+import {Button, List, Card, TextInput} from 'react-native-paper';
+import {Text, View, Left, Right, CardItem} from 'native-base';
+import {
+  Image,
+  Keyboard,
+  Platform,
+  UIManager,
+  StyleSheet,
+  ScrollView,
+  LayoutAnimation,
+  KeyboardAvoidingView,
+} from 'react-native';
 
 import {SearchDialog} from '../../components';
 
@@ -10,17 +19,57 @@ export class CreateShipment extends Component {
   constructor(props) {
     super(props);
     this.props.fetch();
+    if (UIManager.setLayoutAnimationEnabledExperimental) {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
     this.state = {
       quantity: 0,
       price: 0,
-      selectedProduct: {},
+      selectedProduct: {
+        name: '',
+        price: 0,
+        responsibleId: 0,
+        responsibleName: '',
+      },
+      product: '',
+      validated: false,
       selectedResponsible: {},
       selectedProductResponsible: [],
       productVisible: false,
       responsibleVisible: false,
+      autocompleteVisible: false,
+      keyboardVisible: false,
     };
   }
 
+  componentDidMount() {
+    let onShowListenerType =
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
+    let onHideListenerType =
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+    this.keyboardWillShowListener = Keyboard.addListener(
+      onShowListenerType,
+      this.onKeyboardWillShow,
+    );
+    this.keyboardDismissListener = Keyboard.addListener(
+      onHideListenerType,
+      this.onKeyboardDismiss,
+    );
+  }
+
+  componentWillUnmount() {
+    this.keyboardWillShowListener.remove();
+  }
+
+  onKeyboardWillShow = e => {
+    LayoutAnimation.linear();
+    this.setState({keyboardVisible: true, autocompleteVisible: true});
+  };
+
+  onKeyboardDismiss = e => {
+    LayoutAnimation.linear();
+    this.setState({keyboardVisible: false, autocompleteVisible: false});
+  };
   _getPrice() {
     const {selectedProduct, quantity} = this.state;
     return selectedProduct ? selectedProduct.standard_price * quantity : 0;
@@ -35,12 +84,13 @@ export class CreateShipment extends Component {
 
   render() {
     const {
-      selectedProduct,
+      product,
       productVisible,
       quantity,
       selectedResponsible,
       selectedProductResponsible,
       responsibleVisible,
+      validated,
     } = this.state;
     const {
       products,
@@ -57,86 +107,108 @@ export class CreateShipment extends Component {
     } = this.props;
 
     return !isLoading ? (
-      <Container styles={styles.flex}>
-        {/* <Item inlineLabel rounded style={styles.item}> */}
-        <View style={styles.buttonWithLabel}>
-          <Button onPress={() => this.setState({productVisible: true})}>
-            {selectedProduct ? selectedProduct.name : 'اختر منتج'}
-          </Button>
-          <SearchDialog
-            data={
-              isAdmin
-                ? products
-                : searchProducts !== []
-                ? searchProducts
-                : products
-            }
-            search={term => {
-              searchProductsAction(term);
-            }}
-            searchBar={isAdmin}
-            isSearching={isSearchingProducts}
-            visible={productVisible}
-            title="اختر منتج"
-            onSelect={_product => {
-              this.setState({
-                selectedProduct: _product,
-                selectedProductResponsible: _product.responsible_id[1],
-                productVisible: false,
-              });
-            }}
-          />
-          <Label style={styles.text(25)}>المنتج</Label>
-        </View>
-        <Item inlineLabel rounded style={styles.item}>
-          <Input
-            keyboardType="numeric"
-            value={String(quantity)}
-            style={styles.centerTextInput}
-            onChangeText={_quantity => {
-              this.setState({quantity: _quantity});
-            }}
-          />
-          <Label style={styles.text(25)}>الكمية</Label>
-        </Item>
-        <Item inlineLabel rounded style={styles.item}>
-          <Input disabled style={styles.centerTextInput}>
-            <Text style={styles.text(25)}>{this._getPrice() || 0}</Text>
-          </Input>
-          <Label style={styles.text(25)}>التكلفة</Label>
-        </Item>
-        <Item inlineLabel rounded disabled={!isAdmin} style={styles.item}>
-          {!isAdmin ? (
-            <Input disabled={!isAdmin} style={styles.centerTextInput}>
-              <Text style={styles.text(25)}>{currentUser.display_name}</Text>
-            </Input>
-          ) : (
-            <Button onPress={() => this.setState({visible: true})}>
-              {selectedResponsible
-                ? selectedResponsible.name
-                : selectedProductResponsible
-                ? selectedProductResponsible[1]
-                : 'اختر مورد'}
-            </Button>
-          )}
-          <SearchDialog
-            data={searchUsers || users}
-            search={term => {
-              searchUsersAction(term);
-            }}
-            isSearching={isSearchingUsers}
-            visible={responsibleVisible}
-            title="اختر مورد"
-            onSelect={_responsible => {
-              this.setState({
-                selectedResponsible: _responsible,
-                responsibleVisible: false,
-              });
-            }}
-          />
-          <Label style={styles.text(25)}>المورد</Label>
-        </Item>
-      </Container>
+      <KeyboardAvoidingView behavior="padding">
+        <ScrollView style={{flex: 1}}>
+          <Card
+            style={{
+              flex: 40,
+              flexDirection: 'row',
+              backgroundColor: '#eaeaea',
+              margin: '2.5%',
+            }}>
+            <Left style={{flex: 1, flexDirection: 'row'}}>
+              <Left>
+                <CardItem>
+                  <Text>الكمية</Text>
+                </CardItem>
+              </Left>
+              <Right>
+                <CardItem>
+                  <Text>{quantity}</Text>
+                </CardItem>
+              </Right>
+            </Left>
+            <Right>
+              <CardItem style={{backgroundColor: '#eaeaea'}}>
+                <Image
+                  source={require('~/assets/shipment.gif')}
+                  resizeMethod="auto"
+                />
+              </CardItem>
+            </Right>
+          </Card>
+          {validated ? (
+            <View
+              style={{flex: 10, flexDirection: 'row', alignItems: 'center'}}>
+              <Left style={{flex: 1}}>
+                <Button>حفظ</Button>
+              </Left>
+              <Right style={{flex: 1}}>
+                <Button>حفظ وجديد</Button>
+              </Right>
+            </View>
+          ) : null}
+          {/*<View style={{flex: 10, flexDirection: 'row', alignItems: 'center'}}>*/}
+          {/*  <Left style={{flex: 1, alignItems: 'center'}}>*/}
+          {/*    <Button mode="contained" dark color="#9204cc">*/}
+          {/*      اختار منتج*/}
+          {/*    </Button>*/}
+          {/*  </Left>*/}
+          {/*  {isAdmin && (*/}
+          {/*    <Right style={{flex: 1, alignItems: 'center'}}>*/}
+          {/*      <Button mode="contained" dark color="#9204cc">*/}
+          {/*        اختار مورد*/}
+          {/*      </Button>*/}
+          {/*    </Right>*/}
+          {/*  )}*/}
+          {/*</View>*/}
+          <View
+            style={{flex: 50, flexDirection: 'column', alignItems: 'center'}}>
+            <View style={styles.inputContainer}>
+              <TextInput
+                value={product}
+                style={styles.inputs}
+                label="المنتج"
+                mode="outlined"
+                onChangeText={_product => {
+                  this.setState({product: _product});
+                  searchProductsAction(
+                    _product,
+                    [
+                      'name',
+                      'standard_price',
+                      'categ_id',
+                      'removal_time',
+                      'portal_state',
+                      'barcode',
+                      'responsible_id',
+                    ],
+                    'product.template',
+                  );
+                }}
+              />
+              {searchProducts && (
+                <View>
+                  <ScrollView style={styles.autocompleteList}>
+                    {searchProducts.map(item => (
+                      <List.Item title={item.name} />
+                    ))}
+                  </ScrollView>
+                </View>
+              )}
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                value={quantity.toString()}
+                style={styles.inputs}
+                label="الكمية"
+                mode="outlined"
+                onChangeText={_quantity => this.setState({quantity: _quantity})}
+              />
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     ) : (
       <View style={styles.indicator}>
         <BallIndicator />
@@ -197,8 +269,107 @@ const styles = StyleSheet.create({
     marginHorizontal: '1.5%',
     marginVertical: '2%',
   },
+  inputContainer: {
+    backgroundColor: '#FFFFFF',
+    width: '80%',
+    height: 45,
+    marginBottom: 20,
+    flex: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  inputs: {
+    backgroundColor: '#ffffff',
+    flex: 1,
+  },
+  autocompleteList: {
+    height: 100,
+  },
+  keyboardContentContainer: {
+    paddingBottom: 150,
+  },
+  noKeyboardContentContainer: {
+    paddingBottom: 0,
+  },
 });
-
+// {/* <Item inlineLabel rounded style={styles.item}> */}
+// {/*<View style={styles.buttonWithLabel}>*/}
+// {/*  <Button onPress={() => this.setState({productVisible: true})}>*/}
+// {/*    {selectedProduct ? selectedProduct.name : 'اختر منتج'}*/}
+// {/*  </Button>*/}
+// {/*  <Label style={styles.text(25)}>المنتج</Label>*/}
+// {/*</View>*/}
+// {/*<SearchDialog*/}
+// {/*  data={*/}
+// {/*    isAdmin*/}
+// {/*      ? products*/}
+// {/*      : searchProducts !== []*/}
+// {/*      ? searchProducts*/}
+// {/*      : products*/}
+// {/*  }*/}
+// {/*  search={term => {*/}
+// {/*    searchProductsAction(term);*/}
+// {/*  }}*/}
+// {/*  searchBar={isAdmin}*/}
+// {/*  isSearching={isSearchingProducts}*/}
+// {/*  visible={productVisible}*/}
+// {/*  title="اختر منتج"*/}
+// {/*  onSelect={_product => {*/}
+// {/*    this.setState({*/}
+// {/*      selectedProduct: _product,*/}
+// {/*      selectedProductResponsible: _product.responsible_id[1],*/}
+// {/*      productVisible: false,*/}
+// {/*    });*/}
+// {/*  }}*/}
+// {/*/>*/}
+// {/*<Item inlineLabel rounded style={styles.item}>*/}
+// {/*  <Input*/}
+// {/*    keyboardType="numeric"*/}
+// {/*    value={String(quantity)}*/}
+// {/*    style={styles.centerTextInput}*/}
+// {/*    onChangeText={_quantity => {*/}
+// {/*      this.setState({quantity: _quantity});*/}
+// {/*    }}*/}
+// {/*  />*/}
+// {/*  <Label style={styles.text(25)}>الكمية</Label>*/}
+// {/*</Item>*/}
+// {/*<Item inlineLabel rounded style={styles.item}>*/}
+// {/*  <Input disabled style={styles.centerTextInput}>*/}
+// {/*    <Text style={styles.text(25)}>{this._getPrice() || 0}</Text>*/}
+// {/*  </Input>*/}
+// {/*  <Label style={styles.text(25)}>التكلفة</Label>*/}
+// {/*</Item>*/}
+// {/*<Item inlineLabel rounded disabled={!isAdmin} style={styles.item}>*/}
+// {/*  {!isAdmin ? (*/}
+// {/*    <Input disabled={!isAdmin} style={styles.centerTextInput}>*/}
+// {/*      <Text style={styles.text(25)}>{currentUser.display_name}</Text>*/}
+// {/*    </Input>*/}
+// {/*  ) : (*/}
+// {/*    <Button onPress={() => this.setState({visible: true})}>*/}
+// {/*      {selectedResponsible*/}
+// {/*        ? selectedResponsible.name*/}
+// {/*        : selectedProductResponsible*/}
+// {/*        ? selectedProductResponsible[1]*/}
+// {/*        : 'اختر مورد'}*/}
+// {/*    </Button>*/}
+// {/*  )}*/}
+// {/*  <SearchDialog*/}
+// {/*    data={searchUsers || users}*/}
+// {/*    search={term => {*/}
+// {/*      searchUsersAction(term);*/}
+// {/*    }}*/}
+// {/*    isSearching={isSearchingUsers}*/}
+// {/*    visible={responsibleVisible}*/}
+// {/*    title="اختر مورد"*/}
+// {/*    onSelect={_responsible => {*/}
+// {/*      this.setState({*/}
+// {/*        selectedResponsible: _responsible,*/}
+// {/*        responsibleVisible: false,*/}
+// {/*      });*/}
+// {/*    }}*/}
+// {/*  />*/}
+// {/*  <Label style={styles.text(25)}>المورد</Label>*/}
+// {/*</Item>*/}
 /*
 *
 * <Root>

@@ -1,7 +1,7 @@
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {loginRequest} from '../../actions';
+import {loginRequest} from '~/actions';
 import {Login} from '~/views';
 
 const mapStateToProps = state => ({
@@ -10,6 +10,8 @@ const mapStateToProps = state => ({
   passwordError: state.auth.passwordError,
   success: state.auth.success,
   settings: state.auth.settings,
+  loginError: state.auth.loginError,
+  errorMessage: state.auth.errorMessage,
 });
 
 const mapDispatchToProps = dispatch =>

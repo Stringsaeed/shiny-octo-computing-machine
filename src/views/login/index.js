@@ -19,12 +19,10 @@ export class Login extends Component {
       this.props.navigation.navigate('app');
       this.passwordTextInput.clear();
       this.emailTextInput.clear();
-    } else if (
-      ((this.props.emailError || this.props.passwordError) &&
-        this.props.emailError !== prevProps.emailError) ||
-      this.props.passwordError !== prevProps.passwordError
-    ) {
-      this.setState({visible: true});
+    } else if (this.props.errorMessage !== prevProps.errorMessage) {
+      this.setState(state => {
+        return {visible: true};
+      });
       this.passwordTextInput.clear();
       this.emailTextInput.focus();
     }
@@ -37,7 +35,7 @@ export class Login extends Component {
   _onPress = () => this._fetchData();
 
   render() {
-    const {emailError, passwordError, screenProps} = this.props;
+    const {emailError, passwordError, screenProps, errorMessage} = this.props;
     const {t} = screenProps;
     const {email, password, visible} = this.state;
     return (
@@ -98,7 +96,7 @@ export class Login extends Component {
         <Snackbar
           visible={visible}
           onDismiss={() => this.setState({visible: false})}>
-          {t('login.failed')}
+          {t(`login.${errorMessage}`)}
         </Snackbar>
 
         <View style={styles.copyRightView}>
@@ -151,5 +149,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: 'center',
     position: 'absolute',
+    marginTop: '2%',
   },
 });

@@ -1,15 +1,17 @@
-import {switchMap} from 'rxjs/operators';
+import {of} from 'rxjs';
+import {switchMap, catchError} from 'rxjs/operators';
 import {ofType} from 'redux-observable';
 import axios from 'axios';
 import {
   LOGGING_SUCCESS,
   LOGIN_REQUEST,
   EMAIL_ERROR,
+  LOGIN_ERROR,
   PASSWORD_ERROR,
   loginUrl,
 } from '../constants';
 
-const loginUser = (action$, {}) =>
+const loginUser = action$ =>
   action$.pipe(
     ofType(LOGIN_REQUEST),
     switchMap(async action => {
@@ -19,6 +21,7 @@ const loginUser = (action$, {}) =>
         mobile_device: 'XXXX',
         mobile_platform: 'XXXX',
       });
+      console.log(request.data);
       if (request.data.respond === 'success') {
         const settings = {
           url: `${request.data.protocol}://${request.data.server}:${request.data.port}`,
@@ -40,9 +43,21 @@ const loginUser = (action$, {}) =>
           return {
             type: PASSWORD_ERROR,
           };
+        } else {
+          return {
+            type: LOGIN_ERROR,
+            meta: {
+              message: request.data.message,
+            },
+          };
         }
       }
     }),
+    catchError(err =>
+      of({
+        type: PASSWORD_ERROR,
+      }),
+    ),
   );
 
 export default loginUser;

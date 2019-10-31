@@ -12,7 +12,7 @@ export const TopBar = ({onFiltering, filter, filters, name, createButton}) => {
       <Col size={33} style={styles.right}>
         <Text style={styles.textFont}>{name}</Text>
       </Col>
-      <Col style={styles.col} size={33}>
+      <Col style={styles.left} size={33}>
         {onFiltering && filters && filter && (
           <Button
             transparent
@@ -53,14 +53,15 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 5,
     borderRadius: 8,
-    borderWidth: 2,
-    height: 50,
+    borderWidth: 1,
+    height: '8%',
     flexDirection: 'row',
     borderColor: '#d3d3d3',
   },
   left: {
-    justifyContent: 'center',
-    marginRight: '1.2%',
+    justifyContent: 'flex-end',
+    flex: 0,
+    // marginRight: '1.2%',
   },
   dialogScrollArea: {
     maxHeight: 170,

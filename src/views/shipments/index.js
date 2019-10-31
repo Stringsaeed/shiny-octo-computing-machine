@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {BallIndicator} from 'react-native-indicators';
-import {Card, CardItem, Icon} from 'native-base';
+import {Card, CardItem} from 'native-base';
 import {StyleSheet, RefreshControl, View, FlatList, Text} from 'react-native';
 
 import {filtersPortal} from '../../constants';
@@ -38,7 +38,6 @@ export class ShipmentView extends Component {
             filters={filtersPortal}
             filter={filter}
             onFiltering={_filter => {
-              console.log(_filter);
               fetch('fetch', _filter, 0);
             }}
             name="عرض الشحنات"

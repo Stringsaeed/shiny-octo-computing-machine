@@ -9,28 +9,35 @@ import {
 } from 'rxjs/operators';
 
 import {odooAPI} from '../services';
-import {SEARCH, SEARCH_SUCCESS, SEARCH_FAILED} from '~/constants';
+import {SEARCH, SEARCH_SUCCESS, SEARCH_FAILED} from '../constants';
 
-export const search = (action$, store$) =>
-  action$.pipe(
+export const search$ = (action$, store$) => {
+  console.log('a7aaaaaa');
+  return action$.pipe(
     ofType(SEARCH),
     debounceTime(200),
     switchMap(action => {
+      console.log(action);
       const {term, fields, modelName} = action.meta;
       const {settings} = store$.state.auth;
       const api = odooAPI(settings);
       return from(api.search(term, fields, modelName)).pipe(
-        map(results => ({
-          type: SEARCH_SUCCESS,
-          payload: results,
-        })),
+        map(results =>
+          of({
+            type: SEARCH_SUCCESS,
+            payload: results,
+          }),
+        ),
       );
     }),
     takeUntil(action$.ofType(SEARCH)),
-    catchError(e => ({
-      type: SEARCH_FAILED,
-    })),
+    catchError(e =>
+      of({
+        type: SEARCH_FAILED,
+      }),
+    ),
   );
+};
 
 // export const searchProducts = (action$, state$) =>
 //   action$.pipe(

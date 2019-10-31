@@ -16,7 +16,6 @@ export const fetch_shipments = (
   offsetUpdating = 0,
 ) => async (dispatch, getState) => {
   try {
-    console.log('a7a');
     if (type === 'update') {
       dispatch({
         type: UPDATING_SHIPMENT_REQUEST,
@@ -34,10 +33,8 @@ export const fetch_shipments = (
     const odoo = new Odoo(settings);
     const inParams = new Filters(actionFilter).getInParam();
 
-    console.log(_offset);
     if (type !== 'update') {
       fetchLength = await odoo.search_count('portal.shipments', inParams);
-      console.log(fetchLength);
     }
     inParams.push([
       'product_id',

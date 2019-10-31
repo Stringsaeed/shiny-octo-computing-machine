@@ -3,6 +3,7 @@ import {
   EMAIL_ERROR,
   LOGGING_SUCCESS,
   LOGIN_REQUEST,
+  LOGIN_ERROR,
 } from '../constants/login.actions';
 
 const initialState = {
@@ -11,6 +12,8 @@ const initialState = {
   passwordError: false,
   success: false,
   settings: {},
+  loginError: false,
+  errorMessage: '',
 };
 
 export default function(state = initialState, action) {
@@ -38,6 +41,13 @@ export default function(state = initialState, action) {
         ...state,
         isLoading: false,
         emailError: true,
+      };
+    case LOGIN_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        loginError: true,
+        errorMessage: action.meta.message,
       };
     default:
       return state;

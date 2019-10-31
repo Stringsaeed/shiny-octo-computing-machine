@@ -4,7 +4,11 @@
     "email": "Email/ Mobile",
     "password": "Password",
     "loginBtn": "Login",
-    "failed": "Email/ Mobile or Password is not correct"
+    "Username not valid": "Email/Mobile is not correct",
+    "User not subscribed": "You are not subscribed",
+    "Invalid password": "Password is not correct",
+    "Username not found": "Email/ Mobile is not correct",
+    "Subscription ended": "Subscription is ended"
   },
   "app_navigation": {
     "dashboard": "Dashboard",

@@ -15,7 +15,7 @@ export const translate = memoize(
 );
 
 export const setI18nConfig = () => {
-  const fallBack = {language: 'en', isRTL: false};
+  const fallBack = {language: 'ar', isRTL: true};
   const {language, isRTL} = fallBack;
   translate.cache.clear();
 

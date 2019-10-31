@@ -1,6 +1,5 @@
 export class Filters {
   constructor(filter) {
-    console.log(filter, 'a7a');
     this.filter = filter;
     this.fields = [
       'product_id',
@@ -39,7 +38,6 @@ export class Filters {
     if (this.filter === 'WEEK') {
       const thisDay = this.today.getDay();
       const day = thisDay === 0 ? 1 : thisDay;
-      console.log(day);
 
       // get first day of this week
       const startWeek = new Date(
@@ -63,7 +61,6 @@ export class Filters {
         ['create_date', '<=', lastDayWeek],
         ['create_date', '>=', firstDayWeek],
       ]);
-      console.log(inParams);
       return inParams;
     }
     if (this.filter === 'MONTH') {

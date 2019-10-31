@@ -1,11 +1,12 @@
 import Moment from 'moment';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Image} from 'react-native';
 import Barcode from 'react-native-barcode-builder';
 import {Card, CardItem, Text, Left, Right, View} from 'native-base';
 
 export const ShipmentItem = ({
+  placeHolder,
   product,
   amount,
   price,
@@ -44,12 +45,18 @@ export const ShipmentItem = ({
 
         <CardItem style={styles.flex}>
           <Left style={styles.flex}>
-            <Barcode value={barcode} format="CODE128" width={1} />
+            {placeHolder ? (
+              <Image source={require('~/assets/shipment.gif')} />
+            ) : (
+              <Barcode value={barcode} format="CODE128" width={1} />
+            )}
           </Left>
           <Right style={styles.colView}>
             <View style={styles.rowView}>
               <Left style={styles.flex}>
-                <Text style={styles.textStyle}>{amount}</Text>
+                <Text style={styles.textStyle}>
+                  {amount.toLocaleString('ar')}
+                </Text>
               </Left>
               <Right style={styles.flex}>
                 <Text style={styles.textStyle}>الكمية</Text>
@@ -57,7 +64,9 @@ export const ShipmentItem = ({
             </View>
             <View style={styles.rowView}>
               <Left style={styles.flex}>
-                <Text style={styles.textStyle}>{price}</Text>
+                <Text style={styles.textStyle}>
+                  {price.toLocaleString('ar')}
+                </Text>
               </Left>
               <Right style={styles.flex}>
                 <Text style={styles.textStyle}>التكلفة</Text>
@@ -94,7 +103,8 @@ ShipmentItem.propTypes = {
   price: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
   state: PropTypes.string.isRequired,
-  barcode: PropTypes.string.isRequired,
+  barcode: PropTypes.string,
+  placeHolder: PropTypes.boolean,
 };
 
 const styles = StyleSheet.create({
