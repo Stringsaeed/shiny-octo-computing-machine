@@ -14,6 +14,8 @@ export const ShipmentItem = ({
   state,
   barcode,
 }) => {
+  console.log(product);
+  console.log(date);
   let translate_state;
 
   if (state === 'draft') {

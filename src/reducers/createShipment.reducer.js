@@ -4,9 +4,9 @@ import {
   PROUDCTS_SEARCH_FAILED,
   CREATE_SHIPMENT_SUCCESS,
   CREATE_SHIPMENT_FAILED,
-  USERS_SEARCH,
-  USERS_SEARCH_SUCCESS,
-  USERS_SEARCH_FAILED,
+  _SEARCH_REQUEST,
+  _SEARCH_SUCCESS,
+  _SEARCH_FAILED,
 } from '../constants';
 
 const initialState = {
@@ -38,34 +38,18 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
       };
-    case PROUDCTS_SEARCH:
-      return {
-        ...state,
-        isSearchingProducts: true,
-      };
-    case PROUDCTS_SEARCH_SUCCESS:
-      return {
-        ...state,
-        isSearchingProducts: false,
-        searchUsers: action.payload,
-      };
-    case PROUDCTS_SEARCH_FAILED:
-      return {
-        ...state,
-        isSearchingProducts: false,
-      };
-    case USERS_SEARCH:
+    case _SEARCH_REQUEST:
       return {
         ...state,
         isSearchingUsers: true,
       };
-    case USERS_SEARCH_SUCCESS:
+    case _SEARCH_SUCCESS:
       return {
         ...state,
         isSearchingUsers: false,
-        searchUsers: action.payload,
+        searchProducts: action.payload,
       };
-    case USERS_SEARCH_FAILED:
+    case _SEARCH_FAILED:
       return {
         ...state,
         isSearchingUsers: false,

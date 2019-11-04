@@ -1,5 +1,9 @@
 import {odooAPI} from '../services';
-import {CREATE_SHIPMENT_SUCCESS, CREATE_SHIPMENT_FAILED} from '../constants';
+import {
+  CREATE_SHIPMENT_SUCCESS,
+  CREATE_SHIPMENT_FAILED,
+  _SEARCH_REQUEST,
+} from '../constants';
 
 export const fetchData = () => async (dispatch, getState) => {
   const {settings} = getState().auth;
@@ -42,4 +46,12 @@ export const fetchData = () => async (dispatch, getState) => {
   }
 };
 
+export const searchRequest = (term, fields, modelName) => ({
+  type: _SEARCH_REQUEST,
+  meta: {
+    term: term,
+    fields: fields,
+    modelName: modelName,
+  },
+});
 // const _cr_

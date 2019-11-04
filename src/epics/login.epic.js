@@ -53,11 +53,6 @@ const loginUser = action$ =>
         }
       }
     }),
-    catchError(err =>
-      of({
-        type: PASSWORD_ERROR,
-      }),
-    ),
   );
 
 export default loginUser;
