@@ -32,6 +32,7 @@ export const FilterPortal = ({
               {filters &&
                 filters.map(filter => (
                   <TouchableRipple
+                    key={filter._key}
                     onPress={() => {
                       setFilter(filter._key);
                     }}>

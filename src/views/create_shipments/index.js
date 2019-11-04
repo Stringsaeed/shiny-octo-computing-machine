@@ -12,9 +12,9 @@ import {
   FlatList,
   Dimensions,
 } from 'react-native';
-
-import {SearchDialog} from '../../components';
-import {search} from '../../actions';
+//
+// import {SearchDialog} from '../../components';
+// import {search} from '../../actions';
 
 export class CreateShipment extends Component {
   constructor(props) {
@@ -86,7 +86,6 @@ export class CreateShipment extends Component {
   };
 
   render() {
-    console.log(this.props);
     const {
       product,
       productVisible,

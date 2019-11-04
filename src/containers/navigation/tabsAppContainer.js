@@ -17,7 +17,7 @@ export const TopTabsContainer = createMaterialTopTabNavigator(
   },
   {
     initialRouteName: 'Dashboard',
-    order: ['Products', 'Shipments', 'Dashboard'],
+    order: ['Dashboard', 'Shipments', 'Products'],
     swipeEnabled: true,
     lazy: true,
     tabBarOptions: {
@@ -26,6 +26,11 @@ export const TopTabsContainer = createMaterialTopTabNavigator(
       showIcon: true,
       style: {
         backgroundColor: '#FFFFFF',
+        elevation: 0,
+        shadowOpacity: 0,
+        borderBottomColor: '#3a0151',
+        borderBottomWidth: 1,
+        height: '10%',
       },
       indicatorStyle: {
         backgroundColor: 'transparent',

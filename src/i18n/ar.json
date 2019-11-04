@@ -44,5 +44,8 @@
       "remaining": "المتبقية",
       "scrap": "قيمة التالف"
     }
+  },
+  "shipmentItem": {
+    "product": "المنتج"
   }
 }

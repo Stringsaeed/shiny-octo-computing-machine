@@ -43,5 +43,8 @@
       "remaining": "Remaining",
       "scrap": "Scraped"
     }
+  },
+  "shipmentItem": {
+    "product": "Product"
   }
 }

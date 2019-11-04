@@ -4,6 +4,7 @@ import {ofType} from 'redux-observable';
 import {
   map,
   tap,
+  filter,
   takeUntil,
   switchMap,
   catchError,
@@ -67,37 +68,43 @@ const login$ = action$ =>
         }
       }
     }),
+    catchError(err => ({
+      type: LOGIN_ERROR,
+      meta: {
+        message: err,
+      },
+    })),
   );
 
 const search$ = (action$, store$) =>
   action$.pipe(
     tap(obs => console.log(obs)),
-    ofType(_SEARCH_REQUEST),
+    filter(action => action.type === _SEARCH_REQUEST),
     tap(obs => console.log(obs)),
     debounceTime(200),
-    switchMap(async action =>
+    switchMap(action =>
       from(
-        await odooAPI(store$.state.auth).search(
+        odooAPI(store$.value.auth.settings).search(
           action.meta.term,
           action.meta.fields,
           action.meta.modelName,
         ),
       ).pipe(
-        map(results =>
-          of({
-            type: _SEARCH_SUCCESS,
-            payload: results,
-          }),
-        ),
+        map(results => ({
+          type: _SEARCH_SUCCESS,
+          payload: results,
+        })),
+        catchError(e => {
+          console.log(e);
+          return {type: _SEARCH_FAILED};
+        }),
+        takeUntil(action$.ofType(_SEARCH_REQUEST)),
       ),
     ),
-    takeUntil(action$.ofType(_SEARCH_REQUEST)),
-    catchError(e =>
-      of({
-        type: _SEARCH_FAILED,
-      }),
-    ),
-    ignoreElements(),
+    catchError(e => {
+      console.log(e);
+      return {type: _SEARCH_FAILED};
+    }),
   );
 
 export default combineEpics(search$, login$);

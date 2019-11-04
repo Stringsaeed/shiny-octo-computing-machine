@@ -1,4 +1,4 @@
-import Moment from 'moment';
+import Moment from 'moment/min/moment-with-locales';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import {StyleSheet, Image} from 'react-native';
@@ -14,8 +14,6 @@ export const ShipmentItem = ({
   state,
   barcode,
 }) => {
-  console.log(product);
-  console.log(date);
   let translate_state;
 
   if (state === 'draft') {
@@ -27,8 +25,12 @@ export const ShipmentItem = ({
   } else {
     translate_state = 'شحنت';
   }
-
+  Moment.locale('ar');
   const formatted_date = Moment(date);
+  // .format('dd/mm/yy');
+  // console.log(formatted_date);
+  // // console.log(formatted_date.toLocaleDateString('ar-EG'));
+  // console.log(I18n.l('time.formats.short', formatted_date));
   const year = formatted_date.year();
   const day = formatted_date.date();
   const month = formatted_date.month() + 1;

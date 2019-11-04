@@ -41,6 +41,7 @@ export default (action$, store$) =>
         type: _SEARCH_FAILED,
       }),
     ),
+    ignoreElements(),
   );
 
 // export const searchProducts = (action$, state$) =>

@@ -1,8 +1,11 @@
 import Odoo from 'react-native-odoo-client';
+import OdooJson from 'react-native-odoo';
 import {parameters} from '../utils';
 import {Filters} from '../utils';
+// import {searchRequest} from 'actions';
 
 export const odooAPI = settings => {
+  console.log(settings);
   const odoo = new Odoo(settings);
   return {
     auth: async () => {
@@ -88,10 +91,32 @@ export const odooAPI = settings => {
       });
     },
     search: async (term, fields, modelName) => {
-      const inParams = [];
-      inParams.push([['name', 'ilike', term]]);
-      inParams.push(fields);
-      return await odoo.search_read(modelName, inParams, {});
+      const _odoo = new OdooJson({
+        host: 'odoo11.crevisoft.com',
+        database: 'portal',
+        port: 8069,
+        username: '0505338488',
+        password: '1111',
+      });
+      const params = {
+        domain: [['name', 'ilike', term]],
+        fields: fields,
+      };
+      // _odoo.connect(err => {
+      //   if (err) {
+      //     console.log(err);
+      //   }
+      // });
+      return new Promise((resolve, reject) => {
+        _odoo.search_read(modelName, params, (err, results) => {
+          if (err) return reject(err);
+          resolve(results);
+        });
+      });
+      // const inParams = [];
+      // inParams.push([['name', 'ilike', "فطائ"]]);
+      // inParams.push(fields);
+      // return await odoo.search_read(modelName, inParams, {});
     },
   };
 };

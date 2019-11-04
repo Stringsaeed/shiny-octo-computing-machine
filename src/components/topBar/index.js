@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   left: {
     justifyContent: 'flex-end',
     flex: 0,
+    flexDirection: 'row',
     // marginRight: '1.2%',
   },
   dialogScrollArea: {

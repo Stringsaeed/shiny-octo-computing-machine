@@ -13,6 +13,9 @@ export class Login extends Component {
     this._fetchData = this._fetchData.bind(this);
     this._onPress = this._onPress.bind(this);
   }
+  componentDidMount() {
+    this.emailTextInput.focus();
+  }
 
   componentDidUpdate(prevProps) {
     if (this.props.success) {

@@ -1,5 +1,5 @@
 import I18n from 'i18n-js';
-// import Moment from 'moment';
+import Moment from 'moment';
 import memoize from 'lodash.memoize';
 import {I18nManager} from 'react-native';
 // import {findBestAvailableLanguage} from 'react-native-localize';
@@ -23,4 +23,6 @@ export const setI18nConfig = () => {
 
   I18n.translations = {[language]: translationGetters[language]()};
   I18n.locale = language;
+  Moment.locale(language);
+  return language;
 };
