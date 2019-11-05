@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Product from '../../assets/icons/box.svg';
-import Seller from '../../assets/icons/seller.svg';
-import Shipment from '../../assets/icons/credit-card.svg';
-import Product_Outlined from '../../assets/icons/box_outlined.svg';
-import Shipment_Outlined from '../../assets/icons/delivery-truck.svg';
+import Product from '~/assets/icons/box.svg';
+import Seller from '~/assets/icons/seller.svg';
+import Shipment from '~/assets/icons/credit-card.svg';
+import Product_Outlined from '~/assets/icons/box_outlined.svg';
+import Shipment_Outlined from '~/assets/icons/delivery-truck.svg';
 
 export const Icon = props => {
   switch (props.name) {
@@ -34,6 +34,6 @@ Icon.defaultProps = {
 Icon.propTypes = {
   name: PropTypes.string.isRequired,
   outlined: PropTypes.boolean,
-  width: PropTypes.anyOf(PropTypes.string, PropTypes.numeric),
-  height: PropTypes.anyOf(PropTypes.string, PropTypes.numeric),
+  width: PropTypes.oneOf(PropTypes.string, PropTypes.numeric),
+  height: PropTypes.oneOf(PropTypes.string, PropTypes.numeric),
 };

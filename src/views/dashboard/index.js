@@ -56,23 +56,27 @@ export class Dashboard extends Component {
                 chartData={shipmentCardData.data}
                 items={[
                   {
+                    key: 'dashboardShipmentCardItem1',
                     right: shipmentCardData.total,
                     content: false,
                     left: t('dashboard.shipmentsCard.total'),
                   },
                   {
+                    key: 'dashboardShipmentCardItem2',
                     right: shipmentCardData.in_transit,
                     content: true,
                     color: shipmentCardData.data[0].fill,
                     left: t('dashboard.shipmentsCard.inTransit'),
                   },
                   {
+                    key: 'dashboardShipmentCardItem3',
                     right: shipmentCardData.approved,
                     content: true,
                     color: shipmentCardData.data[1].fill,
                     left: t('dashboard.shipmentsCard.received'),
                   },
                   {
+                    key: 'dashboardShipmentCardItem4',
                     right: shipmentCardData.rejected,
                     content: true,
                     color: shipmentCardData.data[2].fill,
@@ -87,23 +91,27 @@ export class Dashboard extends Component {
                 chartData={productCardData.data}
                 items={[
                   {
+                    key: 'dashboardProductCardItem1',
                     right: productCardData.sold,
                     content: false,
                     left: t('dashboard.productsCard.sold'),
                   },
                   {
+                    key: 'dashboardProductCardItem2',
                     right: productCardData.available,
                     content: true,
                     color: productCardData.data[0].fill,
                     left: t('dashboard.productsCard.available'),
                   },
                   {
+                    key: 'dashboardProductCardItem3',
                     right: productCardData.received,
                     content: true,
                     color: productCardData.data[1].fill,
                     left: t('dashboard.productsCard.received'),
                   },
                   {
+                    key: 'dashboardProductCardItem4',
                     right: productCardData.scrap,
                     content: true,
                     color: productCardData.data[2].fill,
@@ -118,29 +126,34 @@ export class Dashboard extends Component {
                 chartData={accountCardData.data}
                 items={[
                   {
+                    key: 'dashboardAccountCardItem1',
                     right: accountCardData.shipments,
                     content: false,
                     left: t('dashboard.accountsCard.shipments'),
                   },
                   {
+                    key: 'dashboardAccountCardItem2',
                     right: accountCardData.payments,
                     content: true,
                     color: accountCardData.data[0].fill,
                     left: t('dashboard.accountsCard.payments'),
                   },
                   {
+                    key: 'dashboardAccountCardItem3',
                     right: accountCardData.received,
                     content: true,
                     color: accountCardData.data[1].fill,
                     left: t('dashboard.accountsCard.received'),
                   },
                   {
+                    key: 'dashboardAccountCardItem4',
                     right: accountCardData.remaining,
                     content: true,
                     color: accountCardData.data[2].fill,
                     left: t('dashboard.accountsCard.remaining'),
                   },
                   {
+                    key: 'dashboardAccountCardItem5',
                     right: accountCardData.scrap,
                     content: true,
                     color: accountCardData.data[3].fill,

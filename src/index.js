@@ -9,15 +9,23 @@
 import React from 'react';
 import {Provider} from 'react-redux';
 import {SafeAreaView, StatusBar} from 'react-native';
-import {Provider as RNPProvider} from 'react-native-paper';
+import {Provider as RNPProvider, DefaultTheme} from 'react-native-paper';
 
 import store from './store';
 import {NavigatedApp} from './containers';
 
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#9204cc',
+  },
+};
+
 const App = () => {
   return (
     <Provider store={store}>
-      <RNPProvider>
+      <RNPProvider theme={theme}>
         <StatusBar backgroundColor="#9204cc" barStyle="light-content" />
         <SafeAreaView
           style={{flex: 1}}

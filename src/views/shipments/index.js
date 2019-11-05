@@ -94,15 +94,9 @@ export class ShipmentView extends Component {
       );
     } else {
       return (
-        <Card transparent style={styles.indicatorCardView}>
-          <CardItem style={styles.flex}>
-            <View style={styles.flex}>
-              <View style={styles.indicatorView}>
-                <BallIndicator color="#540e33" />
-              </View>
-            </View>
-          </CardItem>
-        </Card>
+        <View style={styles.indicatorView}>
+          <BallIndicator color="#540e33" />
+        </View>
       );
     }
   }
@@ -133,12 +127,6 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
-  },
-  indicatorCardView: {
-    marginLeft: 15,
-    marginBottom: 10,
-    marginTop: 20,
-    marginRight: 15,
   },
   indicatorView: {
     alignItems: 'center',

@@ -104,9 +104,6 @@ export class ProductView extends Component {
 ProductView.navigationOptions = {
   title: 'المنتجات',
   swipeEnabled: true,
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="md-cube" size={30} color={tintColor} />
-  ),
   headerForceInset: true,
   headerTintColor: '#9204cc',
 };

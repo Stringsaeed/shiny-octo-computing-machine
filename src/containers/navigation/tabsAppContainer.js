@@ -1,18 +1,26 @@
+import React from 'react';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 
 import {ShipmentStack} from '~/containers/navigation/shipmentStack';
 import {ConnectedDashboard, ConnectedProductView} from '~/containers/screens';
+import {Icon} from '~/components';
 
 export const TopTabsContainer = createMaterialTopTabNavigator(
   {
     Shipments: {
       screen: ShipmentStack,
+      navigationOptions: {
+        tabBarIcon: ({focused}) => <Icon name="shipment" outlined={!focused} />,
+      },
     },
     Dashboard: {
       screen: ConnectedDashboard,
     },
     Products: {
       screen: ConnectedProductView,
+      navigationOptions: {
+        tabBarIcon: ({focused}) => <Icon name="product" outlined={!focused} />,
+      },
     },
   },
   {

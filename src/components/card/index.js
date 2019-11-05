@@ -31,7 +31,7 @@ export const DashboardCard = props => {
 
       {items &&
         items.map(item => (
-          <CardItem style={styles.colView}>
+          <CardItem key={item.key} style={styles.colView}>
             <Left style={styles.colView}>
               <Text style={styles.text}>{item.left.toString()}</Text>
             </Left>

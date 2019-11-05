@@ -8,9 +8,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  TextInput as NativeTextInput,
-  FlatList,
-  Dimensions,
+  TouchableHighlight,
 } from 'react-native';
 //
 // import {SearchDialog} from '../../components';
@@ -20,17 +18,14 @@ export class CreateShipment extends Component {
   constructor(props) {
     super(props);
     this.props.fetchData();
-    // if (UIManager.setLayoutAnimationEnabledExperimental) {
-    //   UIManager.setLayoutAnimationEnabledExperimental(true);
-    // }
+
     this.state = {
       quantity: 0,
       price: 0,
       selectedProduct: {
         name: '',
-        price: 0,
-        responsibleId: 0,
-        responsibleName: '',
+        responsible_id: [0, ''],
+        standard_price: 0,
       },
       hideFlatList: true,
       product: '',
@@ -42,40 +37,13 @@ export class CreateShipment extends Component {
       autocompleteVisible: false,
       keyboardVisible: false,
     };
+    this.isValidated = this.isValidated.bind(this);
     this.textInput = React.createRef();
   }
 
-  componentDidMount() {
-    // let onShowListenerType =
-    //   Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
-    // let onHideListenerType =
-    //   Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
-    // this.keyboardWillShowListener = Keyboard.addListener(
-    //   onShowListenerType,
-    //   this.onKeyboardWillShow,
-    // );
-    // this.keyboardDismissListener = Keyboard.addListener(
-    //   onHideListenerType,
-    //   this.onKeyboardDismiss,
-    // );
-  }
-
-  // componentWillUnmount() {
-  //   this.keyboardWillShowListener.remove();
-  // }
-  //
-  // onKeyboardWillShow = e => {
-  //   LayoutAnimation.linear();
-  //   this.setState({keyboardVisible: true, autocompleteVisible: true});
-  // };
-  //
-  // onKeyboardDismiss = e => {
-  //   LayoutAnimation.linear();
-  //   this.setState({keyboardVisible: false, autocompleteVisible: false});
-  // };
   _getPrice() {
     const {selectedProduct, quantity} = this.state;
-    return selectedProduct ? selectedProduct.standard_price * quantity : 0;
+    return selectedProduct.standard_price * quantity;
   }
 
   showDialog = () => {
@@ -84,12 +52,16 @@ export class CreateShipment extends Component {
   hideDialog = () => {
     this.setState({visible: false});
   };
+  isValidated = () => {
+    return !!(this.state.selectedProduct.id && this.state.quantity !== 0);
+  };
 
   render() {
     const {
       product,
       productVisible,
       quantity,
+      selectedProduct,
       selectedResponsible,
       selectedProductResponsible,
       responsibleVisible,
@@ -110,78 +82,150 @@ export class CreateShipment extends Component {
     } = this.props;
 
     return !isLoading ? (
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{flex: 1}} keyboardShouldPersistTaps="always">
         <Card
           style={{
             flex: 40,
-            flexDirection: 'row',
-            backgroundColor: '#eaeaea',
-            margin: '2.5%',
+            flexDirection: 'column',
+            margin: '5%',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+
+            elevation: 9,
           }}>
-          <Left style={{flex: 1, flexDirection: 'row'}}>
-            <Left>
-              <CardItem>
-                <Text>الكمية</Text>
-              </CardItem>
+          <Card.Content style={{flex: 1, flexDirection: 'row'}}>
+            <Left style={{flex: 1, flexDirection: 'column'}}>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Left>
+                  <CardItem>
+                    <Text>الكمية</Text>
+                  </CardItem>
+                </Left>
+                <Right>
+                  <CardItem>
+                    <Text>{quantity}</Text>
+                  </CardItem>
+                </Right>
+              </View>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Left>
+                  <CardItem>
+                    <Text>التكلفة</Text>
+                  </CardItem>
+                </Left>
+                <Right>
+                  <CardItem>
+                    <Text>{this._getPrice()}</Text>
+                  </CardItem>
+                </Right>
+              </View>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Left>
+                  <CardItem>
+                    <Text>المسئول</Text>
+                  </CardItem>
+                </Left>
+                <Right>
+                  <CardItem>
+                    <Text>{selectedProduct.responsible_id[1]}</Text>
+                  </CardItem>
+                </Right>
+              </View>
             </Left>
             <Right>
               <CardItem>
-                <Text>{quantity}</Text>
+                <Image
+                  source={require('~/assets/shipment.gif')}
+                  width="25%"
+                  height="25%"
+                />
               </CardItem>
             </Right>
-          </Left>
-          <Right>
-            <CardItem style={{backgroundColor: '#eaeaea'}}>
-              <Image
-                source={require('~/assets/shipment.gif')}
-                resizeMethod="auto"
-              />
-            </CardItem>
-          </Right>
+          </Card.Content>
         </Card>
-        {validated ? (
+        {this.isValidated() ? (
           <View style={{flex: 10, flexDirection: 'row', alignItems: 'center'}}>
-            <Left style={{flex: 1}}>
-              <Button>حفظ</Button>
-            </Left>
-            <Right style={{flex: 1}}>
-              <Button>حفظ وجديد</Button>
-            </Right>
+            <View style={{flex: 1}}>
+              <Button
+                mode="contained"
+                style={{
+                  flex: 1,
+                  marginHorizontal: '2%',
+                  backgroundColor: '#9204cc',
+                }}>
+                <Text
+                  style={{
+                    fontFamily: 'NotoKufiArabic',
+                    color: '#fff',
+                  }}>
+                  حفظ
+                </Text>
+              </Button>
+            </View>
+            <View style={{flex: 1}}>
+              <Button
+                mode="contained"
+                style={{
+                  flex: 1,
+                  marginHorizontal: '2%',
+                  backgroundColor: '#9204cc',
+                }}>
+                حفظ وجديد
+              </Button>
+            </View>
           </View>
         ) : null}
-        {/*<View style={{flex: 10, flexDirection: 'row', alignItems: 'center'}}>*/}
-        {/*  <Left style={{flex: 1, alignItems: 'center'}}>*/}
-        {/*    <Button mode="contained" dark color="#9204cc">*/}
-        {/*      اختار منتج*/}
-        {/*    </Button>*/}
-        {/*  </Left>*/}
-        {/*  {isAdmin && (*/}
-        {/*    <Right style={{flex: 1, alignItems: 'center'}}>*/}
-        {/*      <Button mode="contained" dark color="#9204cc">*/}
-        {/*        اختار مورد*/}
-        {/*      </Button>*/}
-        {/*    </Right>*/}
-        {/*  )}*/}
-        {/*</View>*/}
-        <View style={{flex: 50, flexDirection: 'column', alignItems: 'center'}}>
-          <View style={{flex: 1, width: Dimensions.get('screen').width - 140}}>
+        <View
+          style={{
+            flex: 50,
+            flexDirection: 'column',
+            alignItems: 'center',
+            margin: '5%',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+
+            elevation: 9,
+          }}>
+          <View style={styles.inputContainer}>
             <Autocomplete
               data={products}
               renderItem={({item}) => (
-                <TouchableOpacity>
+                <TouchableOpacity
+                  style={{flex: 1, alignItems: 'center'}}
+                  onPress={() =>
+                    this.setState(state => ({
+                      ...state,
+                      selectedProduct: {...item},
+                    }))
+                  }>
                   <Text>{item.name}</Text>
                 </TouchableOpacity>
               )}
               inputContainerStyle={{borderWidth: 0}}
               containerStyle={{borderWidth: 0}}
+              listStyle={{
+                borderColor: '#9204cc',
+                borderBottomLeftRadius: 5,
+                borderBottomRightRadius: 5,
+              }}
               hideResults={hideFlatList}
               listContainerStyle={{flex: 1}}
               renderTextInput={props => (
                 <TextInput
                   ref={this.textInput}
                   {...props}
-                  value={product}
                   style={styles.inputs}
+                  value={selectedProduct.name || product}
                   label="المنتج"
                   mode="outlined"
                   onFocus={() => this.setState({hideFlatList: false})}
@@ -205,26 +249,21 @@ export class CreateShipment extends Component {
                 />
               )}
             />
-
-            {/*{searchProducts && (*/}
-            {/*  <View>*/}
-            {/*    <ScrollView style={styles.autocompleteList}>*/}
-            {/*      {searchProducts.map(item => (*/}
-            {/*        <List.Item title={item.name} />*/}
-            {/*      ))}*/}
-            {/*    </ScrollView>*/}
-            {/*  </View>*/}
-            {/*)}*/}
           </View>
-          {/* <View style={styles.inputContainer}>
+          <View style={{height: 50, ...styles.inputContainer}}>
             <TextInput
-              value={quantity.toString()}
+              value={quantity.toLocaleString()}
               style={styles.inputs}
               label="الكمية"
               mode="outlined"
-              onChangeText={_quantity => this.setState({quantity: _quantity})}
+              keyboardType="numeric"
+              onChangeText={_quantity => {
+                if (_quantity) {
+                  this.setState({quantity: _quantity});
+                }
+              }}
             />
-          </View> */}
+          </View>
         </View>
       </ScrollView>
     ) : (
@@ -296,15 +335,13 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: '80%',
-    height: 45,
-    marginBottom: 20,
+    marginBottom: '4%',
     flex: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   inputs: {
     backgroundColor: '#ffffff',
     flex: 1,
+    borderColor: '#9204cc',
   },
   autocompleteList: {
     height: 100,
