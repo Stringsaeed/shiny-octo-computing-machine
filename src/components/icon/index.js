@@ -8,32 +8,32 @@ import Product_Outlined from '~/assets/icons/box_outlined.svg';
 import Shipment_Outlined from '~/assets/icons/delivery-truck.svg';
 
 export const Icon = props => {
-  switch (props.name) {
-    case 'shipment':
-      if (props.outlined) {
-        return <Shipment_Outlined width={props.width} height={props.height} />;
-      }
-      return <Shipment width={props.width} height={props.height} />;
-    case 'product':
-      if (props.outlined) {
-        return <Product_Outlined width={props.width} height={props.height} />;
-      }
-      return <Product width={props.width} height={props.height} />;
-    default:
-      return <Seller width={props.width} height={props.height} />;
-  }
+	switch (props.name) {
+		case 'shipment':
+			if (props.outlined) {
+				return <Shipment_Outlined width={props.width} height={props.height} />;
+			}
+			return <Shipment width={props.width} height={props.height} />;
+		case 'product':
+			if (props.outlined) {
+				return <Product_Outlined width={props.width} height={props.height} />;
+			}
+			return <Product width={props.width} height={props.height} />;
+		default:
+			return <Seller width={props.width} height={props.height} />;
+	}
 };
 
 Icon.defaultProps = {
-  name: 'seller',
-  outlined: false,
-  width: 25,
-  height: 25,
+	name: 'seller',
+	outlined: false,
+	width: 25,
+	height: 25,
 };
 
 Icon.propTypes = {
-  name: PropTypes.string.isRequired,
-  outlined: PropTypes.boolean,
-  width: PropTypes.oneOf(PropTypes.string, PropTypes.numeric),
-  height: PropTypes.oneOf(PropTypes.string, PropTypes.numeric),
+	name: PropTypes.string.isRequired,
+	outlined: PropTypes.boolean,
+	width: PropTypes.oneOf(PropTypes.string, PropTypes.numeric),
+	height: PropTypes.oneOf(PropTypes.string, PropTypes.numeric),
 };
