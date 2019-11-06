@@ -10,9 +10,9 @@ const initialState = {};
 const epicMiddleware = createEpicMiddleware();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
-  rootReducer,
-  initialState,
-  composeEnhancers(applyMiddleware(epicMiddleware, thunk, logger)),
+	rootReducer,
+	initialState,
+	composeEnhancers(applyMiddleware(epicMiddleware, thunk, logger)),
 );
 epicMiddleware.run(rootEpic);
 export default store;

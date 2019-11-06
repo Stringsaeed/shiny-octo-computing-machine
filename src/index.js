@@ -14,18 +14,21 @@ import {Provider as RNPProvider} from 'react-native-paper';
 import store from './store';
 import {BrightTheme} from './themes';
 import {NavigatedApp} from './containers';
+import {ErrorHandler} from './components';
 
 const App = () => {
 	return (
 		<Provider store={store}>
-			<RNPProvider theme={BrightTheme}>
-				<StatusBar backgroundColor="#9204cc" barStyle="light-content" />
-				<SafeAreaView
-					style={{flex: 1}}
-					forceInset={{horizontal: 'always', top: 'always'}}>
-					<NavigatedApp />
-				</SafeAreaView>
-			</RNPProvider>
+			<ErrorHandler>
+				<RNPProvider theme={BrightTheme}>
+					<StatusBar backgroundColor="#9204cc" barStyle="light-content" />
+					<SafeAreaView
+						style={{flex: 1}}
+						forceInset={{horizontal: 'always', top: 'always'}}>
+						<NavigatedApp />
+					</SafeAreaView>
+				</RNPProvider>
+			</ErrorHandler>
 		</Provider>
 	);
 };

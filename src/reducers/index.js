@@ -7,10 +7,10 @@ import shipmentsReducer from './shipments.reducer';
 import createShipmentsReducer from './createShipment.reducer';
 
 export default combineReducers({
-  auth: loginReducer,
-  search: searchReducer,
-  products: productsReducer,
-  shipments: shipmentsReducer,
-  dashboard: dashboardReducer,
-  createShipment: createShipmentsReducer,
+	auth: loginReducer,
+	search: searchReducer,
+	products: productsReducer,
+	shipments: shipmentsReducer,
+	dashboard: dashboardReducer,
+	createShipment: createShipmentsReducer,
 });

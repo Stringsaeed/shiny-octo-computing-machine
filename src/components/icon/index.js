@@ -1,39 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {createIconSetFromIcoMoon} from 'react-native-vector-icons';
 
-import Product from '~/assets/icons/box.svg';
-import Seller from '~/assets/icons/seller.svg';
-import Shipment from '~/assets/icons/credit-card.svg';
-import Product_Outlined from '~/assets/icons/box_outlined.svg';
-import Shipment_Outlined from '~/assets/icons/delivery-truck.svg';
+import fontConfig from '~/assets/selection.json';
+
+const CustomFont = createIconSetFromIcoMoon(
+	fontConfig,
+	'icomoon',
+	'icomoon.ttf',
+);
 
 export const Icon = props => {
 	switch (props.name) {
 		case 'shipment':
 			if (props.outlined) {
-				return <Shipment_Outlined width={props.width} height={props.height} />;
+				return <CustomFont name="shipment_outlined" size={24} />;
+			} else {
+				return <CustomFont name="shipment" size={24} />;
 			}
-			return <Shipment width={props.width} height={props.height} />;
 		case 'product':
 			if (props.outlined) {
-				return <Product_Outlined width={props.width} height={props.height} />;
+				return <CustomFont name="box_outlined" size={24} />;
+			} else {
+				return <CustomFont name="box" size={24} />;
 			}
-			return <Product width={props.width} height={props.height} />;
+		case 'dashboard':
+			if (props.outlined) {
+				return <CustomFont name="dashboard_outlined" size={24} />;
+			}
+			return <CustomFont name="dashboard" size={24} />;
 		default:
-			return <Seller width={props.width} height={props.height} />;
+			return <CustomFont name="seller" size={24} />;
 	}
 };
 
 Icon.defaultProps = {
 	name: 'seller',
 	outlined: false,
-	width: 25,
-	height: 25,
 };
 
 Icon.propTypes = {
 	name: PropTypes.string.isRequired,
-	outlined: PropTypes.boolean,
-	width: PropTypes.oneOf(PropTypes.string, PropTypes.numeric),
-	height: PropTypes.oneOf(PropTypes.string, PropTypes.numeric),
+	outlined: PropTypes.bool,
 };

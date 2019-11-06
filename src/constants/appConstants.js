@@ -4,55 +4,55 @@ export const baseUrl = 'https://seller.crevisoft.com';
 export const loginUrl = `${baseUrl}/mobile_login/`;
 
 export const dashboardFilters = [
-  'total_price_shipments',
-  'total_payments',
-  'total_received_payments',
-  'total_remaining_payments',
-  'total_price_scrap',
-  'total_shipments',
-  'total_shipments_in_transit',
-  'total_shipments_shipped',
-  'total_shipments_rejected',
-  'quantity_products_received',
-  'quantity_available_products',
-  'quantity_actual_sold',
-  'quantity_scrap_products',
+	'total_price_shipments',
+	'total_payments',
+	'total_received_payments',
+	'total_remaining_payments',
+	'total_price_scrap',
+	'total_shipments',
+	'total_shipments_in_transit',
+	'total_shipments_shipped',
+	'total_shipments_rejected',
+	'quantity_products_received',
+	'quantity_available_products',
+	'quantity_actual_sold',
+	'quantity_scrap_products',
 ];
 
 export const dashboardFiltersPortal = [
-  {
-    _key: 'Today',
-    name: 'اليوم',
-  },
-  {
-    _key: 'Current Week',
-    name: 'هذا الاسبوع',
-  },
-  {
-    _key: 'Current Month',
-    name: 'هذا الشهر',
-  },
-  {
-    _key: 'All',
-    name: 'الكل',
-  },
+	{
+		_key: 'Today',
+		name: 'اليوم',
+	},
+	{
+		_key: 'Current Week',
+		name: 'هذا الاسبوع',
+	},
+	{
+		_key: 'Current Month',
+		name: 'هذا الشهر',
+	},
+	{
+		_key: 'All',
+		name: 'الكل',
+	},
 ];
 
 export const filtersPortal = [
-  {
-    _key: 'TODAY',
-    name: 'اليوم',
-  },
-  {
-    _key: 'WEEK',
-    name: 'هذا الاسبوع',
-  },
-  {
-    _key: 'MONTH',
-    name: 'هذا الشهر',
-  },
-  {
-    _key: 'ALL',
-    name: 'الكل',
-  },
+	{
+		_key: 'TODAY',
+		name: 'اليوم',
+	},
+	{
+		_key: 'WEEK',
+		name: 'هذا الاسبوع',
+	},
+	{
+		_key: 'MONTH',
+		name: 'هذا الشهر',
+	},
+	{
+		_key: 'ALL',
+		name: 'الكل',
+	},
 ];

@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import {Left, Right, CardItem} from 'native-base';
 import {BallIndicator} from 'react-native-indicators';
 import {Button, Card, TextInput} from 'react-native-paper';
-import {Text, View, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 
-import Styles from './styles';
-import {Autocomplete} from '~/components';
+import {StyleSheet} from 'react-native';
+// import Styles from './styles';
+import {Autocomplete} from '../../components';
 // import {SearchDialog} from '../../components';
 // import {search} from '../../actions';
 
@@ -65,7 +66,7 @@ export class CreateShipment extends Component {
 		} = this.props;
 
 		return !isLoading ? (
-			<ScrollView style={Styles.flexRow(1)} keyboardShouldPersistTaps="always">
+			<ScrollView style={{flex: 1}} keyboardShouldPersistTaps="always">
 				<Card style={Styles.cardStyle(40)}>
 					<Card.Content style={Styles.flexRow(1)}>
 						<Left style={Styles.flexCol(1)}>
@@ -213,3 +214,59 @@ export class CreateShipment extends Component {
 		);
 	}
 }
+
+const baseStyles = StyleSheet.create({
+	flexRow: flexSize => ({
+		flex: flexSize,
+		flexDirection: 'row',
+	}),
+	flexCol: flexSize => ({
+		flex: flexSize,
+		flexDirection: 'column',
+	}),
+	centered: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+});
+
+const Styles = StyleSheet.create({
+	...baseStyles,
+	cardStyle: flexSize => ({
+		...baseStyles.flexCol(flexSize),
+		margin: '5%',
+		shadowColor: '#000',
+		shadowOffset: {
+			width: 0,
+			height: 4,
+		},
+		shadowOpacity: 0.32,
+		shadowRadius: 5.46,
+
+		elevation: 9,
+	}),
+	onPressView: flexSize => ({
+		...baseStyles.flexCol(flexSize),
+		alignItems: 'center',
+	}),
+	createButton: {
+		...baseStyles.flexCol(1),
+		marginHorizontal: '2%',
+		backgroundColor: '#9204cc',
+	},
+	createButtonText: {
+		fontFamily: 'NotoKufiArabic-Regular',
+		color: '#fff',
+	},
+	inputContainer: {
+		width: '80%',
+		marginBottom: '4%',
+		...baseStyles.flexCol(10),
+	},
+	inputs: {
+		flex: 1,
+		backgroundColor: '#ffffff',
+		borderColor: '#9204cc',
+	},
+});

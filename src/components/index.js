@@ -6,3 +6,5 @@ export {ProductItem} from './productItem';
 export {SearchDialog} from './searchView';
 export {ShipmentItem} from './shipmentItem';
 export {RenderFooter} from './renderFooter';
+export {ErrorHandler} from './errorHandler';
+export {Autocomplete} from './autocompleteTextInput';

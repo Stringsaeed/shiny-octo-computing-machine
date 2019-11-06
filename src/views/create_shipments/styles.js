@@ -18,8 +18,8 @@ const baseStyles = StyleSheet.create({
 
 export default StyleSheet.create({
 	...baseStyles,
-	cardStyle: flexSize => ({
-		...baseStyles.flexRow(flexSize),
+	presenterCardStyle: {
+		...baseStyles.flexRow(40),
 		margin: '5%',
 		shadowColor: '#000',
 		shadowOffset: {
@@ -30,7 +30,20 @@ export default StyleSheet.create({
 		shadowRadius: 5.46,
 
 		elevation: 9,
-	}),
+	},
+	inputsCardStyle: {
+		...baseStyles.flexRow(50),
+		margin: '5%',
+		shadowColor: '#000',
+		shadowOffset: {
+			width: 0,
+			height: 4,
+		},
+		shadowOpacity: 0.32,
+		shadowRadius: 5.46,
+
+		elevation: 9,
+	},
 	onPressView: flexSize => ({
 		...baseStyles.flexRow(flexSize),
 		alignItems: 'center',

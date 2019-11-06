@@ -6,15 +6,15 @@ import {fetchData, searchRequest} from '../../actions';
 
 const mapStateToProps = state => state.createShipment;
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      searchRequest,
-      fetchData,
-    },
-    dispatch,
-  );
+	bindActionCreators(
+		{
+			searchRequest,
+			fetchData,
+		},
+		dispatch,
+	);
 
 export const ConnectedCreateShipment = connect(
-  mapStateToProps,
-  mapDispatchToProps,
+	mapStateToProps,
+	mapDispatchToProps,
 )(CreateShipment);

@@ -8,134 +8,134 @@ import {filtersPortal} from '../../constants';
 import {TopBar, RenderFooter, ShipmentItem} from '../../components';
 
 export class ShipmentView extends Component {
-  constructor(props) {
-    super(props);
-    this.props.fetch('fetch', false, 0);
-    this._onRefresh = this._onRefresh.bind(this);
-  }
+	constructor(props) {
+		super(props);
+		this.props.fetch('fetch', false, 0);
+		this._onRefresh = this._onRefresh.bind(this);
+	}
 
-  _onRefresh() {
-    this.props.fetch('refresh', this.props.filter, 0);
-  }
+	_onRefresh() {
+		this.props.fetch('refresh', this.props.filter, 0);
+	}
 
-  render() {
-    const {
-      isLoading,
-      filter,
-      navigation,
-      isUpdating,
-      length,
-      limit,
-      offset,
-      isRefreshing,
-      data,
-      fetch,
-    } = this.props;
-    if (!isLoading) {
-      return (
-        <View style={styles.flex}>
-          <TopBar
-            filters={filtersPortal}
-            filter={filter}
-            onFiltering={_filter => {
-              fetch('fetch', _filter, 0);
-            }}
-            name="عرض الشحنات"
-            createButton={{
-              iconName: 'ios-add-circle-outline',
-              createView: () => {
-                navigation.navigate('createShipment');
-              },
-            }}
-          />
-          <FlatList
-            data={data}
-            renderItem={({item}) => (
-              <ShipmentItem
-                product={item.product_id[1]}
-                amount={item.quantity}
-                date={item.create_date}
-                state={item.state}
-                price={item.standard_price}
-                barcode={item.barcode}
-              />
-            )}
-            keyExtractor={(item, index) => item.id.toString()}
-            ListFooterComponent={
-              <RenderFooter
-                isUpdating={isUpdating}
-                len={length}
-                limit={limit}
-                offset={offset}
-                update={key => {
-                  const offsetUpdating =
-                    key === 'in'
-                      ? offset + limit
-                      : key === 'de'
-                      ? offset - limit
-                      : offset;
-                  fetch('update', filter, offsetUpdating);
-                }}
-              />
-            }
-            ListEmptyComponent={
-              <View style={styles.emptyContainer}>
-                <Text>لا يوجد شحنات</Text>
-              </View>
-            }
-            refreshControl={
-              <RefreshControl
-                refreshing={isRefreshing}
-                onRefresh={this._onRefresh}
-              />
-            }
-          />
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.indicatorView}>
-          <BallIndicator color="#540e33" />
-        </View>
-      );
-    }
-  }
+	render() {
+		const {
+			isLoading,
+			filter,
+			navigation,
+			isUpdating,
+			length,
+			limit,
+			offset,
+			isRefreshing,
+			data,
+			fetch,
+		} = this.props;
+		if (!isLoading) {
+			return (
+				<View style={styles.flex}>
+					<TopBar
+						filters={filtersPortal}
+						filter={filter}
+						onFiltering={_filter => {
+							fetch('fetch', _filter, 0);
+						}}
+						name="عرض الشحنات"
+						createButton={{
+							iconName: 'ios-add-circle-outline',
+							createView: () => {
+								navigation.navigate('createShipment');
+							},
+						}}
+					/>
+					<FlatList
+						data={data}
+						renderItem={({item}) => (
+							<ShipmentItem
+								product={item.product_id[1]}
+								amount={item.quantity}
+								date={item.create_date}
+								state={item.state}
+								price={item.standard_price}
+								barcode={item.barcode}
+							/>
+						)}
+						keyExtractor={(item, index) => item.id.toString()}
+						ListFooterComponent={
+							<RenderFooter
+								isUpdating={isUpdating}
+								len={length}
+								limit={limit}
+								offset={offset}
+								update={key => {
+									const offsetUpdating =
+										key === 'in'
+											? offset + limit
+											: key === 'de'
+											? offset - limit
+											: offset;
+									fetch('update', filter, offsetUpdating);
+								}}
+							/>
+						}
+						ListEmptyComponent={
+							<View style={styles.emptyContainer}>
+								<Text>لا يوجد شحنات</Text>
+							</View>
+						}
+						refreshControl={
+							<RefreshControl
+								refreshing={isRefreshing}
+								onRefresh={this._onRefresh}
+							/>
+						}
+					/>
+				</View>
+			);
+		} else {
+			return (
+				<View style={styles.indicatorView}>
+					<BallIndicator color="#540e33" />
+				</View>
+			);
+		}
+	}
 }
 
 ShipmentView.propTypes = {
-  isLoading: PropTypes.bool,
-  filter: PropTypes.string,
-  isUpdating: PropTypes.bool,
-  length: PropTypes.number,
-  limit: PropTypes.number,
-  offset: PropTypes.number,
-  isRefreshing: PropTypes.bool,
-  data: PropTypes.array,
-  fetch: PropTypes.func.isRequired,
+	isLoading: PropTypes.bool,
+	filter: PropTypes.string,
+	isUpdating: PropTypes.bool,
+	length: PropTypes.number,
+	limit: PropTypes.number,
+	offset: PropTypes.number,
+	isRefreshing: PropTypes.bool,
+	data: PropTypes.array,
+	fetch: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  text: {
-    paddingLeft: 8,
-    fontFamily: 'NotoKufiArabic-Regular',
-  },
-  flex: {
-    flex: 1,
-  },
-  indicatorView: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+	row: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingHorizontal: 16,
+		paddingVertical: 8,
+	},
+	text: {
+		paddingLeft: 8,
+		fontFamily: 'NotoKufiArabic-Regular',
+	},
+	flex: {
+		flex: 1,
+	},
+	indicatorView: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		flex: 1,
+	},
+	emptyContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 });

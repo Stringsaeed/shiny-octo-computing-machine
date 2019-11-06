@@ -36,6 +36,7 @@
 		EAE9115142E24D2CB2ACF58D /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14A473384435499ABB0A8690 /* Zocial.ttf */; };
 		347EFA1973534A1C8D2CF4D1 /* NotoKufiArabic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93B8B5FC0CF2424DADDC5C3D /* NotoKufiArabic-Bold.ttf */; };
 		BDFE6D3CF11B43CBB2E29FEE /* NotoKufiArabic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC4C3242149D401B9A7C5F0D /* NotoKufiArabic-Regular.ttf */; };
+		892811DA3A18401A9B39E4F0 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A56627B12754753A7670A25 /* icomoon.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		14A473384435499ABB0A8690 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		93B8B5FC0CF2424DADDC5C3D /* NotoKufiArabic-Bold.ttf */ = {isa = PBXFileReference; name = "NotoKufiArabic-Bold.ttf"; path = "../assets/fonts/NotoKufiArabic-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		CC4C3242149D401B9A7C5F0D /* NotoKufiArabic-Regular.ttf */ = {isa = PBXFileReference; name = "NotoKufiArabic-Regular.ttf"; path = "../assets/fonts/NotoKufiArabic-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0A56627B12754753A7670A25 /* icomoon.ttf */ = {isa = PBXFileReference; name = "icomoon.ttf"; path = "../assets/fonts/icomoon.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +225,7 @@
 				14A473384435499ABB0A8690 /* Zocial.ttf */,
 				93B8B5FC0CF2424DADDC5C3D /* NotoKufiArabic-Bold.ttf */,
 				CC4C3242149D401B9A7C5F0D /* NotoKufiArabic-Regular.ttf */,
+				0A56627B12754753A7670A25 /* icomoon.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				EAE9115142E24D2CB2ACF58D /* Zocial.ttf in Resources */,
 				347EFA1973534A1C8D2CF4D1 /* NotoKufiArabic-Bold.ttf in Resources */,
 				BDFE6D3CF11B43CBB2E29FEE /* NotoKufiArabic-Regular.ttf in Resources */,
+				892811DA3A18401A9B39E4F0 /* icomoon.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

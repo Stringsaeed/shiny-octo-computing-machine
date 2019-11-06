@@ -1,48 +1,48 @@
 import {from, of} from 'rxjs';
 import {ofType} from 'redux-observable';
 import {
-  map,
-  tap,
-  takeUntil,
-  switchMap,
-  catchError,
-  debounceTime,
-  ignoreElements,
+	map,
+	tap,
+	takeUntil,
+	switchMap,
+	catchError,
+	debounceTime,
+	ignoreElements,
 } from 'rxjs/operators';
 
 import {odooAPI} from '../services';
 import {_SEARCH_FAILED, _SEARCH_SUCCESS, _SEARCH_REQUEST} from '../constants';
 
 export default (action$, store$) =>
-  action$.pipe(
-    tap(obs => console.log(obs)),
-    ofType(_SEARCH_REQUEST),
-    tap(obs => console.log(obs)),
-    debounceTime(200),
-    switchMap(action =>
-      from(
-        odooAPI(store$.state.auth).search(
-          action.meta.term,
-          action.meta.fields,
-          action.meta.modelName,
-        ),
-      ).pipe(
-        map(results =>
-          of({
-            type: _SEARCH_SUCCESS,
-            payload: results,
-          }),
-        ),
-      ),
-    ),
-    takeUntil(action$.ofType(_SEARCH_REQUEST)),
-    catchError(e =>
-      of({
-        type: _SEARCH_FAILED,
-      }),
-    ),
-    ignoreElements(),
-  );
+	action$.pipe(
+		tap(obs => console.log(obs)),
+		ofType(_SEARCH_REQUEST),
+		tap(obs => console.log(obs)),
+		debounceTime(200),
+		switchMap(action =>
+			from(
+				odooAPI(store$.state.auth).search(
+					action.meta.term,
+					action.meta.fields,
+					action.meta.modelName,
+				),
+			).pipe(
+				map(results =>
+					of({
+						type: _SEARCH_SUCCESS,
+						payload: results,
+					}),
+				),
+			),
+		),
+		takeUntil(action$.ofType(_SEARCH_REQUEST)),
+		catchError(e =>
+			of({
+				type: _SEARCH_FAILED,
+			}),
+		),
+		ignoreElements(),
+	);
 
 // export const searchProducts = (action$, state$) =>
 //   action$.pipe(

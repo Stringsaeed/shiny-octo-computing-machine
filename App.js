@@ -15,18 +15,18 @@ import store from '~/store';
 import AppSwitcher from '~/containers/appContainer';
 
 const App = () => {
-  return (
-    <Provider store={store}>
-      <RNPProvider>
-        <StatusBar backgroundColor="#9204cc" barStyle="light-content" />
-        <SafeAreaView
-          style={{flex: 1}}
-          forceInset={{horizontal: 'always', top: 'always'}}>
-          <AppSwitcher />
-        </SafeAreaView>
-      </RNPProvider>
-    </Provider>
-  );
+	return (
+		<Provider store={store}>
+			<RNPProvider>
+				<StatusBar backgroundColor="#9204cc" barStyle="light-content" />
+				<SafeAreaView
+					style={{flex: 1}}
+					forceInset={{horizontal: 'always', top: 'always'}}>
+					<AppSwitcher />
+				</SafeAreaView>
+			</RNPProvider>
+		</Provider>
+	);
 };
 
 export default App;

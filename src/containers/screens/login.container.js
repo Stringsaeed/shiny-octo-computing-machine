@@ -5,24 +5,24 @@ import {loginRequest} from '~/actions';
 import {Login} from '~/views';
 
 const mapStateToProps = state => ({
-  isLoading: state.auth.isLoading,
-  emailError: state.auth.emailError,
-  passwordError: state.auth.passwordError,
-  success: state.auth.success,
-  settings: state.auth.settings,
-  loginError: state.auth.loginError,
-  errorMessage: state.auth.errorMessage,
+	isLoading: state.auth.isLoading,
+	emailError: state.auth.emailError,
+	passwordError: state.auth.passwordError,
+	success: state.auth.success,
+	settings: state.auth.settings,
+	loginError: state.auth.loginError,
+	errorMessage: state.auth.errorMessage,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      loginRequest,
-    },
-    dispatch,
-  );
+	bindActionCreators(
+		{
+			loginRequest,
+		},
+		dispatch,
+	);
 
 export const ConnectedLogin = connect(
-  mapStateToProps,
-  mapDispatchToProps,
+	mapStateToProps,
+	mapDispatchToProps,
 )(Login);

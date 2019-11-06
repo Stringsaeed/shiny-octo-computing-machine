@@ -8,30 +8,30 @@ import {authSwitcher} from '~/containers/navigation/switchContainer';
 const AppContainer = createAppContainer(authSwitcher);
 
 export class NavigatedApp extends Component {
-  constructor(props) {
-    super(props);
-    setI18nConfig();
-  }
-  componentDidMount() {
-    addEventListener('change', this.handleLocalizationChange);
-  }
+	constructor(props) {
+		super(props);
+		setI18nConfig();
+	}
+	componentDidMount() {
+		addEventListener('change', this.handleLocalizationChange);
+	}
 
-  componentWillUnmount() {
-    removeEventListener('change', this.handleLocalizationChange);
-  }
+	componentWillUnmount() {
+		removeEventListener('change', this.handleLocalizationChange);
+	}
 
-  handleLocalizationChange = () => {
-    setI18nConfig();
-    this.forceUpdate();
-  };
+	handleLocalizationChange = () => {
+		setI18nConfig();
+		this.forceUpdate();
+	};
 
-  render() {
-    return (
-      <AppContainer
-        screenProps={{
-          t: translate,
-        }}
-      />
-    );
-  }
+	render() {
+		return (
+			<AppContainer
+				screenProps={{
+					t: translate,
+				}}
+			/>
+		);
+	}
 }
