@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Left, Right, CardItem} from 'native-base';
 import {BallIndicator} from 'react-native-indicators';
-import {Button, Card, TextInput} from 'react-native-paper';
-import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {Button, Text, Card, TextInput} from 'react-native-paper';
+import {View, Image, ScrollView, TouchableOpacity} from 'react-native';
 
 import {StyleSheet} from 'react-native';
 // import Styles from './styles';
@@ -136,7 +136,7 @@ export class CreateShipment extends Component {
 						</View>
 					</View>
 				) : null}
-				<View style={Styles.cardStyle(50)}>
+				<View style={[Styles.cardStyle(50), Styles.centered]}>
 					<View style={Styles.inputContainer}>
 						<Autocomplete
 							data={products}

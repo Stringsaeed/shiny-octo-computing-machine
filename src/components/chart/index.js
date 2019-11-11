@@ -11,8 +11,6 @@ export const Chart = props => {
 			width={width}
 			height={height}
 			padding={0}
-			startAngle={90}
-			endAngle={-90}
 			// radius={({datum}) => datum.w}
 			style={{
 				data: {
